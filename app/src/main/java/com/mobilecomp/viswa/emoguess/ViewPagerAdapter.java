@@ -10,11 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public class ViewPagerAdapter extends PagerAdapter {
 
     //    String mResources[] = {"To start off lets understand what exactly Android CardView is? Its a new widget for Android, which can be used to display a card sort of a layout in android. As you may know Android material design is inspired from paper and ink concept. Mostly it displays views on top of each other, with shadows. In simple terms, Android CardView is such a view which has all material design properties, most importantly showing shadows according the elevation. The best part about this view is that it extends FrameLayout and it can be displayed on all the platforms of android since it’s available through the Support v7 library. Lets have a look at some of its properties:", "To start off lets understand what exactly Android CardView is? Its a new widget for Android, which can be used to display a card sort of a layout in android. As you may know Android material design is inspired from paper and ink concept. Mostly it displays views on top of each other, with shadows. In simple terms, Android CardView is such a view which has all material design properties, most importantly showing shadows according the elevation. The best part about this view is that it extends FrameLayout and it can be displayed on all the platforms of android since it’s available through the Support v7 library. Lets have a look at some of its properties:", "To start off lets understand what exactly Android CardView is? Its a new widget for Android, which can be used to display a card sort of a layout in android. As you may know Android material design is inspired from paper and ink concept. Mostly it displays views on top of each other, with shadows. In simple terms, Android CardView is such a view which has all material design properties, most importantly showing shadows according the elevation. The best part about this view is that it extends FrameLayout and it can be displayed on all the platforms of android since it’s available through the Support v7 library. Lets have a look at some of its properties:", "To start off lets understand what exactly Android CardView is? Its a new widget for Android, which can be used to display a card sort of a layout in android. As you may know Android material design is inspired from paper and ink concept. Mostly it displays views on top of each other, with shadows. In simple terms, Android CardView is such a view which has all material design properties, most importantly showing shadows according the elevation. The best part about this view is that it extends FrameLayout and it can be displayed on all the platforms of android since it’s available through the Support v7 library. Lets have a look at some of its properties:"};
-    private String mEmotions[];
-    private TypedArray mImages;
+    private static String[] mEmotions;
+    private static TypedArray mImages;
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
@@ -46,17 +49,23 @@ public class ViewPagerAdapter extends PagerAdapter {
 
 
 
+//        emoText.setText(mEmotions[position]);
+//        image.setImageResource(mImages.getResourceId(position, -1));
         emoText.setText(mEmotions[position]);
         image.setImageResource(mImages.getResourceId(position, -1));
+        random();
         container.addView(itemView);
         return itemView;
+    }
+    public static void random() {
+        Collections.shuffle(Arrays.asList(mEmotions));
+        Collections.shuffle(Arrays.asList(mImages));
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((CardView) object);
     }
-
 }
 
 
