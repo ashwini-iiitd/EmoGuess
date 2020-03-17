@@ -16,6 +16,7 @@
             android:name=".ImageActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".RegisterActivity" />
+        <activity android:name=".RestartActivity" />
         <activity android:name=".HowToActivity" />
         <activity
             android:name=".PlayActivity"
