@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="timer_text" type="id" />
+    <item name="timer_button" type="id" />
+    <item name="imageView1" type="id" />
+    <item name="button1" type="id" />
+    <item name="score_layout" type="id" />
+    <item name="restart_layout" type="id" />
+    <item name="videoView" type="id" />
+    <item name="bRestartVideo" type="id" />
+    <item name="restartvideo_layout" type="id" />
+    <item name="regButton" type="id" />
+</resources>
