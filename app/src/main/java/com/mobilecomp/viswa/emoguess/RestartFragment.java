@@ -9,17 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
+ * {@link RestartFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
+ * Use the {@link RestartFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class RestartFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,7 +32,7 @@ public class HomeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public HomeFragment() {
+    public RestartFragment() {
         // Required empty public constructor
     }
 
@@ -41,11 +42,11 @@ public class HomeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
+     * @return A new instance of fragment ScoreFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
+    public static RestartFragment newInstance(String param1, String param2) {
+        RestartFragment fragment = new RestartFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,34 +67,41 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        // Toast toast=Toast. makeText(getActivity(),"Hello Fragment",Toast. LENGTH_SHORT);
+        View view = inflater.inflate(R.layout.fragment_restart, container, false);
+        //Toast toast=Toast. makeText(getActivity(),"restart fragment",Toast. LENGTH_SHORT);
         // toast.show();
 
-        Button playButton = view.findViewById(R.id.bPlay);
-        playButton.setOnClickListener(new View.OnClickListener() {
+        Button score = view.findViewById(R.id.Score);
+        score.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), PlayActivity.class));
+                if (ImageFragment.timelefttext.compareTo("0:00") == 0) {
+                    Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score), Toast.LENGTH_LONG);
+                    toast.show();
+                } else if (VideoFragment.timelefttext.compareTo("0:00") == 0) {
+                    Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(VideoFragment.score), Toast.LENGTH_LONG);
+                    toast.show();
+                }
             }
         });
-        Button howtoButton = view.findViewById(R.id.bHowto);
-        howtoButton.setOnClickListener(new View.OnClickListener() {
+
+        Button restartiButton = view.findViewById(R.id.bRestartImages);
+        restartiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), HowToActivity.class));
+                startActivity(new Intent(getContext(), ImageActivity.class));
             }
         });
-        Button registerButton = view.findViewById(R.id.bRegister);
-        registerButton.setOnClickListener(new View.OnClickListener() {
+
+        Button restartvButton = view.findViewById(R.id.bRestartVideos);
+        restartvButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), RegisterActivity.class));
+                startActivity(new Intent(getContext(), VideoActivity.class));
             }
         });
 
         return view;
-
     }
 
     // TODO: Rename method, update argument and hook method into UI event

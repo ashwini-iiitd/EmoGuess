@@ -7,16 +7,14 @@ import android.util.AttributeSet;
 import android.view.View;
 
 
+public class HorizontalViewPagerVideo extends ViewPager {
 
-
-public class HorizontalViewPager extends ViewPager {
-
-    public HorizontalViewPager(Context context) {
+    public HorizontalViewPagerVideo(Context context) {
         super(context);
         init();
     }
 
-    public HorizontalViewPager(Context context, AttributeSet attrs) {
+    public HorizontalViewPagerVideo(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }

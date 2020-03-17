@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 
 /**
@@ -85,8 +84,8 @@ public class PlayFragment extends Fragment {
         });
 
 
-        Toast toast=Toast. makeText(getActivity(),"play fragment",Toast. LENGTH_SHORT);
-        toast.show();
+        //   Toast toast=Toast. makeText(getActivity(),"play fragment",Toast. LENGTH_SHORT);
+        //  toast.show();
         return view;
     }
 

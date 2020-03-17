@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 
 /**
@@ -66,8 +65,8 @@ public class HowToFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_how_to, container, false);
-        Toast toast=Toast. makeText(getActivity(),"howto fragment",Toast. LENGTH_SHORT);
-        toast.show();
+        // Toast toast=Toast. makeText(getActivity(),"howto fragment",Toast. LENGTH_SHORT);
+        //toast.show();
         return view;
     }
 

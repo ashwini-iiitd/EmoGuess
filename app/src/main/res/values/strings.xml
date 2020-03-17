@@ -19,6 +19,12 @@
         <item>@drawable/angry</item>
     </array>
 
+    <!--    <array name="emo_videos">-->
+    <!--        <item>@drawable/happy</item>-->
+    <!--        <item>@drawable/sad</item>-->
+    <!--        <item>@drawable/angry</item>-->
+    <!--    </array>-->
+
 </resources>
 
 

@@ -1,13 +1,14 @@
 package com.mobilecomp.viswa.emoguess;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.Button;
 
 
 /**
@@ -40,7 +41,7 @@ public class RegisterFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment RegisterFragment.
+     * @return A new instance of fragment HomeFragment.
      */
     // TODO: Rename and change types and number of parameters
     public static RegisterFragment newInstance(String param1, String param2) {
@@ -65,10 +66,20 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_register, container, false);
-        Toast toast=Toast. makeText(getActivity(),"register fragment",Toast. LENGTH_SHORT);
-        toast.show();
+        View view = inflater.inflate(R.layout.fragment_register, container, false);
+        // Toast toast=Toast. makeText(getActivity(),"Hello Fragment",Toast. LENGTH_SHORT);
+        // toast.show();
+
+        Button regButton = view.findViewById(R.id.regButton);
+        regButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), PlayActivity.class));
+            }
+        });
+
         return view;
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

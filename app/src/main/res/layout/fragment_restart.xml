@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment"
+    tools:context=".RestartFragment">
     android:orientation="vertical"
     android:layout_centerVertical="true">
 
@@ -12,29 +12,24 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_launcher_background"/>
+
         <Button
-            android:id = "@+id/bPlay"
+            android:id="@+id/Score"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="Score" />
+
+        <Button
+            android:id="@+id/bRestartImages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Play" />
+            android:text="Restart Images" />
+
         <Button
-            android:id = "@+id/bHowto"
+            android:id="@+id/bRestartVideos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="How to play" />
-        <Button
-            android:id = "@+id/bRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Register" />
+            android:text="Restart Videos" />
     </LinearLayout>
-
-
-
-
 
 </RelativeLayout>

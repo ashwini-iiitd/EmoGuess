@@ -7,8 +7,40 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/howto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="How To" />
+        android:layout_marginTop="90dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textAlignment="center"
+        android:textSize="35dp"
+        android:text="How To Play EmoGuess:" />
 
+    <TextView
+        android:id="@+id/howtoparents"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/howto"
+        android:layout_marginTop="210dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:text="Parents: Hold the phone such that the screen faces the child and is not visible to you. For both, images and videos, shake/scroll to get the next one, and for every, guess the emotion based on how the child enacts it. Keep going till the timer stops. " />
+
+    <TextView
+        android:id="@+id/howtochildren"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/howtoparents"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="410dp"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:text="Children: Carefully look at the image/video on the screen (with text below it as the hint). Enact the emotion shown by the image/video.">
+
+    </TextView>
 </FrameLayout>

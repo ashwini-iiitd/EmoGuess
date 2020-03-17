@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,25 +10,56 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:screenOrientation="landscape" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <TextView
+        android:id="@+id/countdown_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|end"
+        android:gravity="right"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:text="1:00"
+        android:textSize="27dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignParentRight="@id/viewPager" />
+
+    <Button
+        android:id="@+id/countdown_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|end"
+        android:text="Start"
+        android:layout_marginRight="15dp"
+        android:layout_below="@id/countdown_text"
+        android:layout_alignRight="@id/viewPager" />
 
     <ImageButton
         android:id="@+id/left_nav"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_gravity="center_vertical|start"
-        android:src="@drawable/ic_previous"
+        android:layout_gravity="center_horizontal|start"
+        app:srcCompat="@drawable/ic_action_left"
         android:visibility="gone"
-        android:background="@null" />
+        android:background="@null"
+        android:layout_below="@id/countdown_button"
+        android:layout_alignLeft="@id/viewPager" />
 
     <ImageButton
         android:id="@+id/right_nav"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_gravity="center_vertical|end"
+        android:layout_gravity="center_horizontal|end"
         android:fadingEdge="horizontal"
-        android:src="@drawable/ic_next"
-        android:background="@null" />
+        app:srcCompat="@drawable/ic_action_right"
+        android:background="@null"
+        android:layout_below="@id/countdown_button"
+        android:layout_alignRight="@id/viewPager" />/>
 
-</FrameLayout>
+</RelativeLayout>
