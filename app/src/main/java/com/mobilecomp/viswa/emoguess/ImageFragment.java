@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import com.androidhiddencamera.CameraConfig;
+
 public class ImageFragment extends Fragment {
 
     ImageButton leftNav, rightNav;
@@ -42,7 +44,8 @@ public class ImageFragment extends Fragment {
     static String timelefttext;
     private OnFragmentInteractionListener mListener;
     private static final int REQ_CODE_CAMERA_PERMISSION = 1253;
-    // private CameraConfig mCameraConfig;
+
+   private CameraConfig mCameraConfig;
 
     public ImageFragment() {
         // Required empty public constructor
