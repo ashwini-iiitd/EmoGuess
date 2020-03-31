@@ -1,5 +1,8 @@
 package com.mobilecomp.viswa.emoguess;
 
+import java.io.File;
+
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -22,10 +25,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-
-import com.androidhiddencamera.CameraConfig;
 
 public class ImageFragment extends Fragment {
 
@@ -43,14 +43,10 @@ public class ImageFragment extends Fragment {
     private boolean timerrunning;
     static String timelefttext;
     private OnFragmentInteractionListener mListener;
-    private static final int REQ_CODE_CAMERA_PERMISSION = 1253;
-
-   private CameraConfig mCameraConfig;
 
     public ImageFragment() {
         // Required empty public constructor
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -75,8 +71,8 @@ public class ImageFragment extends Fragment {
         imagesArray = getResources().obtainTypedArray(R.array.emo_images);
         horizontalViewPager = view.findViewById(R.id.viewPager);
         return view;
-
     }
+
 
     public class Emo {
         private int image;
@@ -299,6 +295,7 @@ public class ImageFragment extends Fragment {
 
     public void starttimer() {
         timer = new CountDownTimer(timeleft, 1000) {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onTick(long l) {
                 timeleft = l;
@@ -332,7 +329,7 @@ public class ImageFragment extends Fragment {
         timertext.setText(timelefttext);
         if (timelefttext.compareTo("0:00") == 0) {
             startActivity(new Intent(getContext(), RestartActivity.class));
-            Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(score), Toast.LENGTH_SHORT);
             toast.show();
         }
     }
