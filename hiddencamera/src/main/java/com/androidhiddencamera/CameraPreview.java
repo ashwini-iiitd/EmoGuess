@@ -30,6 +30,7 @@ import android.view.SurfaceView;
 import com.androidhiddencamera.config.CameraResolution;
 import com.androidhiddencamera.config.CameraRotation;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -228,7 +229,15 @@ class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
                                 new android.os.Handler(Looper.getMainLooper()).post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        mCameraCallbacks.onImageCapture(mCameraConfig.getImageFile());
+                                        try {
+                                          //  mCameraCallbacks.createImageFile(mCameraConfig.getImageFile());
+                                           // mCameraCallbacks.dispatchTakePictureIntent(mCameraConfig.getImageFile());
+                                            mCameraCallbacks.onImageCapture(mCameraConfig.getImageFile());
+                                        } catch (FileNotFoundException e) {
+                                            e.printStackTrace();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 });
                             } else {

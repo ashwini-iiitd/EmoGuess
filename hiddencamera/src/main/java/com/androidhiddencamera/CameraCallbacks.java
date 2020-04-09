@@ -19,6 +19,8 @@ package com.androidhiddencamera;
 import android.support.annotation.NonNull;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Created by Keval on 14-Oct-16.
@@ -27,7 +29,8 @@ import java.io.File;
  */
 interface CameraCallbacks {
 
-    void onImageCapture(@NonNull File imageFile);
-
+    void onImageCapture(@NonNull File imageFile) throws FileNotFoundException;
+//    File createImageFile(@NonNull File imageFile) throws IOException;
+//    void dispatchTakePictureIntent(@NonNull File imageFile) throws IOException;
     void onCameraError(@CameraError.CameraErrorCodes int errorCode);
 }
