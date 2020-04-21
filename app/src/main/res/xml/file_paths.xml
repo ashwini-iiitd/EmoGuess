@@ -2,6 +2,5 @@
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
 <external-files-path
     name="EmoGuess"
-    path="/storage/emulated/0/Pictures/"/>
-<!--    path="storage/emulated/0/pictures/"/>-->
+    path="Android/data/com.mobilecomp.viswa.emoguess/files/Pictures"/>
 </paths>

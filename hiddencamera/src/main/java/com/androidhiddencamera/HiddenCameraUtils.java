@@ -23,7 +23,11 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
@@ -34,6 +38,9 @@ import com.androidhiddencamera.config.CameraRotation;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import static android.os.Environment.getExternalStoragePublicDirectory;
+import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 /**
  * Created by Keval on 11-Nov-16.
@@ -53,6 +60,8 @@ public final class HiddenCameraUtils {
      * @return true if the permission is available.
      * @see 'http://www.androidpolice.com/2015/09/07/android-m-begins-locking-down-floating-apps-requires-users-to-grant-special-permission-to-draw-on-other-apps/'
      */
+    private static final int CAMERA_REQUEST = 1888;
+    
     @SuppressLint("NewApi")
     public static boolean canOverDrawOtherApps(Context context) {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(context);

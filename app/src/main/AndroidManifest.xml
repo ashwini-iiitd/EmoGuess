@@ -3,7 +3,9 @@
     package="com.mobilecomp.viswa.emoguess">
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-<!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -38,9 +40,9 @@
             android:authorities="com.mobilecomp.viswa.emoguess.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-                <meta-data
-                    android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/file_paths"></meta-data>
+<!--                <meta-data-->
+<!--                    android:name="android.support.FILE_PROVIDER_PATHS"-->
+<!--                    android:resource="@xml/file_paths"></meta-data>-->
         </provider>
     </application>
 </manifest>

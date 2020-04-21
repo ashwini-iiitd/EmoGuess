@@ -44,26 +44,19 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.androidhiddencamera.CameraConfig;
 import com.androidhiddencamera.CameraError;
-import com.androidhiddencamera.HiddenCameraActivity;
 import com.androidhiddencamera.HiddenCameraUtils;
 import com.androidhiddencamera.config.CameraFacing;
 import com.androidhiddencamera.config.CameraFocus;
 import com.androidhiddencamera.config.CameraImageFormat;
 import com.androidhiddencamera.config.CameraResolution;
 import com.androidhiddencamera.config.CameraRotation;
-import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class ImageActivity extends HiddenCameraActivity implements ImageFragment.OnFragmentInteractionListener {
+    private static final int REQUEST_WRITE_STORAGE = 1254;
     private SensorManager mSensorManager;
     private ImageFragment.ShakeEventListener mSensorListener;
-
-    private static final int CAMERA_REQUEST = 1888;
-    private ImageView imageView;
-    private static final int MY_CAMERA_PERMISSION_CODE = 100;
-
     private static final int REQ_CODE_CAMERA_PERMISSION = 1253;
     private CameraConfig mCameraConfig;
-    OutputStream outputStream;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -149,53 +142,8 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
         }
     }
 
-    String currentPhotoPath;
-
-//    @Override
-//    public File createImageFile(@NonNull File imageFile) throws IOException {
-//        // Create an image file name
-//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//        String imageFileName = "JPEG_" + timeStamp + "_";
-//        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-//        File image = File.createTempFile(
-//                imageFileName,  /* prefix */
-//                ".jpg",         /* suffix */
-//                storageDir      /* directory */
-//        );
-//
-//        // Save a file: path for use with ACTION_VIEW intents
-//        currentPhotoPath = image.getAbsolutePath();
-//        return image;
-//    }
-
-    static final int REQUEST_TAKE_PHOTO = 1;
-
-//    @Override
-//    public void dispatchTakePictureIntent(@NonNull File imageFile) throws IOException {
-//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        // Ensure that there's a camera activity to handle the intent
-//        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-//            // Create the File where the photo should go
-//            File photoFile = null;
-//            try {
-//                photoFile = createImageFile(imageFile);
-//            } catch (IOException ex) {
-//                // Error occurred while creating the File
-//                ex.printStackTrace();
-//            }
-//            // Continue only if the File was successfully created
-//            if (photoFile != null) {
-//                Uri photoURI = FileProvider.getUriForFile(this,
-//                        "com.example.android.fileprovider",
-//                        photoFile);
-//                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-//                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-//            }
-//        }
-//   }
-
     @Override
-    public void onImageCapture(@NonNull File imageFile) {
+    public void onImageCapture(@NonNull File imageFile) throws IOException {
 
         // Convert file to bitmap.
         // Do something.
@@ -204,67 +152,25 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
         Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
 
         //Display the image to the image view
-        ((ImageView) findViewById(R.id.cam_prev)).setImageBitmap(bitmap);
+     //   ((ImageView) findViewById(R.id.cam_prev)).setImageBitmap(bitmap);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_WRITE_STORAGE);
+        }
 
-//        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-//        File f = new File(imageFile.getAbsolutePath());
-//        Uri contentUri = Uri.fromFile(f);
-//        mediaScanIntent.setData(contentUri);
-//        this.sendBroadcast(mediaScanIntent);
+        String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath()+"/EmoGuess";
+        File dir = new File(file_path);
+       // System.out.println(file_path);
+        if(!dir.exists())
+            dir.mkdirs();
+        File file = new File(dir, "emoguess" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".png");
+      //  System.out.println(file);
+        FileOutputStream fOut = new FileOutputStream(file);
 
-//        File direct = new File(getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/EmoGuess");
-//
-//        if (!direct.exists()) {
-//            File Directory = new File(getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/EmoGuess");
-//            Directory.mkdirs();
-//        }
-//
-//        File file = new File(getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/EmoGuess", imageFile.toString());
-//        if (file != null) {
-//            // save image here
-//            Uri relativePath = Uri.fromFile(file);
-//            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//            intent.putExtra(MediaStore.EXTRA_OUTPUT, relativePath);
-//            startActivityForResult(intent, CAMERA_REQUEST);
-//        }
-//
-//        Intent takePic= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        String name= new SimpleDateFormat("yyyyMMdd_HHmm sss").format(new Date());
-//        File storageDir= getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-//        File image= null;
-//        try {
-//            image= File.createTempFile(name, ".jpg", storageDir);
-//        } catch (IOException e) {
-//            Log.d("mylog", "Excep: "+ e.toString());
-//        }
-//        if (image!=null) {
-//            String pathToFile= image.getAbsolutePath();
-//            Uri photoURI= FileProvider.getUriForFile(ImageActivity.this, "com.mobilecomp.viswa.emoguess.fileprovider",image);
-//            takePic.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-//            startActivityForResult(takePic, 1);
-//        }
-
-//        File filepath= Environment.getExternalStorageDirectory();
-//        File dir= new File(filepath.getAbsolutePath()+"/EG/");
-//        dir.mkdir();
-//        File file= new File(dir, System.currentTimeMillis()+".jpg");
-//        try {
-//            outputStream = new FileOutputStream(file);
-//        }
-//        catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-//        try {
-//            outputStream.flush();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            outputStream.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+        fOut.flush();
+        fOut.close();
     }
 
     @Override
@@ -297,6 +203,7 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
 
 //    @Override
     public void onFragmentInteraction(Uri uri) {
+
 
     }
 

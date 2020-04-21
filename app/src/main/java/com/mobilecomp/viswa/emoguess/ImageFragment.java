@@ -207,9 +207,9 @@ public class ImageFragment extends Fragment {
                 float deltaY = Math.abs(lastY - y);
                 float deltaZ = Math.abs(lastZ - z);
 
-                System.out.println("deltaX ==" + deltaX);
-                System.out.println("deltaY ==" + deltaY);
-                System.out.println("deltaZ ==" + deltaZ);
+//                System.out.println("deltaX ==" + deltaX);
+//                System.out.println("deltaY ==" + deltaY);
+//                System.out.println("deltaZ ==" + deltaZ);
 
                 if (deltaX < NOISE) deltaX = (float) 0.0;
                 if (deltaY < NOISE) deltaY = (float) 0.0;

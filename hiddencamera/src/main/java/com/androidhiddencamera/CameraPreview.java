@@ -230,8 +230,6 @@ class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
                                     @Override
                                     public void run() {
                                         try {
-                                          //  mCameraCallbacks.createImageFile(mCameraConfig.getImageFile());
-                                           // mCameraCallbacks.dispatchTakePictureIntent(mCameraConfig.getImageFile());
                                             mCameraCallbacks.onImageCapture(mCameraConfig.getImageFile());
                                         } catch (FileNotFoundException e) {
                                             e.printStackTrace();

@@ -29,7 +29,7 @@ import java.io.IOException;
  */
 interface CameraCallbacks {
 
-    void onImageCapture(@NonNull File imageFile) throws FileNotFoundException;
+    void onImageCapture(@NonNull File imageFile) throws IOException;
 //    File createImageFile(@NonNull File imageFile) throws IOException;
 //    void dispatchTakePictureIntent(@NonNull File imageFile) throws IOException;
     void onCameraError(@CameraError.CameraErrorCodes int errorCode);
