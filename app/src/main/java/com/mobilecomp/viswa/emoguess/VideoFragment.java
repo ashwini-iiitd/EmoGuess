@@ -108,6 +108,7 @@ public class VideoFragment extends Fragment {
     public void startStop() {
         if (timerrunning) {
             stoptimer();
+            startActivity(new Intent(getContext(), RestartActivity.class));
         } else {
             starttimer();
             horizontalViewPagerVideo.setAdapter(new ViewPagerAdapterVideo(mContext, emos));
@@ -214,9 +215,9 @@ public class VideoFragment extends Fragment {
                 float deltaY = Math.abs(lastY - y);
                 float deltaZ = Math.abs(lastZ - z);
 
-                System.out.println("deltaX ==" + deltaX);
-                System.out.println("deltaY ==" + deltaY);
-                System.out.println("deltaZ ==" + deltaZ);
+//                System.out.println("deltaX ==" + deltaX);
+//                System.out.println("deltaY ==" + deltaY);
+//                System.out.println("deltaZ ==" + deltaZ);
 
                 if (deltaX < NOISE) deltaX = (float) 0.0;
                 if (deltaY < NOISE) deltaY = (float) 0.0;

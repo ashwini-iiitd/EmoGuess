@@ -103,6 +103,7 @@ public class ImageFragment extends Fragment {
     public void startStop() {
         if (timerrunning) {
             stoptimer();
+            startActivity(new Intent(getContext(), RestartActivity.class));
         } else {
             starttimer();
             horizontalViewPager.setAdapter(new ViewPagerAdapter(mContext, emos));

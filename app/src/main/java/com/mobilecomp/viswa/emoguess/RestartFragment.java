@@ -1,15 +1,30 @@
 package com.mobilecomp.viswa.emoguess;
 
+import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -70,7 +85,6 @@ public class RestartFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_restart, container, false);
         //Toast toast=Toast. makeText(getActivity(),"restart fragment",Toast. LENGTH_SHORT);
         // toast.show();
-
         Button score = view.findViewById(R.id.Score);
         score.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +98,27 @@ public class RestartFragment extends Fragment {
                 }
             }
         });
+
+        ImageButton share = view.findViewById(R.id.share);
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("IntentReset")
+            @Override
+            public void onClick(View v){
+                Intent intent1 = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                intent1.setType("image/*");
+                intent1.putExtra("crop", "true");
+                intent1.putExtra("scale", true);
+                intent1.putExtra("outputX", 256);
+                intent1.putExtra("outputY", 256);
+                intent1.putExtra("aspectX", 1);
+                intent1.putExtra("aspectY", 1);
+                intent1.putExtra("return-data", true);
+                intent1.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                startActivityForResult(intent1, 1);
+            }
+        });
+
 
         Button restartiButton = view.findViewById(R.id.bRestartImages);
         restartiButton.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +143,86 @@ public class RestartFragment extends Fragment {
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an Image is picked
+            if (requestCode == 1 && null != data) {
+                // Get the Image from data
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                ArrayList<String> imagesEncodedList = new ArrayList<>();
+                ArrayList<Uri> mArrayUri = new ArrayList<>();
+                String imageEncoded;
+                if(data.getData()!=null){
+                    Uri mImageUri=data.getData();
+                    // Get the cursor
+                    Cursor cursor = getActivity().getContentResolver().query(mImageUri, filePathColumn, null, null, null);
+                    // Move to first row
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    imageEncoded  = cursor.getString(columnIndex);
+                    cursor.close();
+                }
+                else {
+                    if (data.getClipData() != null) {
+                        ClipData mClipData = data.getClipData();
+                        for (int i = 0; i < mClipData.getItemCount(); i++) {
+                            ClipData.Item item = mClipData.getItemAt(i);
+                            Uri uri = item.getUri();
+                            mArrayUri.add(uri);
+                            // Get the cursor
+                            Cursor cursor = getActivity().getContentResolver().query(uri, filePathColumn, null, null, null);
+                            // Move to first row
+                            cursor.moveToFirst();
+                            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                            imageEncoded  = cursor.getString(columnIndex);
+                            imagesEncodedList.add(imageEncoded);
+                            cursor.close();
+                        }
+                        Log.v("LOG_TAG", "Selected Images" + mArrayUri.size());
+                    }
+                }
+                  List<Intent> targetShareIntents=new ArrayList<Intent>();
+                  Intent shareIntent=new Intent();
+                  shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
+                  shareIntent.setType("image/*");
+                  List<ResolveInfo> resInfos=getActivity().getPackageManager().queryIntentActivities(shareIntent, 0);
+                  if(!resInfos.isEmpty()){
+                    System.out.println("Have package");
+                        for(ResolveInfo resInfo : resInfos){
+                            String packageName=resInfo.activityInfo.packageName;
+                           // Log.i("Package Name", packageName);
+                             if(packageName.contains("com.google.android.apps.docs")){
+                                Intent intent=new Intent();
+                                intent.setComponent(new ComponentName(packageName, resInfo.activityInfo.name));
+                                intent.setAction(Intent.ACTION_SEND_MULTIPLE);
+                                intent.setType("image/*");
+                                intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, mArrayUri);
+                                Uri u= Uri.parse("https://drive.google.com/drive/u/0/folders/1BvgUXNEPz8YJmqXXr5u81hdzlOdm6I_P");
+                                intent.setDataAndType(u, intent.getType());
+                                intent.setPackage(packageName);
+                                targetShareIntents.add(intent);
+                            }
+                        }
+                    if(!targetShareIntents.isEmpty()){
+                        System.out.println("Have Intent");
+                        Intent chooserIntent=Intent.createChooser(targetShareIntents.remove(0), "Choose app to share");
+                        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetShareIntents.toArray(new Parcelable[]{}));
+                        startActivity(chooserIntent);
+                    }
+                    else {
+                    System.out.println("Do not Have Intent");
+                    }
+              }
+            } else {
+                System.out.println("Image not picked");
+            }
+        } catch (Exception e) {
+            System.out.println("Something went wrong");
         }
     }
 
