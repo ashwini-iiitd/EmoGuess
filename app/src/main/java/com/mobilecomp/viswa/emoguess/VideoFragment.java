@@ -80,15 +80,15 @@ public class VideoFragment extends Fragment {
     }
 
     public class Emo {
-        private String video;
+        private Uri video;
         private String text;
 
-        public Emo(String video, String text) {
+        public Emo(Uri video, String text) {
             this.video = video;
             this.text = text;
         }
 
-        public String getVideo() {
+        public Uri getVideo() {
             return video;
         }
 
@@ -97,9 +97,9 @@ public class VideoFragment extends Fragment {
         }
     }
 
-    Emo e1 = new Emo("http://www.ebookfrenzy.com/android_book/movie.mp4", "Happy");
-    Emo e2 = new Emo("android.resource://com.mobilecomp.viswa.emoguess/R.raw.sample2.mp4", "Sad");
-    Emo e3 = new Emo("android.resource://com.mobilecomp.viswa.emoguess/R.raw.sample2.mp4", "Angry");
+    Emo e1 = new Emo(Uri.parse("https://s3.amazonaws.com/androidvideostutorial/862009639.mp4"), "Happy");
+    Emo e2 = new Emo(Uri.parse("android.resource://com.mobilecomp.viswa.emoguess/R.raw.sample2.mp4"), "Sad");
+    Emo e3 = new Emo(Uri.parse("android.resource://com.mobilecomp.viswa.emoguess/R.raw.sample2.mp4"), "Angry");
 
     Emo[] emos = new Emo[]{
             e1, e2, e3

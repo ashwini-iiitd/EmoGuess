@@ -6,6 +6,7 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -45,12 +46,14 @@ public class ViewPagerAdapterVideo extends PagerAdapter {
         VideoView video = itemView.findViewById(R.id.videoView);
 
         emoText.setText(mEmotions[position].getText());
-        video.setVideoPath((mEmotions[position].getVideo()));
+        video.setVideoURI((mEmotions[position].getVideo()));
+        System.out.println("hi");
 //        MediaController mediaController = new
 //                MediaController(mContext);
 //        mediaController.setAnchorView(video);
 //        video.setMediaController(mediaController);
         video.start();
+        System.out.println(video);
         random();
         container.addView(itemView);
         return itemView;
