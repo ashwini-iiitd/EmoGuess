@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -123,6 +124,14 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
                 takePicture();
             }
         });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)){
+            takePicture();
+        }
+        return true;
     }
 
     @SuppressLint("MissingPermission")
