@@ -1,14 +1,19 @@
 package com.mobilecomp.viswa.emoguess;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -45,7 +50,27 @@ public class ViewPagerAdapter extends PagerAdapter {
         ImageView image = itemView.findViewById(R.id.imageView);
 
         emoText.setText(mEmotions[position].getText());
-        image.setImageResource(mEmotions[position].getImage());
+        /*********/
+        Uri img = Uri.parse("android.resource://"
+                + mContext.getPackageName() + "/raw/"
+                + mEmotions[position].getImage());
+        InputStream imageIS = mContext.getResources().openRawResource(mEmotions[position].getImage());
+        Bitmap image_org = BitmapFactory.decodeStream(imageIS);//loading the large bitmap is fine.
+        int w = image_org.getWidth();//get width
+        int h = image_org.getHeight();//get height
+        int aspRat = w / h;//get aspect ratio
+        int W = 200;//do whatever you want with width. Fixed, screen size, anything
+        int H = W * aspRat;//set the height based on width and aspect ratio
+
+        Bitmap b = Bitmap.createScaledBitmap(image_org, W, H, false);//scale the bitmap
+        image.setImageBitmap(b);//set the image view
+        image_org = null;//save memory on the bitmap called 'image'
+        /*********/
+
+
+
+//        System.out.println("Image\n"+ mEmotions[position].getImage());
+       // image.setImageResource(mEmotions[position].getImage());
         random();
         container.addView(itemView);
         return itemView;
