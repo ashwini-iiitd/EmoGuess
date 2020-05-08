@@ -44,16 +44,15 @@ public class ViewPagerAdapterVideo extends PagerAdapter {
 
         TextView emoText = itemView.findViewById(R.id.textViewEmotions);
         VideoView video = itemView.findViewById(R.id.videoView);
+        MediaController media_control;
+
+        media_control = new MediaController(mContext);
+        video.setMediaController(media_control);
 
         emoText.setText(mEmotions[position].getText());
         video.setVideoURI((mEmotions[position].getVideo()));
-        System.out.println("hi");
-//        MediaController mediaController = new
-//                MediaController(mContext);
-//        mediaController.setAnchorView(video);
-//        video.setMediaController(mediaController);
         video.start();
-        System.out.println(video);
+       // System.out.println(video);
         random();
         container.addView(itemView);
         return itemView;

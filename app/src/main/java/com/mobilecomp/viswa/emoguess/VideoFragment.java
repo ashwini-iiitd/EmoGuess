@@ -99,11 +99,12 @@ public class VideoFragment extends Fragment {
 
     Emo e1 = new Emo(Uri.parse("https://s3.amazonaws.com/androidvideostutorial/862009639.mp4"), "Happy");
     Emo e2 = new Emo(Uri.parse("android.resource://com.mobilecomp.viswa.emoguess/R.raw.sample2.mp4"), "Sad");
-    Emo e3 = new Emo(Uri.parse("android.resource://com.mobilecomp.viswa.emoguess/R.raw.sample2.mp4"), "Angry");
+    Emo e3 = new Emo(Uri.parse("android.resource://+ mContext.getPackageName() +/R.raw.sample"), "Angry");
 
     Emo[] emos = new Emo[]{
             e1, e2, e3
     };
+
 
     public void startStop() {
         if (timerrunning) {
