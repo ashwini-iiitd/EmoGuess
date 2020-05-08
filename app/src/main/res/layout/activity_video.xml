@@ -7,16 +7,15 @@
     android:id="@+id/video_layout"
     tools:context=".VideoActivity">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/capture_btn"
-        android:layout_alignParentBottom="true"
-        android:text="@string/btn_tittle_capture_image"/>
+<!--    <Button-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/capture_btn"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:text="@string/btn_tittle_capture_image"/>-->
 
     <ImageView
         android:id="@+id/cam_prev"
-        android:layout_above="@id/capture_btn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Hello World!"/>

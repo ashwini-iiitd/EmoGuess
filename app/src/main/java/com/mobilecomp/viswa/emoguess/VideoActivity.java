@@ -119,13 +119,13 @@ public class VideoActivity extends HiddenCameraActivity implements VideoFragment
 
         //Take a picture
 
-        findViewById(R.id.capture_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Take picture using the camera without preview.
-                takePicture();
-            }
-        });
+//        findViewById(R.id.capture_btn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //Take picture using the camera without preview.
+//                takePicture();
+//            }
+//        });
     }
 
     @Override

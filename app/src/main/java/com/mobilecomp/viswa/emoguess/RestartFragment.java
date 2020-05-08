@@ -44,6 +44,7 @@ public class RestartFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    static View view;
 
     private OnFragmentInteractionListener mListener;
 
@@ -82,20 +83,29 @@ public class RestartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_restart, container, false);
+        view = inflater.inflate(R.layout.fragment_restart, container, false);
         //Toast toast=Toast. makeText(getActivity(),"restart fragment",Toast. LENGTH_SHORT);
         // toast.show();
         Button score = view.findViewById(R.id.Score);
+
         score.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ImageFragment.timelefttext.compareTo("0:00") == 0) {
-                    Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score), Toast.LENGTH_LONG);
-                    toast.show();
-                } else if (VideoFragment.timelefttext.compareTo("0:00") == 0) {
-                    Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(VideoFragment.score), Toast.LENGTH_LONG);
-                    toast.show();
-                }
+                Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score), Toast.LENGTH_LONG);
+                   toast.show();
+//                if (ImageFragment.timelefttext.compareTo("0:00") == 0) {
+//                    System.out.println("score");
+//                    Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score), Toast.LENGTH_LONG);
+//                    toast.show();
+//                } else if (VideoFragment.timelefttext.compareTo("0:00") == 0) {
+//                    Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(VideoFragment.score), Toast.LENGTH_LONG);
+//                    toast.show();
+//                }
+//                else if (ImageFragment.timelefttext.compareTo("0:00") == 1) {
+//                    System.out.println("no score");
+//                    Toast toast = Toast.makeText(getActivity(), "Score yet: " + String.valueOf(VideoFragment.score), Toast.LENGTH_LONG);
+//                    toast.show();
+//                }
             }
         });
 
@@ -158,7 +168,9 @@ public class RestartFragment extends Fragment {
                 ArrayList<Uri> mArrayUri = new ArrayList<>();
                 String imageEncoded;
                 if(data.getData()!=null){
+                    //System.out.println("nothing2 "+data.getData());
                     Uri mImageUri=data.getData();
+                    mArrayUri.add(mImageUri);
                     // Get the cursor
                     Cursor cursor = getActivity().getContentResolver().query(mImageUri, filePathColumn, null, null, null);
                     // Move to first row
@@ -168,8 +180,10 @@ public class RestartFragment extends Fragment {
                     cursor.close();
                 }
                 else {
+                    System.out.println("nothing");
                     if (data.getClipData() != null) {
                         ClipData mClipData = data.getClipData();
+                        //System.out.println("clip data " + mClipData);
                         for (int i = 0; i < mClipData.getItemCount(); i++) {
                             ClipData.Item item = mClipData.getItemAt(i);
                             Uri uri = item.getUri();
@@ -179,13 +193,17 @@ public class RestartFragment extends Fragment {
                             // Move to first row
                             cursor.moveToFirst();
                             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                            imageEncoded  = cursor.getString(columnIndex);
+                            imageEncoded = cursor.getString(columnIndex);
                             imagesEncodedList.add(imageEncoded);
                             cursor.close();
                         }
                         Log.v("LOG_TAG", "Selected Images" + mArrayUri.size());
                     }
                 }
+//                System.out.println("File "+filePathColumn);
+//                System.out.println("encoded "+imagesEncodedList);
+//                System.out.println("array "+mArrayUri);
+//                System.out.println("array size "+mArrayUri.size());
                   List<Intent> targetShareIntents=new ArrayList<Intent>();
                   Intent shareIntent=new Intent();
                   shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);

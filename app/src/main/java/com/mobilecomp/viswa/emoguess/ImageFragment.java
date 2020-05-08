@@ -375,6 +375,7 @@ public class ImageFragment extends Fragment {
 
 
     public void starttimer() {
+        score=0;
         timer = new CountDownTimer(timeleft, 1000) {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -467,7 +468,7 @@ public class ImageFragment extends Fragment {
                 } else
                     leftNav.setVisibility(View.VISIBLE);
 
-                if (position==emotions.length-1){
+                if (position==emos.length-1){
                     rightNav.setVisibility(View.INVISIBLE);
                 } else {
                     rightNav.setVisibility(View.VISIBLE);

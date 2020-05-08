@@ -303,6 +303,7 @@ public class VideoFragment extends Fragment {
 
 
     public void starttimer() {
+        score=0;
         timer = new CountDownTimer(timeleft, 1000) {
             @Override
             public void onTick(long l) {

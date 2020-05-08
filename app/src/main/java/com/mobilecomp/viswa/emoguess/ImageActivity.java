@@ -117,13 +117,13 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
 
         //Take a picture
 
-        findViewById(R.id.capture_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Take picture using the camera without preview.
-                takePicture();
-            }
-        });
+//        findViewById(R.id.capture_btn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //Take picture using the camera without preview.
+//                takePicture();
+//            }
+//        });
     }
 
     @Override
