@@ -5,9 +5,9 @@ import android.provider.ContactsContract;
 public class User {
     String name;
     String email;
-    long phone;
+    String phone;
 
-    public User(String name, String email, long phone) {
+    public User(String name, String email, String phone) {
         this.name=name;
         this.email=email;
         this.phone=phone;
@@ -29,11 +29,11 @@ public class User {
         this.email=email;
     }
 
-    public long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(long phone) {
+    public void setPhone(String phone) {
         this.phone=phone;
     }
 }

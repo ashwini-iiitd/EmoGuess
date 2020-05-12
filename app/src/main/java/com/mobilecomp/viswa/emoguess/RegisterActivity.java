@@ -44,18 +44,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFragm
         }
     }
 
-    public void Register(View view) {
-        EditText editText = (EditText) findViewById(R.id.editText);
-        String name = editText.getText().toString();
-        EditText editText2 = (EditText) findViewById(R.id.editText2);
-        String email = editText.getText().toString();
-        EditText editText3 = (EditText) findViewById(R.id.editText);
-        String phone = editText.getText().toString();
-        User user=new User(name, email, (long)Integer.parseInt(phone));
-        SessionManagement sessionManagement=new SessionManagement(RegisterActivity.this);
-        sessionManagement.saveSession(user);
-        movetoplay();
-    }
+//    public void Register(View view) {
+//
+//    }
 
     private void movetoplay() {
         Intent intent=new Intent(RegisterActivity.this, PlayActivity.class);
@@ -66,5 +57,19 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFragm
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    public void Register(View view) {
+        EditText editText = (EditText) findViewById(R.id.editText);
+        String name = (editText.getText().toString()).replaceAll("\\s","");
+        EditText editText2 = (EditText) findViewById(R.id.editText2);
+        String email = (editText2.getText().toString()).replaceAll("\\s","");
+        EditText editText3 = (EditText) findViewById(R.id.editText3);
+        String temp = (editText3.getText().toString()).replaceAll("\\s","");
+        String phone = temp.substring(temp.length()-10,temp.length()-1);
+        User user=new User(name, email, phone);
+        SessionManagement sessionManagement=new SessionManagement(RegisterActivity.this);
+        sessionManagement.saveSession(user);
+        movetoplay();
     }
 }

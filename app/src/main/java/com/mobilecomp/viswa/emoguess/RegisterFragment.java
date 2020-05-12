@@ -71,12 +71,12 @@ public class RegisterFragment extends Fragment {
         // toast.show();
 
         Button regButton = view.findViewById(R.id.regButton);
-        regButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), PlayActivity.class));
-            }
-        });
+//        regButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getContext(), PlayActivity.class));
+//            }
+//        });
 
         return view;
 

@@ -28,7 +28,7 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    static View view;
     private OnFragmentInteractionListener mListener;
 
     public HomeFragment() {
@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
         // Toast toast=Toast. makeText(getActivity(),"Hello Fragment",Toast. LENGTH_SHORT);
         // toast.show();
 

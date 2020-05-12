@@ -3,6 +3,7 @@ package com.mobilecomp.viswa.emoguess;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.provider.ContactsContract;
+import android.view.View;
 
 public class SessionManagement {
     SharedPreferences sharedPreferences;
@@ -18,9 +19,9 @@ public class SessionManagement {
     public void saveSession(User user) {
         String name=user.getName();
         String email=user.getEmail();
-        long phone=user.getPhone();
-       System.out.println(user);
-        editor.putInt(skey, (int) phone).commit();
+        String phone=user.getPhone();
+        System.out.println(user);
+        editor.putInt(skey, Integer.parseInt(phone)).commit();
     }
 
     public int getSession() {
