@@ -1,20 +1,16 @@
 package com.mobilecomp.viswa.emoguess;
 
+import android.provider.ContactsContract;
+
 public class User {
-    int id;
     String name;
+    String email;
+    long phone;
 
-    public User(int id, String name) {
-        this.id=id;
+    public User(String name, String email, long phone) {
         this.name=name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id=id;
+        this.email=email;
+        this.phone=phone;
     }
 
     public String getName() {
@@ -23,5 +19,21 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email=email;
+    }
+
+    public long getPhone() {
+        return phone;
+    }
+
+    public void setPhone(long phone) {
+        this.phone=phone;
     }
 }

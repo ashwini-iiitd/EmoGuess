@@ -2,11 +2,15 @@ package com.mobilecomp.viswa.emoguess;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
+import android.widget.EditText;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterFragment.OnFragmentInteractionListener{
 
@@ -41,7 +45,13 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFragm
     }
 
     public void Register(View view) {
-        User user=new User(12,"ABC");
+        EditText editText = (EditText) findViewById(R.id.editText);
+        String name = editText.getText().toString();
+        EditText editText2 = (EditText) findViewById(R.id.editText2);
+        String email = editText.getText().toString();
+        EditText editText3 = (EditText) findViewById(R.id.editText);
+        String phone = editText.getText().toString();
+        User user=new User(name, email, (long)Integer.parseInt(phone));
         SessionManagement sessionManagement=new SessionManagement(RegisterActivity.this);
         sessionManagement.saveSession(user);
         movetoplay();
