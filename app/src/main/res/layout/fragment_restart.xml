@@ -32,6 +32,13 @@
             android:layout_height="wrap_content"
             android:text="Restart Videos" />
 
+        <Button
+            android:id="@+id/bEndGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="End Game"
+            android:onClick="logout"/>
+
         <ImageButton
             android:id="@+id/share"
             android:layout_width="wrap_content"

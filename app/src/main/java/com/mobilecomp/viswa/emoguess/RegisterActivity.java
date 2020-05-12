@@ -1,10 +1,12 @@
 package com.mobilecomp.viswa.emoguess;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterFragment.OnFragmentInteractionListener{
 
@@ -18,6 +20,37 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFragm
 
         RegisterFragment registerFragment = new RegisterFragment();
         fragmentTransaction.replace(R.id.register_layout, registerFragment).commit();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkSession();
+    }
+
+    private void checkSession() {
+        SessionManagement sessionManagement= new SessionManagement(RegisterActivity.this);
+        int userID= sessionManagement.getSession();
+
+        if (userID!=-1) {
+            movetoplay();
+        }
+        else{
+
+        }
+    }
+
+    public void Register(View view) {
+        User user=new User(12,"ABC");
+        SessionManagement sessionManagement=new SessionManagement(RegisterActivity.this);
+        sessionManagement.saveSession(user);
+        movetoplay();
+    }
+
+    private void movetoplay() {
+        Intent intent=new Intent(RegisterActivity.this, PlayActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override

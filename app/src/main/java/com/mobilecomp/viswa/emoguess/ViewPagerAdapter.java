@@ -59,7 +59,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         int w = image_org.getWidth();//get width
         int h = image_org.getHeight();//get height
         int aspRat = w / h;//get aspect ratio
-        int W = 200;//do whatever you want with width. Fixed, screen size, anything
+        int W = 500;//do whatever you want with width. Fixed, screen size, anything
         int H = W * aspRat;//set the height based on width and aspect ratio
 
         Bitmap b = Bitmap.createScaledBitmap(image_org, W, H, false);//scale the bitmap

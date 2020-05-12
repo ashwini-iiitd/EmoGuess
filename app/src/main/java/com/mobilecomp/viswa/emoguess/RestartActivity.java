@@ -1,10 +1,12 @@
 package com.mobilecomp.viswa.emoguess;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 public class RestartActivity extends AppCompatActivity implements RestartFragment.OnFragmentInteractionListener {
 
@@ -24,4 +26,15 @@ public class RestartActivity extends AppCompatActivity implements RestartFragmen
 
     }
 
+    public void logout(View view) {
+        SessionManagement sessionManagement=new SessionManagement(RestartActivity.this);
+        sessionManagement.removeSession();
+        movetohome();
+    }
+
+    private void movetohome() {
+        Intent intent=new Intent(RestartActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 }
