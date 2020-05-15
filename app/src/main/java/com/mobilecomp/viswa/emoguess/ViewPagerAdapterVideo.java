@@ -1,6 +1,7 @@
 package com.mobilecomp.viswa.emoguess;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -43,16 +45,10 @@ public class ViewPagerAdapterVideo extends PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.view_pagervideo, container, false);
 
         TextView emoText = itemView.findViewById(R.id.textViewEmotions);
-        VideoView video = itemView.findViewById(R.id.videoView);
-        MediaController media_control;
-
-        media_control = new MediaController(mContext);
-        video.setMediaController(media_control);
-
+        VideoView video = (VideoView)itemView.findViewById(R.id.videoView);
         emoText.setText(mEmotions[position].getText());
         video.setVideoURI((mEmotions[position].getVideo()));
         video.start();
-       // System.out.println(video);
         random();
         container.addView(itemView);
         return itemView;
