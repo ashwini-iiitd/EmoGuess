@@ -1,1 +1,1 @@
-include ':app', ':hiddencamera', ':player-lib'
+include ':app', ':hiddencamera'
