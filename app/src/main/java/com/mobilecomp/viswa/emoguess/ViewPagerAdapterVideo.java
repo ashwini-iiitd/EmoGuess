@@ -48,6 +48,7 @@ public class ViewPagerAdapterVideo extends PagerAdapter {
         VideoView video = (VideoView)itemView.findViewById(R.id.videoView);
         emoText.setText(mEmotions[position].getText());
         video.setVideoURI((mEmotions[position].getVideo()));
+        video.requestFocus();
         video.start();
         random();
         container.addView(itemView);

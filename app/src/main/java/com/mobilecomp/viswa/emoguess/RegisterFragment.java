@@ -4,30 +4,47 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link RegisterFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link RegisterFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.HashMap;
+import java.util.Map;
+
 public class RegisterFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    EditText editName, editEmail, editContact, editPassword;
+    Button buttonRegister;
+    TextView txtLogin;
+    ProgressBar progressBar;
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+    String userID;
+    String TAG = "DB";
+    String MobilePattern = "[0-9]{10}";
+
+
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -35,31 +52,14 @@ public class RegisterFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static RegisterFragment newInstance(String param1, String param2) {
         RegisterFragment fragment = new RegisterFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -70,19 +70,106 @@ public class RegisterFragment extends Fragment {
         // Toast toast=Toast. makeText(getActivity(),"Hello Fragment",Toast. LENGTH_SHORT);
         // toast.show();
 
-        Button regButton = view.findViewById(R.id.regButton);
-//        regButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getContext(), PlayActivity.class));
-//            }
-//        });
+        editName = view.findViewById(R.id.editName);
+        editEmail = view.findViewById(R.id.editEmail);
+        editPassword = view.findViewById(R.id.editPassword);
+        editContact = view.findViewById(R.id.editContact);
+        buttonRegister = view.findViewById(R.id.registerButton);
+        txtLogin = view.findViewById(R.id.textLogin);
+        progressBar = view.findViewById(R.id.progBar);
+        fAuth = FirebaseAuth.getInstance();
+        fStore= FirebaseFirestore.getInstance();
+
+        if (fAuth.getCurrentUser()!=null){
+            startActivity(new Intent(getContext(),HomeActivity.class));
+            getActivity().finish();
+        }
+
+
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                final String email = editEmail.getText().toString().trim();
+                String password = editPassword.getText().toString().trim();
+                final String fullname = editName.getText().toString();
+                final String contact = editContact.getText().toString();
+
+                if(TextUtils.isEmpty(email)){
+                    editEmail.setError("Email is required");
+                    return;
+                }
+                if(TextUtils.isEmpty(password)){
+                    editPassword.setError("Password is required");
+                    return;
+                }
+
+                if (password.length()<6){
+                    editPassword.setError("Password must be atleast 6 characters");
+                    return;
+                }
+                if(contact.matches(MobilePattern)) {
+                    Toast.makeText(getContext(), "phone number is valid", Toast.LENGTH_SHORT).show();
+                } else if(!contact.matches(MobilePattern)) {
+                    Toast.makeText(getContext(), "Please enter valid 10 digit phone number", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                progressBar.setVisibility(view.VISIBLE);
+
+                //registration in Firebase
+
+                fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(getContext(),"User Successfully Registered ",Toast.LENGTH_SHORT).show();
+
+                            //get userID from firebase authentication done
+                            userID = fAuth.getCurrentUser().getUid();
+                            //create a document reference to the collection
+                            DocumentReference docReference = fStore.collection("users").document(userID);
+                            // Create a hash map to store a new user with a fullname, email and contact number
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("name", fullname);
+                            user.put("email", email);
+                            user.put("contact", contact);
+
+                            docReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG,"OnSuccess: User profile is created for"+fullname+"with id"+userID);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error adding document", e);
+                                }
+                            });
+
+                            startActivity(new Intent(getContext(),HomeActivity.class));
+                        }
+                        else{
+                            Toast.makeText(getContext(),"Error"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(view.GONE);
+                        }
+                    }
+                });
+
+
+            }
+        });
+
+        txtLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent (getContext(),MainActivity.class));
+            }
+        });
 
         return view;
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    // TODO: Rename method, update argument and hook method into UI ev
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -106,16 +193,7 @@ public class RegisterFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
