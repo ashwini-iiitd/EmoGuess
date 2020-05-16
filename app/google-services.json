@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "958654311440",
+    "firebase_url": "https://emoguess-fe113.firebaseio.com",
+    "project_id": "emoguess-fe113",
+    "storage_bucket": "emoguess-fe113.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958654311440:android:609fcc1b21f593801fae95",
+        "android_client_info": {
+          "package_name": "com.mobilecomp.viswa.emoguess"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "958654311440-bsuvi46g34meq30g034n659ruls8tm03.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobilecomp.viswa.emoguess",
+            "certificate_hash": "d423661e6105bcb3eac5a6c1f5614376d824b764"
+          }
+        },
+        {
+          "client_id": "958654311440-55j36cpcmj7q1jeufa7blnnq7grf08h2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKLaFb_Ik6oqaX1VwExaEHN12fjozK0PQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "958654311440-55j36cpcmj7q1jeufa7blnnq7grf08h2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
