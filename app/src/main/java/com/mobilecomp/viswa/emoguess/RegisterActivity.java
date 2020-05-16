@@ -6,11 +6,14 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterFragment.OnFragmentInteractionListener{
 
@@ -18,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -60,16 +64,17 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFragm
     }
 
     public void Register(View view) {
-        EditText editText = (EditText) findViewById(R.id.editText);
-        String name = (editText.getText().toString()).replaceAll("\\s","");
-        EditText editText2 = (EditText) findViewById(R.id.editText2);
-        String email = (editText2.getText().toString()).replaceAll("\\s","");
-        EditText editText3 = (EditText) findViewById(R.id.editText3);
-        String temp = (editText3.getText().toString()).replaceAll("\\s","");
-        String phone = temp.substring(temp.length()-10,temp.length()-1);
-        User user=new User(name, email, phone);
-        SessionManagement sessionManagement=new SessionManagement(RegisterActivity.this);
-        sessionManagement.saveSession(user);
-        movetoplay();
+//        EditText editText = (EditText) findViewById(R.id.editText);
+//        String name = (editText.getText().toString()).replaceAll("\\s","");
+//        EditText editText2 = (EditText) findViewById(R.id.editText2);
+//        String email = (editText2.getText().toString()).replaceAll("\\s","");
+//        EditText editText3 = (EditText) findViewById(R.id.editText3);
+//        String temp = (editText3.getText().toString()).replaceAll("\\s","");
+//        String phone = temp.substring(temp.length()-10,temp.length()-1);
+//        User user=new User(name, email, phone);
+//        SessionManagement sessionManagement=new SessionManagement(RegisterActivity.this);
+//        sessionManagement.saveSession(user);
+//        movetoplay();
+        Log.d("REG","RegiterActivity");
     }
 }

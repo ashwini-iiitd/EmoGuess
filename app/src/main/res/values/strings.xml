@@ -1,7 +1,12 @@
 <resources>
-    <string name="app_name">EmoGuess</string>
+    <array name="emo_images">
+        <item>@drawable/happy</item>
+        <item>@drawable/sad</item>
+        <item>@drawable/angry</item>
+    </array>
 
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">EmoGuess</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_play">PlayActivity</string>
     <string name="error_camera_permission_denied" />
@@ -9,20 +14,15 @@
     <string name="error_cannot_write" />
     <string name="error_cannot_get_permission" />
     <string name="error_not_having_camera" />
-    <string name="btn_tittle_capture_image" />
 
+
+    <string name="btn_tittle_capture_image" />
 
     <string-array name="emotions">
         <item>happy</item>
         <item>sad</item>
         <item>angry</item>
     </string-array>
-
-    <array name="emo_images">
-        <item>@drawable/happy</item>
-        <item>@drawable/sad</item>
-        <item>@drawable/angry</item>
-    </array>
 
     <!--    <array name="emo_videos">-->
     <!--        <item>@drawable/happy</item>-->
