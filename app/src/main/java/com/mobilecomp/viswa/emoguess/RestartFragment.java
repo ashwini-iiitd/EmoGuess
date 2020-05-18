@@ -209,6 +209,7 @@ public class RestartFragment extends Fragment {
                   shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
                   shareIntent.setType("image/*");
                   List<ResolveInfo> resInfos=getActivity().getPackageManager().queryIntentActivities(shareIntent, 0);
+                  System.out.println(resInfos);
                   if(!resInfos.isEmpty()){
                     System.out.println("Have package");
                         for(ResolveInfo resInfo : resInfos){
@@ -217,11 +218,11 @@ public class RestartFragment extends Fragment {
                              if(packageName.contains("com.google.android.apps.docs")){
                                 Intent intent=new Intent();
                                 intent.setComponent(new ComponentName(packageName, resInfo.activityInfo.name));
+                                System.out.println(packageName);
+                                System.out.println(resInfo.activityInfo.name);
                                 intent.setAction(Intent.ACTION_SEND_MULTIPLE);
                                 intent.setType("image/*");
                                 intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, mArrayUri);
-                                Uri u= Uri.parse("https://drive.google.com/drive/u/0/folders/1BvgUXNEPz8YJmqXXr5u81hdzlOdm6I_P");
-                                intent.setDataAndType(u, intent.getType());
                                 intent.setPackage(packageName);
                                 targetShareIntents.add(intent);
                             }
@@ -230,6 +231,7 @@ public class RestartFragment extends Fragment {
                         System.out.println("Have Intent");
                         Intent chooserIntent=Intent.createChooser(targetShareIntents.remove(0), "Choose app to share");
                         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetShareIntents.toArray(new Parcelable[]{}));
+                        System.out.println(Intent.EXTRA_INITIAL_INTENTS);
                         startActivity(chooserIntent);
                     }
                     else {
