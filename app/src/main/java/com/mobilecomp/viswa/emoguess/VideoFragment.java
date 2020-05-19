@@ -97,8 +97,8 @@ public class VideoFragment extends Fragment {
         }
     }
 
-    Emo e1 = new Emo(Uri.parse("android.resource://com.mobilecomp.viswa.emoguess/"+R.raw.sample), "Happy");
-    Emo e2 = new Emo(Uri.parse("android.resource://com.mobilecomp.viswa.emoguess/"+R.raw.sample), "Sad");
+    Emo e1 = new Emo(Uri.parse("https://developers.google.com/training/images/tacoma_narrows.mp4"), "Happy");
+    Emo e2 = new Emo(Uri.parse("https://youtu.be/18s1aP2k-3A.mp4"), "Sad");
     Emo e3 = new Emo(Uri.parse("android.resource://com.mobilecomp.viswa.emoguess/"+R.raw.sample), "Angry");
 
     Emo[] emos = new Emo[]{
