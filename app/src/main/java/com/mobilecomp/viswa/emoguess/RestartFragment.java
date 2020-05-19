@@ -1,6 +1,7 @@
 package com.mobilecomp.viswa.emoguess;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ComponentName;
 import android.content.Context;
@@ -10,8 +11,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,9 +25,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -44,6 +56,9 @@ public class RestartFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    Context mContext;
+    FirebaseStorage storage;
+    StorageReference storageReference;
     static View view;
 
     private OnFragmentInteractionListener mListener;
@@ -77,6 +92,8 @@ public class RestartFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
     }
 
     @Override
@@ -156,6 +173,7 @@ public class RestartFragment extends Fragment {
         }
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -163,24 +181,22 @@ public class RestartFragment extends Fragment {
             // When an Image is picked
             if (requestCode == 1 && null != data) {
                 // Get the Image from data
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
                 ArrayList<String> imagesEncodedList = new ArrayList<>();
                 ArrayList<Uri> mArrayUri = new ArrayList<>();
                 String imageEncoded;
-                if(data.getData()!=null){
+                if (data.getData() != null) {
                     //System.out.println("nothing2 "+data.getData());
-                    Uri mImageUri=data.getData();
+                    Uri mImageUri = data.getData();
                     mArrayUri.add(mImageUri);
                     // Get the cursor
                     Cursor cursor = getActivity().getContentResolver().query(mImageUri, filePathColumn, null, null, null);
                     // Move to first row
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    imageEncoded  = cursor.getString(columnIndex);
+                    imageEncoded = cursor.getString(columnIndex);
                     cursor.close();
-                }
-                else {
-                    System.out.println("nothing");
+                } else {
                     if (data.getClipData() != null) {
                         ClipData mClipData = data.getClipData();
                         //System.out.println("clip data " + mClipData);
@@ -200,48 +216,84 @@ public class RestartFragment extends Fragment {
                         Log.v("LOG_TAG", "Selected Images" + mArrayUri.size());
                     }
                 }
+
+            for (int i =0 ; i < mArrayUri.size(); i++) {
+                if (mArrayUri.get(i) != null) {
+//                    final ProgressDialog progressDialog = new ProgressDialog(mContext);
+//                    progressDialog.setTitle("Uploading...");
+//                    progressDialog.show();
+
+                    StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());;
+                    ref.putFile(mArrayUri.get(i))
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    //progressDialog.dismiss();
+                                    System.out.println("uploaded");
+                                    //Toast.makeText(mContext, "Uploaded", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                  //  progressDialog.dismiss();
+                                      //Toast.makeText(mContext, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+                                            .getTotalByteCount());
+                                    //progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                                }
+                            });
+                }
+            }
+
 //                System.out.println("File "+filePathColumn);
 //                System.out.println("encoded "+imagesEncodedList);
 //                System.out.println("array "+mArrayUri);
 //                System.out.println("array size "+mArrayUri.size());
-                  List<Intent> targetShareIntents=new ArrayList<Intent>();
-                  Intent shareIntent=new Intent();
-                  shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
-                  shareIntent.setType("image/*");
-                  List<ResolveInfo> resInfos=getActivity().getPackageManager().queryIntentActivities(shareIntent, 0);
-                  System.out.println(resInfos);
-                  if(!resInfos.isEmpty()){
-                    System.out.println("Have package");
-                        for(ResolveInfo resInfo : resInfos){
-                            String packageName=resInfo.activityInfo.packageName;
-                           // Log.i("Package Name", packageName);
-                             if(packageName.contains("com.google.android.apps.docs")){
-                                Intent intent=new Intent();
-                                intent.setComponent(new ComponentName(packageName, resInfo.activityInfo.name));
-                                System.out.println(packageName);
-                                System.out.println(resInfo.activityInfo.name);
-                                intent.setAction(Intent.ACTION_SEND_MULTIPLE);
-                                intent.setType("image/*");
-                                intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, mArrayUri);
-                                intent.setPackage(packageName);
-                                targetShareIntents.add(intent);
-                            }
-                        }
-                    if(!targetShareIntents.isEmpty()){
-                        System.out.println("Have Intent");
-                        Intent chooserIntent=Intent.createChooser(targetShareIntents.remove(0), "Choose app to share");
-                        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetShareIntents.toArray(new Parcelable[]{}));
-                        System.out.println(Intent.EXTRA_INITIAL_INTENTS);
-                        startActivity(chooserIntent);
-                    }
-                    else {
-                    System.out.println("Do not Have Intent");
-                    }
-              }
+//                  List<Intent> targetShareIntents=new ArrayList<Intent>();
+//                  Intent shareIntent=new Intent();
+//                  shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
+//                  shareIntent.setType("image/*");
+//                  List<ResolveInfo> resInfos=getActivity().getPackageManager().queryIntentActivities(shareIntent, 0);
+//                  System.out.println(resInfos);
+//                  if(!resInfos.isEmpty()){
+//                    System.out.println("Have package");
+//                        for(ResolveInfo resInfo : resInfos){
+//                            String packageName=resInfo.activityInfo.packageName;
+//                           // Log.i("Package Name", packageName);
+//                             if(packageName.contains("com.google.android.apps.docs")){
+//                                Intent intent=new Intent();
+//                                intent.setComponent(new ComponentName(packageName, resInfo.activityInfo.name));
+//                                System.out.println(packageName);
+//                                System.out.println(resInfo.activityInfo.name);
+//                                intent.setAction(Intent.ACTION_SEND_MULTIPLE);
+//                                intent.setType("image/*");
+//                                intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, mArrayUri);
+//                                intent.setPackage(packageName);
+//                                targetShareIntents.add(intent);
+//                            }
+//                        }
+//                    if(!targetShareIntents.isEmpty()){
+//                        System.out.println("Have Intent");
+//                        Intent chooserIntent=Intent.createChooser(targetShareIntents.remove(0), "Choose app to share");
+//                        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetShareIntents.toArray(new Parcelable[]{}));
+//                        System.out.println(Intent.EXTRA_INITIAL_INTENTS);
+//                        startActivity(chooserIntent);
+//                    }
+//                    else {
+//                    System.out.println("Do not Have Intent");
+//                    }
+//              }
             } else {
                 System.out.println("Image not picked");
             }
         } catch (Exception e) {
+            System.out.println(e);
             System.out.println("Something went wrong");
         }
     }
