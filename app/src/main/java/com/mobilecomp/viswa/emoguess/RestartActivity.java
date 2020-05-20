@@ -5,8 +5,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 
 public class RestartActivity extends AppCompatActivity implements RestartFragment.OnFragmentInteractionListener {
@@ -24,6 +26,16 @@ public class RestartActivity extends AppCompatActivity implements RestartFragmen
 
         RestartFragment restartFragment = new RestartFragment();
         fragmentTransaction.replace(R.id.restart_layout, restartFragment).commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return  true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
