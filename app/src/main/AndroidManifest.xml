@@ -17,12 +17,12 @@
         <activity
             android:name=".VideoActivity"
             android:screenOrientation="landscape"
-            android:parentActivityName=".HomeActivity"/>
+            android:parentActivityName=".PlayActivity"/>
 
         <activity
             android:name=".ImageActivity"
             android:screenOrientation="landscape"
-            android:parentActivityName=".HomeActivity"/>
+            android:parentActivityName=".PlayActivity"/>
 
         <activity android:name=".RegisterActivity" />
 
