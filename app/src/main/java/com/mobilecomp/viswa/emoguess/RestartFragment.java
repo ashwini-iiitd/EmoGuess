@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
@@ -33,7 +34,12 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -219,12 +225,30 @@ public class RestartFragment extends Fragment {
 
             for (int i =0 ; i < mArrayUri.size(); i++) {
                 if (mArrayUri.get(i) != null) {
+                    InputStream imageStream = null;
+                    try {
+                        imageStream = getActivity().getContentResolver().openInputStream(mArrayUri.get(i));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    Bitmap bmp = BitmapFactory.decodeStream(imageStream);
+
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.PNG, 25, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    try {
+                        stream.close();
+                        stream = null;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
 //                    final ProgressDialog progressDialog = new ProgressDialog(mContext);
 //                    progressDialog.setTitle("Uploading...");
 //                    progressDialog.show();
 
-                    StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());;
-                    ref.putFile(mArrayUri.get(i))
+                    StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+                    ref.putBytes(byteArray)
                             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

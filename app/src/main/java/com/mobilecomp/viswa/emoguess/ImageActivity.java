@@ -176,8 +176,9 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
        // System.out.println(file_path);
         if(!dir.exists())
             dir.mkdirs();
-        File file = new File(dir, "emoguess" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".png");
-      //  System.out.println(file);
+
+        File file = new File(dir, "emoguess" + ViewPagerAdapter.eText+ new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".png");
+        System.out.println(ViewPagerAdapter.eText);
         FileOutputStream fOut = new FileOutputStream(file);
 
         bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);

@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +19,8 @@ import java.util.Collections;
 public class ViewPagerAdapter extends PagerAdapter {
 
     //    String mResources[] = {"To start off lets understand what exactly Android CardView is? Its a new widget for Android, which can be used to display a card sort of a layout in android. As you may know Android material design is inspired from paper and ink concept. Mostly it displays views on top of each other, with shadows. In simple terms, Android CardView is such a view which has all material design properties, most importantly showing shadows according the elevation. The best part about this view is that it extends FrameLayout and it can be displayed on all the platforms of android since it’s available through the Support v7 library. Lets have a look at some of its properties:", "To start off lets understand what exactly Android CardView is? Its a new widget for Android, which can be used to display a card sort of a layout in android. As you may know Android material design is inspired from paper and ink concept. Mostly it displays views on top of each other, with shadows. In simple terms, Android CardView is such a view which has all material design properties, most importantly showing shadows according the elevation. The best part about this view is that it extends FrameLayout and it can be displayed on all the platforms of android since it’s available through the Support v7 library. Lets have a look at some of its properties:", "To start off lets understand what exactly Android CardView is? Its a new widget for Android, which can be used to display a card sort of a layout in android. As you may know Android material design is inspired from paper and ink concept. Mostly it displays views on top of each other, with shadows. In simple terms, Android CardView is such a view which has all material design properties, most importantly showing shadows according the elevation. The best part about this view is that it extends FrameLayout and it can be displayed on all the platforms of android since it’s available through the Support v7 library. Lets have a look at some of its properties:", "To start off lets understand what exactly Android CardView is? Its a new widget for Android, which can be used to display a card sort of a layout in android. As you may know Android material design is inspired from paper and ink concept. Mostly it displays views on top of each other, with shadows. In simple terms, Android CardView is such a view which has all material design properties, most importantly showing shadows according the elevation. The best part about this view is that it extends FrameLayout and it can be displayed on all the platforms of android since it’s available through the Support v7 library. Lets have a look at some of its properties:"};
-    private static ImageFragment.Emo[] mEmotions;
-
+    static ImageFragment.Emo[] mEmotions;
+    static String eText;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
 
@@ -50,6 +49,9 @@ public class ViewPagerAdapter extends PagerAdapter {
         ImageView image = itemView.findViewById(R.id.imageView);
 
         emoText.setText(mEmotions[position].getText());
+        eText= mEmotions[position].getText();
+
+        System.out.println(position+" "+eText);
         /*********/
         Uri img = Uri.parse("android.resource://"
                 + mContext.getPackageName() + "/raw/"
@@ -72,12 +74,16 @@ public class ViewPagerAdapter extends PagerAdapter {
 //        System.out.println("Image\n"+ mEmotions[position].getImage());
        // image.setImageResource(mEmotions[position].getImage());
         random();
+
         container.addView(itemView);
         return itemView;
     }
 
-    public static void random() {
+    public static ImageFragment.Emo[] random() {
+       // System.out.println("s " +mEmotions[1].getText());
         Collections.shuffle(Arrays.asList(mEmotions));
+
+        return mEmotions;
     }
 
     @Override
