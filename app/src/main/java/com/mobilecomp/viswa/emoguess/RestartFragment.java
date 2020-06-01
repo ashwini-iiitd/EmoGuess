@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -64,8 +65,10 @@ public class RestartFragment extends Fragment {
     private String mParam2;
     Context mContext;
     FirebaseStorage storage;
+    FirebaseAuth fAuth;
     StorageReference storageReference;
     static View view;
+    String userID;
 
     private OnFragmentInteractionListener mListener;
 
@@ -99,6 +102,7 @@ public class RestartFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         storage = FirebaseStorage.getInstance();
+        fAuth = FirebaseAuth.getInstance();
         storageReference = storage.getReference();
     }
 
@@ -184,6 +188,8 @@ public class RestartFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
+
+            userID = fAuth.getCurrentUser().getUid();
             // When an Image is picked
             if (requestCode == 1 && null != data) {
                 // Get the Image from data
@@ -247,7 +253,8 @@ public class RestartFragment extends Fragment {
 //                    progressDialog.setTitle("Uploading...");
 //                    progressDialog.show();
 
-                    StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+                    //Replace UUID.randomUUID().toString()  to image name
+                    StorageReference ref = storageReference.child("images/"+userID+"/"+ UUID.randomUUID().toString());
                     ref.putBytes(byteArray)
                             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override

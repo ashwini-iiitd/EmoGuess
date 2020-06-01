@@ -59,6 +59,7 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
     private ImageFragment.ShakeEventListener mSensorListener;
     private static final int REQ_CODE_CAMERA_PERMISSION = 1253;
     private CameraConfig mCameraConfig;
+    private View currentView;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -159,6 +160,8 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
 
         // Convert file to bitmap.
         // Do something.
+
+
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.RGB_565;
         Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
@@ -176,6 +179,7 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
        // System.out.println(file_path);
         if(!dir.exists())
             dir.mkdirs();
+
 
         File file = new File(dir, "emoguess" + ViewPagerAdapter.eText+ new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".png");
         System.out.println(ViewPagerAdapter.eText);
