@@ -119,7 +119,7 @@ public class RestartFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score), Toast.LENGTH_LONG);
-                   toast.show();
+                toast.show();
 //                if (ImageFragment.timelefttext.compareTo("0:00") == 0) {
 //                    System.out.println("score");
 //                    Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score), Toast.LENGTH_LONG);
@@ -229,58 +229,58 @@ public class RestartFragment extends Fragment {
                     }
                 }
 
-            for (int i =0 ; i < mArrayUri.size(); i++) {
-                if (mArrayUri.get(i) != null) {
-                    InputStream imageStream = null;
-                    try {
-                        imageStream = getActivity().getContentResolver().openInputStream(mArrayUri.get(i));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    Bitmap bmp = BitmapFactory.decodeStream(imageStream);
+                for (int i =0 ; i < mArrayUri.size(); i++) {
+                    if (mArrayUri.get(i) != null) {
+                        InputStream imageStream = null;
+                        try {
+                            imageStream = getActivity().getContentResolver().openInputStream(mArrayUri.get(i));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        Bitmap bmp = BitmapFactory.decodeStream(imageStream);
 
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bmp.compress(Bitmap.CompressFormat.PNG, 25, stream);
-                    byte[] byteArray = stream.toByteArray();
-                    try {
-                        stream.close();
-                        stream = null;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bmp.compress(Bitmap.CompressFormat.PNG, 25, stream);
+                        byte[] byteArray = stream.toByteArray();
+                        try {
+                            stream.close();
+                            stream = null;
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
 //                    final ProgressDialog progressDialog = new ProgressDialog(mContext);
 //                    progressDialog.setTitle("Uploading...");
 //                    progressDialog.show();
 
-                    //Replace UUID.randomUUID().toString()  to image name
-                    StorageReference ref = storageReference.child("images/"+userID+"/"+ UUID.randomUUID().toString());
-                    ref.putBytes(byteArray)
-                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    //progressDialog.dismiss();
-                                    System.out.println("uploaded");
-                                    //Toast.makeText(mContext, "Uploaded", Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                  //  progressDialog.dismiss();
-                                      //Toast.makeText(mContext, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
-                                            .getTotalByteCount());
-                                    //progressDialog.setMessage("Uploaded " + (int) progress + "%");
-                                }
-                            });
+                        //Replace UUID.randomUUID().toString()  to image name
+                        StorageReference ref = storageReference.child("images/"+userID+"/"+ UUID.randomUUID().toString());
+                        ref.putBytes(byteArray)
+                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        //progressDialog.dismiss();
+                                        System.out.println("uploaded");
+                                        //Toast.makeText(mContext, "Uploaded", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        //  progressDialog.dismiss();
+                                        //Toast.makeText(mContext, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                        double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+                                                .getTotalByteCount());
+                                        //progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                                    }
+                                });
+                    }
                 }
-            }
 
 //                System.out.println("File "+filePathColumn);
 //                System.out.println("encoded "+imagesEncodedList);
