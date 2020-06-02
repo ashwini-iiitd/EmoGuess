@@ -18,12 +18,15 @@ import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -44,6 +47,7 @@ public class ImageFragment extends Fragment {
     private boolean timerrunning;
     static String timelefttext;
     private OnFragmentInteractionListener mListener;
+    private View currentView;
 
     public ImageFragment() {
         // Required empty public constructor
@@ -55,6 +59,8 @@ public class ImageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_image, container, false);
+
+
         timertext = view.findViewById(R.id.countdown_text);
         timerbutton = view.findViewById(R.id.countdown_button);
         timerbutton.setOnClickListener(new View.OnClickListener() {
@@ -455,6 +461,7 @@ public class ImageFragment extends Fragment {
         leftNav = view.findViewById(R.id.left_nav);
         rightNav = view.findViewById(R.id.right_nav);
 
+
         horizontalViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -486,6 +493,8 @@ public class ImageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 horizontalViewPager.arrowScroll(View.FOCUS_LEFT);
+
+
             }
         });
 
@@ -494,7 +503,29 @@ public class ImageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
+
+
+
                     horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
+
+                    /********* To get current emotion displayed on the screen *********/
+                    /*******Code in ViewPagerAdapter to set the current view***************/
+                    currentView = ViewPagerAdapter.mCurrentView;
+
+                    ViewGroup viewGroup = ((ViewGroup)currentView);
+                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+
+                    String getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+                    System.out.println("Current emotion"+getName);
+
+                    /**********************************************************************/
+
+
+
+
                 }catch (Exception e){
                     // Toaster.showShortMessage("Extra Page!");
                 }
