@@ -53,6 +53,7 @@ import com.androidhiddencamera.config.CameraImageFormat;
 import com.androidhiddencamera.config.CameraResolution;
 import com.androidhiddencamera.config.CameraRotation;
 
+
 public class ImageActivity extends HiddenCameraActivity implements ImageFragment.OnFragmentInteractionListener {
     private static final int REQUEST_WRITE_STORAGE = 1254;
     private SensorManager mSensorManager;
@@ -154,15 +155,15 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onImageCapture(@NonNull File imageFile) throws IOException {
 
         // Convert file to bitmap.
         // Do something.
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
-
         //Display the image to the image view
      //   ((ImageView) findViewById(R.id.cam_prev)).setImageBitmap(bitmap);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -177,11 +178,13 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
         if(!dir.exists())
             dir.mkdirs();
 
-        File file = new File(dir, "emoguess" + ViewPagerAdapter.eText+ new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".png");
+        File file = new File(dir, "emoguess" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".png");
         System.out.println(ViewPagerAdapter.eText);
         FileOutputStream fOut = new FileOutputStream(file);
-
-        bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+        System.out.println("before "+bitmap.getAllocationByteCount());
+        bitmap.compress(Bitmap.CompressFormat.PNG, 25, fOut);
+        //bitmap.createScaledBitmap(bitmap, 20, 20, true);
+        System.out.println("after "+bitmap.getAllocationByteCount());
         fOut.flush();
         fOut.close();
     }
