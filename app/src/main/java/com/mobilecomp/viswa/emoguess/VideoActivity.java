@@ -180,7 +180,7 @@ public class VideoActivity extends HiddenCameraActivity implements VideoFragment
         // System.out.println(file_path);
         if(!dir.exists())
             dir.mkdirs();
-        File file = new File(dir, "emoguess" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".png");
+        File file = new File(dir, "emoguess_" + VideoFragment.getName+ new SimpleDateFormat("_yyyyMMdd_HHmmss").format(new Date()) + ".png");
         //  System.out.println(file);
         FileOutputStream fOut = new FileOutputStream(file);
 

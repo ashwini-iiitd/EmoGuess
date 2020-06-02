@@ -2,6 +2,7 @@ package com.mobilecomp.viswa.emoguess;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ public class ViewPagerAdapterVideo extends PagerAdapter {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
+    static View mCurrentView;
 
     public ViewPagerAdapterVideo(Context context, VideoFragment.Emo[] emotions) {
         mContext = context;
@@ -64,4 +66,12 @@ public class ViewPagerAdapterVideo extends PagerAdapter {
         container.removeView((CardView) object);
     }
 
+    /********* To get current emotion displayed on the screen *********/
+    /*******Code in Image fragment to access the current view***************/
+    @Override
+    public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        mCurrentView = (View)object;
+    }
+
+    /**********************************************************************/
 }
