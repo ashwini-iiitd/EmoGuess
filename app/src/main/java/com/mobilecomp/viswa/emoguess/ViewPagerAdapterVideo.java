@@ -2,6 +2,7 @@ package com.mobilecomp.viswa.emoguess;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
@@ -49,7 +50,11 @@ public class ViewPagerAdapterVideo extends PagerAdapter {
         TextView emoText = itemView.findViewById(R.id.textViewEmotions);
         VideoView video = (VideoView)itemView.findViewById(R.id.videoView);
         emoText.setText(mEmotions[position].getText());
-        video.setVideoURI((mEmotions[position].getVideo()));
+//        String videoPath = mEmotions[position].getVideo().replace("open?", "uc?authuser=0&");
+//        videoPath = videoPath + "&export=download.mp4";
+//        Uri v= Uri.parse(videoPath);
+        Uri v= Uri.parse(mEmotions[position].getVideo());
+        video.setVideoURI(v);
         video.requestFocus();
         video.start();
         random();

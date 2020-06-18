@@ -142,6 +142,16 @@ public class RestartFragment extends Fragment {
             }
         });
 
+        ImageView score1 = view.findViewById(R.id.bScore);
+
+        score1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score), Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
+
         ImageButton share = view.findViewById(R.id.share);
 
         share.setOnClickListener(new View.OnClickListener() {
@@ -171,8 +181,24 @@ public class RestartFragment extends Fragment {
             }
         });
 
+        ImageView restarti1Button = view.findViewById(R.id.brImage);
+        restarti1Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), ImageActivity.class));
+            }
+        });
+
         Button restartvButton = view.findViewById(R.id.bRestartVideos);
         restartvButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), VideoActivity.class));
+            }
+        });
+
+        ImageView restartv1Button = view.findViewById(R.id.brVideo);
+        restartv1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), VideoActivity.class));

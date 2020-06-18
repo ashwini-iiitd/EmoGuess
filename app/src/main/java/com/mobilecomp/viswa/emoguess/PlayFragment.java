@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.VideoView;
 
 
 /**
@@ -75,8 +77,27 @@ public class PlayFragment extends Fragment {
             }
         });
 
+        Button immView = view.findViewById(R.id.bbImage);
+        immView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(),ImageActivity.class));
+            }
+        });
+
         ImageView videoView = view.findViewById(R.id.bVideo);
+//        Uri s=Uri.parse("android.resource://com.mobilecomp.viswa.emoguess/"+R.raw.video);
+//        videoView.setVideoURI(s);
+//        videoView.start();
         videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(),VideoActivity.class));
+            }
+        });
+
+        Button videoView2 = view.findViewById(R.id.bbVideo);
+        videoView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(),VideoActivity.class));

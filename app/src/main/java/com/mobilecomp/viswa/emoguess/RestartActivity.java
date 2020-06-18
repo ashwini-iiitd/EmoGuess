@@ -8,6 +8,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -18,8 +21,13 @@ public class RestartActivity extends AppCompatActivity implements RestartFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restart);
 
-        ActionBar actionBar =  getSupportActionBar();
-        actionBar.setTitle("EmoGuess");
+        SpannableString s = new SpannableString("EmoGuess");
+        s.setSpan(new TypefaceSpan("casual"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Update the action bar title with the TypefaceSpan instance
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(s);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

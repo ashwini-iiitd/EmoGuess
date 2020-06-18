@@ -3,44 +3,100 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg"
+    android:backgroundTint="@color/colorOrange"
+    android:backgroundTintMode="src_atop"
     tools:context=".HowToFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/howto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="90dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textAlignment="center"
-        android:textSize="35dp"
-        android:text="How To Play EmoGuess:" />
+<!--    <TextView-->
+<!--        android:id="@+id/howto"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:textColor="@color/colorViolet"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_marginRight="20dp"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textSize="35dp"-->
+<!--        android:text="How To Play EmoGuess:" />-->
 
-    <TextView
-        android:id="@+id/howtoparents"
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="154dp"
         android:layout_height="match_parent"
-        android:layout_below="@+id/howto"
-        android:layout_marginTop="210dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textAlignment="center"
-        android:textSize="20dp"
-        android:text="Parents: Hold the phone such that the screen faces the child and is not visible to you. For both, images and videos, shake/scroll to get the next one, and for every, guess the emotion based on how the child enacts it. Keep going till the timer stops. " />
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="0dp"
+        android:src="@drawable/howto" />
 
-    <TextView
-        android:id="@+id/howtochildren"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/howtoparents"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="410dp"
-        android:textAlignment="center"
-        android:textSize="20dp"
-        android:text="Children: Carefully look at the image/video on the screen (with text below it as the hint). Enact the emotion shown by the image/video.">
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_marginLeft="170dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="80dp"
+        app:cardBackgroundColor="@color/colorOrange2"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp">
 
-    </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/howtoparents"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/howto"
+                android:layout_margin="10dp"
+                android:fontFamily="casual"
+                android:text="Parents: Hold the phone such that the screen faces the child and is not visible to you. For both, images and videos, shake/scroll to get the next one, and for every, guess the emotion based on how the child enacts it. Keep going till the timer stops. "
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_marginLeft="170dp"
+        android:layout_marginTop="450dp"
+        android:layout_marginRight="15dp"
+        app:cardBackgroundColor="@color/colorOrange2"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/howtochildren"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:fontFamily="casual"
+                android:text="Children: Carefully look at the image/video on the screen (with text below it as the hint). Enact the emotion shown by the image/video."
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold">
+
+            </TextView>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
 </FrameLayout>

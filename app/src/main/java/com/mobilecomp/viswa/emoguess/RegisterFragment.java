@@ -108,7 +108,7 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
                 if(contact.matches(MobilePattern)) {
-                    Toast.makeText(getContext(), "phone number is valid", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Phone number is valid", Toast.LENGTH_SHORT).show();
                 } else if(!contact.matches(MobilePattern)) {
                     Toast.makeText(getContext(), "Please enter valid 10 digit phone number", Toast.LENGTH_SHORT).show();
                     return;
@@ -148,7 +148,7 @@ public class RegisterFragment extends Fragment {
                             startActivity(new Intent(getContext(),HomeActivity.class));
                         }
                         else{
-                            Toast.makeText(getContext(),"Error"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),"Error: "+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(view.GONE);
                         }
                     }

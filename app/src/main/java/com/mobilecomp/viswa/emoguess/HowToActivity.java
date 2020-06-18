@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
 
 public class HowToActivity extends AppCompatActivity implements HowToFragment.OnFragmentInteractionListener{
 
@@ -14,8 +17,13 @@ public class HowToActivity extends AppCompatActivity implements HowToFragment.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_how_to);
 
-        ActionBar actionBar =  getSupportActionBar();
-        actionBar.setTitle("How to play");
+        SpannableString s = new SpannableString("How to Play");
+        s.setSpan(new TypefaceSpan("casual"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Update the action bar title with the TypefaceSpan instance
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(s);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

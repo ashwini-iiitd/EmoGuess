@@ -33,16 +33,19 @@
                 card_view:srcCompat="@drawable/ic_launcher_background" />
 
             <TextView
-                android:textColor="@color/colorPrimaryDark"
                 android:id="@+id/textViewEmotions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:textStyle="bold"
+                android:textSize="30dp"
                 android:gravity="center"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="@color/colorOrange2" />
 
         </LinearLayout>
     </ScrollView>
