@@ -165,16 +165,16 @@ public class ImageFragment extends Fragment {
     Emo e59 = new Emo(R.drawable.s9 , "Sad");
     Emo e60 = new Emo(R.drawable.s10 , "Sad");
 
-    Emo e61 = new Emo(R.drawable.sur1 , "Surprising");
-    Emo e62 = new Emo(R.drawable.sur2 , "Surprising");
-    Emo e63 = new Emo(R.drawable.sur3 , "Surprising");
-    Emo e64 = new Emo(R.drawable.sur4 , "Surprising");
-    Emo e65 = new Emo(R.drawable.sur5 , "Surprising");
-    Emo e66 = new Emo(R.drawable.sur6 , "Surprising");
-    Emo e67 = new Emo(R.drawable.sur7 , "Surprising");
-    Emo e68 = new Emo(R.drawable.sur8 , "Surprising");
-    Emo e69 = new Emo(R.drawable.sur9 , "Surprising");
-    Emo e70 = new Emo(R.drawable.sur10 , "Surprising");
+    Emo e61 = new Emo(R.drawable.sur1 , "Surprise");
+    Emo e62 = new Emo(R.drawable.sur2 , "Surprise");
+    Emo e63 = new Emo(R.drawable.sur3 , "Surprise");
+    Emo e64 = new Emo(R.drawable.sur4 , "Surprise");
+    Emo e65 = new Emo(R.drawable.sur5 , "Surprise");
+    Emo e66 = new Emo(R.drawable.sur6 , "Surprise");
+    Emo e67 = new Emo(R.drawable.sur7 , "Surprise");
+    Emo e68 = new Emo(R.drawable.sur8 , "Surprise");
+    Emo e69 = new Emo(R.drawable.sur9 , "Surprise");
+    Emo e70 = new Emo(R.drawable.sur10 , "Surprise");
 
 
     Emo[] emos = new Emo[]{

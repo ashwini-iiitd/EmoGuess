@@ -101,12 +101,24 @@ public class VideoFragment extends Fragment {
         }
     }
 
-    Emo e1 = new Emo("https://developers.google.com/training/images/tacoma_narrows.mp4", "Happy");
-    Emo e2 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_angry1.mp4?alt=media&token=741fe80b-5144-4ef6-b830-30cd305f363e", "Sad");
-    Emo e3 = new Emo("android.resource://com.mobilecomp.viswa.emoguess/"+R.raw.sample, "Angry");
+    Emo e1 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_angry2.mp4?alt=media&token=6b5304fa-de20-4732-b039-b1dc20470b0b", "Angry");
+    Emo e2 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_angry1.mp4?alt=media&token=741fe80b-5144-4ef6-b830-30cd305f363e", "Angry");
+    Emo e3 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_fear1.mp4?alt=media&token=b8577913-ed62-45f8-a999-b5158cb557ed", "Fear");
+    Emo e4 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_fear2.mp4?alt=media&token=d0a8e54c-7b83-45ce-9488-f3e7da21bb56", "Fear");
+    Emo e5 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_happy1.mp4?alt=media&token=4d221cf2-cd16-43a9-876d-fb044825eacc", "Happy");
+    Emo e6 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_happy2.mp4?alt=media&token=55a4bd73-a1f4-488a-a3ea-e5f98a670476", "Happy");
+    Emo e7 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_neutral1.mp4?alt=media&token=59b190ed-c86b-463d-a019-6b42f322ebb5", "Neutral");
+    Emo e8 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_neutral2.mp4?alt=media&token=dfbc7585-35dd-4b45-820b-b9070e47b93e", "Neutral");
+    Emo e9 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_sad1.mp4?alt=media&token=caa6e3ea-4c78-4a4b-856e-34e325902bfd", "Sad");
+    Emo e10 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_surprise1.mp4?alt=media&token=20210e4a-2597-4125-a462-21a3e81f9505", "Surprise");
+    Emo e11 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_surprise2.mp4?alt=media&token=851350c1-49cd-4bdc-9048-9c5d63e05208", "Surprise");
+    Emo e12 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fjerry_disgust1.mp4?alt=media&token=8ce63469-7f8a-4c3e-ad1a-51b17ec0aa8b", "Disgust");
+    Emo e13 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fjerry_disgust2.mp4?alt=media&token=28e8aa34-04a0-4432-9b0a-570447ab24e5", "Disgust");
+    Emo e14 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fjerry_sad2.mp4?alt=media&token=942b43ab-3dfc-4f0f-b9c6-6c7478223d63", "Sad");
+    Emo e15 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fjerry_sad3.mp4?alt=media&token=d129eb50-ba83-481a-b465-0246137110ba", "Sad");
 
     Emo[] emos = new Emo[]{
-            e1, e2, e3
+            e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15
     };
 
 

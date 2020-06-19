@@ -57,6 +57,12 @@ public class ViewPagerAdapterVideo extends PagerAdapter {
         video.setVideoURI(v);
         video.requestFocus();
         video.start();
+        video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+            }
+        });
         random();
         container.addView(itemView);
         return itemView;
