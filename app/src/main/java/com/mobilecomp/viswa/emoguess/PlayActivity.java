@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
 
 import com.mobilecomp.viswa.emoguess.PlayFragment.OnFragmentInteractionListener;
 
@@ -16,9 +19,14 @@ public class PlayActivity extends AppCompatActivity implements PlayFragment.OnFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
+        SpannableString s = new SpannableString("Play Area");
+        s.setSpan(new TypefaceSpan("casual"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        ActionBar actionBar =  getSupportActionBar();
-        actionBar.setTitle("EmoGuess");
+        // Update the action bar title with the TypefaceSpan instance
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(s);
+
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

@@ -47,7 +47,8 @@ public class ImageFragment extends Fragment {
     private boolean timerrunning;
     static String timelefttext;
     private OnFragmentInteractionListener mListener;
-    private View currentView;
+    private static View currentView;
+    static String getName;
 
     public ImageFragment() {
         // Required empty public constructor
@@ -164,16 +165,16 @@ public class ImageFragment extends Fragment {
     Emo e59 = new Emo(R.drawable.s9 , "Sad");
     Emo e60 = new Emo(R.drawable.s10 , "Sad");
 
-    Emo e61 = new Emo(R.drawable.sur1 , "Surprising");
-    Emo e62 = new Emo(R.drawable.sur2 , "Surprising");
-    Emo e63 = new Emo(R.drawable.sur3 , "Surprising");
-    Emo e64 = new Emo(R.drawable.sur4 , "Surprising");
-    Emo e65 = new Emo(R.drawable.sur5 , "Surprising");
-    Emo e66 = new Emo(R.drawable.sur6 , "Surprising");
-    Emo e67 = new Emo(R.drawable.sur7 , "Surprising");
-    Emo e68 = new Emo(R.drawable.sur8 , "Surprising");
-    Emo e69 = new Emo(R.drawable.sur9 , "Surprising");
-    Emo e70 = new Emo(R.drawable.sur10 , "Surprising");
+    Emo e61 = new Emo(R.drawable.sur1 , "Surprise");
+    Emo e62 = new Emo(R.drawable.sur2 , "Surprise");
+    Emo e63 = new Emo(R.drawable.sur3 , "Surprise");
+    Emo e64 = new Emo(R.drawable.sur4 , "Surprise");
+    Emo e65 = new Emo(R.drawable.sur5 , "Surprise");
+    Emo e66 = new Emo(R.drawable.sur6 , "Surprise");
+    Emo e67 = new Emo(R.drawable.sur7 , "Surprise");
+    Emo e68 = new Emo(R.drawable.sur8 , "Surprise");
+    Emo e69 = new Emo(R.drawable.sur9 , "Surprise");
+    Emo e70 = new Emo(R.drawable.sur10 , "Surprise");
 
 
     Emo[] emos = new Emo[]{
@@ -193,6 +194,34 @@ public class ImageFragment extends Fragment {
         } else {
             starttimer();
             horizontalViewPager.setAdapter(new ViewPagerAdapter(mContext, emos));
+            try {
+
+
+
+
+
+                /********* To get current emotion displayed on the screen *********/
+                /*******Code in ViewPagerAdapter to set the current view***************/
+                currentView = ViewPagerAdapter.mCurrentView;
+
+                ViewGroup viewGroup = ((ViewGroup)currentView);
+                ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+                ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+                LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+                ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+
+                getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+                System.out.println("Current emotion: "+getName);
+
+                /**********************************************************************/
+
+
+
+
+            }catch (Exception e){
+                System.out.println(e);
+                // Toaster.showShortMessage("Extra Page!");
+            }
         }
     }
 
@@ -308,10 +337,66 @@ public class ImageFragment extends Fragment {
 
                 if (z > FLIPCONSTANT && deltaZ > 0) { //pass
                     horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
+                    try {
+
+
+
+
+
+                        /********* To get current emotion displayed on the screen *********/
+                        /*******Code in ViewPagerAdapter to set the current view***************/
+                        currentView = ViewPagerAdapter.mCurrentView;
+
+                        ViewGroup viewGroup = ((ViewGroup)currentView);
+                        ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+                        ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+                        LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+                        ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+
+                        getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+                        System.out.println("Current emotion: "+getName);
+
+                        /**********************************************************************/
+
+
+
+
+                    }catch (Exception e){
+                        System.out.println(e);
+                        // Toaster.showShortMessage("Extra Page!");
+                    }
 
                 } else if (z < -1 * FLIPCONSTANT && deltaZ > 0) {//got word
                     horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
                     score++;
+                    try {
+
+
+
+
+
+                        /********* To get current emotion displayed on the screen *********/
+                        /*******Code in ViewPagerAdapter to set the current view***************/
+                        currentView = ViewPagerAdapter.mCurrentView;
+
+                        ViewGroup viewGroup = ((ViewGroup)currentView);
+                        ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+                        ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+                        LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+                        ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+
+                        getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+                        System.out.println("Current emotion: "+getName);
+
+                        /**********************************************************************/
+
+
+
+
+                    }catch (Exception e){
+                        System.out.println(e);
+                        // Toaster.showShortMessage("Extra Page!");
+                    }
                 }
 
             }
@@ -465,7 +550,34 @@ public class ImageFragment extends Fragment {
         horizontalViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+//                try {
+//
+//
+//
+//
+//
+//                    /********* To get current emotion displayed on the screen *********/
+//                    /*******Code in ViewPagerAdapter to set the current view***************/
+//                    currentView = ViewPagerAdapter.mCurrentView;
+//
+//                    ViewGroup viewGroup = ((ViewGroup)currentView);
+//                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+//                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+//                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+//                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+//
+//                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+//                    System.out.println("Current emotion: "+getName);
+//
+//                    /**********************************************************************/
+//
+//
+//
+//
+//                }catch (Exception e){
+//                    System.out.println(e);
+//                    // Toaster.showShortMessage("Extra Page!");
+//                }
             }
 
             @Override
@@ -493,20 +605,11 @@ public class ImageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 horizontalViewPager.arrowScroll(View.FOCUS_LEFT);
-
-
-            }
-        });
-
-        // Images right navigatin
-        rightNav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 try {
 
 
 
-                    horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
+
 
                     /********* To get current emotion displayed on the screen *********/
                     /*******Code in ViewPagerAdapter to set the current view***************/
@@ -518,8 +621,8 @@ public class ImageFragment extends Fragment {
                     LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
                     ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
 
-                    String getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-                    System.out.println("Current emotion"+getName);
+                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+                    System.out.println("Current emotion: "+getName);
 
                     /**********************************************************************/
 
@@ -527,6 +630,43 @@ public class ImageFragment extends Fragment {
 
 
                 }catch (Exception e){
+                    System.out.println(e);
+                    // Toaster.showShortMessage("Extra Page!");
+                }
+
+            }
+        });
+
+        // Images right navigatin
+        rightNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
+
+
+
+
+                    /********* To get current emotion displayed on the screen *********/
+                    /*******Code in ViewPagerAdapter to set the current view***************/
+                    currentView = ViewPagerAdapter.mCurrentView;
+
+                    ViewGroup viewGroup = ((ViewGroup)currentView);
+                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+
+                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+                    System.out.println("Current emotion: "+getName);
+
+                    /**********************************************************************/
+
+
+
+
+                }catch (Exception e){
+                    System.out.println(e);
                     // Toaster.showShortMessage("Extra Page!");
                 }
             }

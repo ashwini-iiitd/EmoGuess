@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/</item>
+        <item>@font/amatica_sc</item>
+        <item>@font/amatica_sc_bold</item>
+        <item>@font/amita</item>
+        <item>@font/annie_use_your_telescope</item>
+        <item>@font/arapey</item>
+        <item>@font/atma</item>
+        <item>@font/atma_bold</item>
+        <item>@font/atma_light</item>
+        <item>@font/atma_medium</item>
+        <item>@font/butterfly_kids</item>
+        <item>@font/caveat</item>
+        <item>@font/cedarville_cursive</item>
+        <item>@font/coming_soon</item>
+        <item>@font/cookie</item>
+        <item>@font/covered_by_your_grace</item>
+    </array>
+</resources>

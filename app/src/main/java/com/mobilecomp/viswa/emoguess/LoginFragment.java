@@ -96,7 +96,7 @@ public class LoginFragment extends Fragment {
                         }
                         else{
 //                            status = 1;
-                            Toast.makeText(getContext(),"Error"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),"Error: "+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(view.GONE);
 
                         }

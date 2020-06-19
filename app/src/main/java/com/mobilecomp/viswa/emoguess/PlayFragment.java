@@ -1,14 +1,21 @@
 package com.mobilecomp.viswa.emoguess;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.VideoView;
 
 
 /**
@@ -62,6 +69,8 @@ public class PlayFragment extends Fragment {
         }
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,19 +84,75 @@ public class PlayFragment extends Fragment {
             }
         });
 
-        ImageView videoView = view.findViewById(R.id.bVideo);
-        videoView.setOnClickListener(new View.OnClickListener() {
+        Button immView = view.findViewById(R.id.bbImage);
+        immView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(),VideoActivity.class));
+                startActivity(new Intent(getContext(),ImageActivity.class));
             }
         });
 
+        ImageView videoView = view.findViewById(R.id.bVideo);
+//        Uri s=Uri.parse("android.resource://com.mobilecomp.viswa.emoguess/"+R.raw.video);
+//        videoView.setVideoURI(s);
+//        videoView.start();
+        videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isConnected(getContext());
+                if (isConnected(getContext())==true) {
+                    startActivity(new Intent(getContext(),VideoActivity.class));
+                }
+            }
+        });
+
+        Button videoView2 = view.findViewById(R.id.bbVideo);
+        videoView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isConnected(getContext());
+                if (isConnected(getContext())==true) {
+                    startActivity(new Intent(getContext(),VideoActivity.class));
+                }
+            }
+        });
 
         //   Toast toast=Toast. makeText(getActivity(),"play fragment",Toast. LENGTH_SHORT);
         //  toast.show();
         return view;
     }
+
+    public boolean isConnected(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobileInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+        if ((wifiInfo != null && wifiInfo.isConnected()) || (mobileInfo != null && mobileInfo.isConnected())) {
+            return true;
+        } else {
+            showDialog();
+            return false;
+        }
+    }
+
+        private void showDialog()
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Connect to wifi or quit")
+                    .setCancelable(false)
+                    .setPositiveButton("Connect to WIFI", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                        }
+                    })
+                    .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            getActivity().finish();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

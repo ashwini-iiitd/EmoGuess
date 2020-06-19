@@ -15,6 +15,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -81,8 +84,13 @@ public class VideoActivity extends HiddenCameraActivity implements VideoFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
 
-        ActionBar actionBar =  getSupportActionBar();
-        actionBar.setTitle("EmoGuess");
+        SpannableString s = new SpannableString("Video Play");
+        s.setSpan(new TypefaceSpan("casual"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Update the action bar title with the TypefaceSpan instance
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(s);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -180,7 +188,7 @@ public class VideoActivity extends HiddenCameraActivity implements VideoFragment
         // System.out.println(file_path);
         if(!dir.exists())
             dir.mkdirs();
-        File file = new File(dir, "emoguess" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".png");
+        File file = new File(dir, "emoguess_" + VideoFragment.getName+ new SimpleDateFormat("_yyyyMMdd_HHmmss").format(new Date()) + ".png");
         //  System.out.println(file);
         FileOutputStream fOut = new FileOutputStream(file);
 

@@ -10,8 +10,13 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Message;
 import android.os.Parcelable;
 import android.provider.MediaStore;
@@ -39,6 +44,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -136,6 +142,16 @@ public class RestartFragment extends Fragment {
             }
         });
 
+        ImageView score1 = view.findViewById(R.id.bScore);
+
+        score1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score), Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
+
         ImageButton share = view.findViewById(R.id.share);
 
         share.setOnClickListener(new View.OnClickListener() {
@@ -165,8 +181,24 @@ public class RestartFragment extends Fragment {
             }
         });
 
+        ImageView restarti1Button = view.findViewById(R.id.brImage);
+        restarti1Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), ImageActivity.class));
+            }
+        });
+
         Button restartvButton = view.findViewById(R.id.bRestartVideos);
         restartvButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), VideoActivity.class));
+            }
+        });
+
+        ImageView restartv1Button = view.findViewById(R.id.brVideo);
+        restartv1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), VideoActivity.class));
@@ -183,7 +215,6 @@ public class RestartFragment extends Fragment {
         }
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -195,8 +226,10 @@ public class RestartFragment extends Fragment {
                 // Get the Image from data
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
                 ArrayList<String> imagesEncodedList = new ArrayList<>();
+                ArrayList<String> imagesNameList = new ArrayList<>();
                 ArrayList<Uri> mArrayUri = new ArrayList<>();
                 String imageEncoded;
+                String imageName;
                 if (data.getData() != null) {
                     //System.out.println("nothing2 "+data.getData());
                     Uri mImageUri = data.getData();
@@ -207,6 +240,10 @@ public class RestartFragment extends Fragment {
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     imageEncoded = cursor.getString(columnIndex);
+                    imageName= imageEncoded.substring(47);
+                    imagesEncodedList.add(imageEncoded);
+                    imagesNameList.add(imageName);
+                    System.out.println(imageName);
                     cursor.close();
                 } else {
                     if (data.getClipData() != null) {
@@ -222,7 +259,10 @@ public class RestartFragment extends Fragment {
                             cursor.moveToFirst();
                             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                             imageEncoded = cursor.getString(columnIndex);
+                            imageName= imageEncoded.substring(47);
                             imagesEncodedList.add(imageEncoded);
+                            imagesNameList.add(imageName);
+                            System.out.println(imageName);
                             cursor.close();
                         }
                         Log.v("LOG_TAG", "Selected Images" + mArrayUri.size());
@@ -241,6 +281,9 @@ public class RestartFragment extends Fragment {
 
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         bmp.compress(Bitmap.CompressFormat.PNG, 25, stream);
+                        String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bmp, imagesNameList.get(i), null);
+                        //Bitmap compressed = BitmapFactory.decodeStream(new ByteArrayInputStream(stream.toByteArray()));
+                        final Uri compressed= Uri.parse(path);
                         byte[] byteArray = stream.toByteArray();
                         try {
                             stream.close();
@@ -254,11 +297,12 @@ public class RestartFragment extends Fragment {
 //                    progressDialog.show();
 
                         //Replace UUID.randomUUID().toString()  to image name
-                        StorageReference ref = storageReference.child("images/"+userID+"/"+ UUID.randomUUID().toString());
-                        ref.putBytes(byteArray)
+                        StorageReference ref = storageReference.child("images/"+userID+"/"+ imagesNameList.get(i));
+                        ref.putFile(compressed)
                                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        getActivity().getContentResolver().delete(compressed, null, null);
                                         //progressDialog.dismiss();
                                         System.out.println("uploaded");
                                         //Toast.makeText(mContext, "Uploaded", Toast.LENGTH_SHORT).show();

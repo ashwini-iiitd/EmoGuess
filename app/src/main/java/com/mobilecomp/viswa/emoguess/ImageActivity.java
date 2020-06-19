@@ -16,6 +16,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -59,7 +62,6 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
     private ImageFragment.ShakeEventListener mSensorListener;
     private static final int REQ_CODE_CAMERA_PERMISSION = 1253;
     private CameraConfig mCameraConfig;
-    private View currentView;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -79,8 +81,14 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
-        ActionBar actionBar =  getSupportActionBar();
-        actionBar.setTitle("EmoGuess");
+
+        SpannableString s = new SpannableString("Image Play");
+        s.setSpan(new TypefaceSpan("casual"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Update the action bar title with the TypefaceSpan instance
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(s);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -160,8 +168,6 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
 
         // Convert file to bitmap.
         // Do something.
-
-
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.RGB_565;
         Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
@@ -180,9 +186,7 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
         if(!dir.exists())
             dir.mkdirs();
 
-
-        File file = new File(dir, "emoguess" + ViewPagerAdapter.eText+ new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".png");
-        System.out.println(ViewPagerAdapter.eText);
+        File file = new File(dir, "emoguess_" + ImageFragment.getName+ new SimpleDateFormat("_yyyyMMdd_HHmmss").format(new Date()) + ".png");
         FileOutputStream fOut = new FileOutputStream(file);
 
         bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
