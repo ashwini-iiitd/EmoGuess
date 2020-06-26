@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,8 +64,11 @@ public class ViewPagerAdapter extends PagerAdapter {
         int w = image_org.getWidth();//get width
         int h = image_org.getHeight();//get height
         int aspRat = w / h;//get aspect ratio
-        int W = 500;//do whatever you want with width. Fixed, screen size, anything
-        int H = W * aspRat;//set the height based on width and aspect ratio
+        DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
+        int W = metrics.widthPixels*2/(3);//do whatever you want with width. Fixed, screen size, anything
+//        int usableHeight = metrics.heightPixels;
+//        int realHeight = metrics.heightPixels;
+        int H = metrics.heightPixels;//set the height based on width and aspect ratio
 
         Bitmap b = Bitmap.createScaledBitmap(image_org, W, H, false);//scale the bitmap
         image.setImageBitmap(b);//set the image view
