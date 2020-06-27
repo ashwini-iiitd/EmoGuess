@@ -25,6 +25,7 @@ public class ViewPagerAdapterVideo extends PagerAdapter {
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     static View mCurrentView;
+    static VideoView video;
 
     public ViewPagerAdapterVideo(Context context, VideoFragment.Emo[] emotions) {
         mContext = context;
@@ -48,7 +49,7 @@ public class ViewPagerAdapterVideo extends PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.view_pagervideo, container, false);
 
         TextView emoText = itemView.findViewById(R.id.textViewEmotions);
-        VideoView video = (VideoView)itemView.findViewById(R.id.videoView);
+        video = (VideoView)itemView.findViewById(R.id.videoView);
         emoText.setText(mEmotions[position].getText());
 //        String videoPath = mEmotions[position].getVideo().replace("open?", "uc?authuser=0&");
 //        videoPath = videoPath + "&export=download.mp4";
@@ -64,6 +65,7 @@ public class ViewPagerAdapterVideo extends PagerAdapter {
             }
         });
         random();
+//        video.stopPlayback();
         container.addView(itemView);
         return itemView;
     }
