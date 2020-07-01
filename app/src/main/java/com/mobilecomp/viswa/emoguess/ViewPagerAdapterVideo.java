@@ -1,6 +1,7 @@
 package com.mobilecomp.viswa.emoguess;
 
 import android.content.Context;
+import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -51,9 +52,6 @@ public class ViewPagerAdapterVideo extends PagerAdapter {
         TextView emoText = itemView.findViewById(R.id.textViewEmotions);
         video = (VideoView)itemView.findViewById(R.id.videoView);
         emoText.setText(mEmotions[position].getText());
-//        String videoPath = mEmotions[position].getVideo().replace("open?", "uc?authuser=0&");
-//        videoPath = videoPath + "&export=download.mp4";
-//        Uri v= Uri.parse(videoPath);
         Uri v= Uri.parse(mEmotions[position].getVideo());
         video.setVideoURI(v);
         video.requestFocus();
@@ -62,10 +60,10 @@ public class ViewPagerAdapterVideo extends PagerAdapter {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 mp.setLooping(true);
+                //mp.pause();
             }
         });
         random();
-//        video.stopPlayback();
         container.addView(itemView);
         return itemView;
     }

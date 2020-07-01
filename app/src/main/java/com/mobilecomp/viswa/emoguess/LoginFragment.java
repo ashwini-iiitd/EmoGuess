@@ -1,5 +1,6 @@
 package com.mobilecomp.viswa.emoguess;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,9 +8,11 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -39,6 +42,7 @@ public class LoginFragment extends Fragment {
     TextView txtRegister;
     ProgressBar progressBar;
     FirebaseAuth fAuth;
+    private static final int REQ_CODE_CAMERA_PERMISSION = 1253;
 //    static int status = 0;
 
     public LoginFragment() {
@@ -112,6 +116,13 @@ public class LoginFragment extends Fragment {
 
             }
         });
+
+        if (Build.VERSION.SDK_INT<=23) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},2);
+        }
+
+        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA},
+                REQ_CODE_CAMERA_PERMISSION);
 
         txtRegister.setOnClickListener(new View.OnClickListener() {
             @Override

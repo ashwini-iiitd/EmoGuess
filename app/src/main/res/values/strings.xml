@@ -17,6 +17,9 @@
 
 
     <string name="btn_tittle_capture_image" />
+    <string name="how_to_play_parents">How to Play: Hold the phone such that the screen faces the child and is not visible to you. For both, images and videos, shake/scroll to get the next one, and for every, guess the emotion based on how the child enacts it, as well as capture their expressions using the \'volume down\' button. Keep going till the timer stops.</string>
+    <string name="how_to_share_parents">How to Share: The expressions you capture get saved to your gallery automatically. After the game ends, you will see a share button on the next screen, clicking which will take you to the gallery, from where you select the images to be shared. In case you forget to do this after the game ends, there is also an option on the home screen which you may use for the same.</string>
+    <string name="how_to_children">For Children: Carefully look at the image/video on the screen (with text below it as the hint). Enact the emotion shown by the image/video.</string>
 
     <string-array name="emotions">
         <item>happy</item>

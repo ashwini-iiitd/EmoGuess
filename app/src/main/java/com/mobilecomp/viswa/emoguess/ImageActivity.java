@@ -1,5 +1,6 @@
 package com.mobilecomp.viswa.emoguess;
 
+import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
@@ -62,7 +63,7 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
     private ImageFragment.ShakeEventListener mSensorListener;
     private static final int REQ_CODE_CAMERA_PERMISSION = 1253;
     private CameraConfig mCameraConfig;
-
+    private Context mContext;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -102,9 +103,9 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
 
         fragmentTransaction.replace(R.id.image_layout, imageFragment).commit();
 
-        if (Build.VERSION.SDK_INT<=23) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},2);
-        }
+        //if (Build.VERSION.SDK_INT<=23) {
+           // requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},2);
+        //}
 
         mCameraConfig = new CameraConfig()
                 .getBuilder(this)
@@ -123,8 +124,8 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
             //Start camera preview
             startCamera(mCameraConfig);
         } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
-                    REQ_CODE_CAMERA_PERMISSION);
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
+//                    REQ_CODE_CAMERA_PERMISSION);
         }
 
         //Take a picture
@@ -142,9 +143,16 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)){
             takePicture();
+            ImageFragment.stoptimer();
         }
         return true;
     }
+
+//    KeyguardManager myKM = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
+//        if( myKM.isKeyguardLocked()) {
+//            ImageFragment.stoptimer();
+//        }
+
 
     @SuppressLint("MissingPermission")
     @Override

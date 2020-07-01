@@ -17,7 +17,7 @@ public class HowToActivity extends AppCompatActivity implements HowToFragment.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_how_to);
 
-        SpannableString s = new SpannableString("How to Play");
+        SpannableString s = new SpannableString("Instructions");
         s.setSpan(new TypefaceSpan("casual"), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 

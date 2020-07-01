@@ -19,6 +19,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,10 +42,10 @@ public class ImageFragment extends Fragment {
     private TypedArray imagesArray;
     static int score;
     private TextView timertext;
-    private Button timerbutton;
-    private CountDownTimer timer;
+    static private Button timerbutton;
+    static private CountDownTimer timer;
     private long timeleft = 60000;
-    private boolean timerrunning;
+    static private boolean timerrunning;
     static String timelefttext;
     private OnFragmentInteractionListener mListener;
     private static View currentView;
@@ -190,7 +191,7 @@ public class ImageFragment extends Fragment {
     public void startStop() {
         if (timerrunning) {
             stoptimer();
-            startActivity(new Intent(getContext(), RestartActivity.class));
+            //startActivity(new Intent(getContext(), RestartActivity.class));
         } else {
             starttimer();
             horizontalViewPager.setAdapter(new ViewPagerAdapter(mContext, emos));
@@ -484,11 +485,12 @@ public class ImageFragment extends Fragment {
         timerrunning = true;
     }
 
-    public void stoptimer() {
+    public static void stoptimer() {
         timer.cancel();
-        timerbutton.setText("START");
+        timerbutton.setText("RESUME");
         timerrunning = false;
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void updatetimer() {

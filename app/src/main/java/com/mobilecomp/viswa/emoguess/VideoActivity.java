@@ -103,9 +103,7 @@ public class VideoActivity extends HiddenCameraActivity implements VideoFragment
         videoFragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.video_layout, videoFragment).commit();
 
-        if (Build.VERSION.SDK_INT<=23) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},2);
-        }
+
 
         mCameraConfig = new CameraConfig()
                 .getBuilder(this)
@@ -124,9 +122,6 @@ public class VideoActivity extends HiddenCameraActivity implements VideoFragment
             //Start camera preview
 
             startCamera(mCameraConfig);
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
-                    REQ_CODE_CAMERA_PERMISSION);
         }
 
         //Take a picture

@@ -36,15 +36,15 @@ public class RestartActivity extends AppCompatActivity implements RestartFragmen
         fragmentTransaction.replace(R.id.restart_layout, restartFragment).commit();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            onBackPressed();
-            return  true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == android.R.id.home) {
+//            onBackPressed();
+//            return  true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onFragmentInteraction(Uri uri) {

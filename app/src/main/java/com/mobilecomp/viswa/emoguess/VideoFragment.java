@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import java.util.ArrayList;
 
@@ -44,6 +45,7 @@ public class VideoFragment extends Fragment {
     static String timelefttext;
     private static View currentView;
     static String getName;
+    static VideoView getVideo;
 
     private OnFragmentInteractionListener mListener;
 
@@ -102,7 +104,7 @@ public class VideoFragment extends Fragment {
     }
 
     Emo e1 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_angry1.mp4?alt=media&token=741fe80b-5144-4ef6-b830-30cd305f363e", "Angry");
-   // Emo e2 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_angry2.mp4?alt=media&token=6b5304fa-de20-4732-b039-b1dc20470b0b", "Angry");
+    Emo e2 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_angry.mp4?alt=media&token=b6fe23b3-38d8-4feb-a993-8c9441aa1713", "Angry");
     Emo e3 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_fear1.mp4?alt=media&token=b8577913-ed62-45f8-a999-b5158cb557ed", "Fear");
     Emo e4 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_fear2.mp4?alt=media&token=d0a8e54c-7b83-45ce-9488-f3e7da21bb56", "Fear");
     Emo e5 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_happy1.mp4?alt=media&token=4d221cf2-cd16-43a9-876d-fb044825eacc", "Happy");
@@ -118,15 +120,14 @@ public class VideoFragment extends Fragment {
     Emo e15 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fjerry_sad3.mp4?alt=media&token=d129eb50-ba83-481a-b465-0246137110ba", "Sad");
 
     Emo[] emos = new Emo[]{
-            e1, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15,
-            //e2
+            e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15,
     };
 
 
     public void startStop() {
         if (timerrunning) {
             stoptimer();
-            startActivity(new Intent(getContext(), RestartActivity.class));
+            //startActivity(new Intent(getContext(), RestartActivity.class));
         } else {
             starttimer();
             horizontalViewPagerVideo.setAdapter(new ViewPagerAdapterVideo(mContext, emos));
@@ -147,6 +148,8 @@ public class VideoFragment extends Fragment {
 
                 getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
                 System.out.println("Current emotion: "+getName);
+                getVideo= ((VideoView)viewGroup2.getChildAt(0));
+                System.out.println("Current emotion: "+getVideo);
 
                 /**********************************************************************/
 
@@ -291,7 +294,7 @@ public class VideoFragment extends Fragment {
 
                         getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
                         System.out.println("Current emotion: "+getName);
-
+                        getVideo= ((VideoView)viewGroup2.getChildAt(0));
                         /**********************************************************************/
 
 
@@ -322,7 +325,7 @@ public class VideoFragment extends Fragment {
 
                         getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
                         System.out.println("Current emotion: "+getName);
-
+                        getVideo= ((VideoView)viewGroup2.getChildAt(0));
                         /**********************************************************************/
 
 
@@ -421,7 +424,7 @@ public class VideoFragment extends Fragment {
 
     public void stoptimer() {
         timer.cancel();
-        timerbutton.setText("START");
+        timerbutton.setText("RESUME");
         timerrunning = false;
     }
 
@@ -528,7 +531,7 @@ public class VideoFragment extends Fragment {
 
                     getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
                     System.out.println("Current emotion: "+getName);
-
+                    getVideo= ((VideoView)viewGroup2.getChildAt(0));
                     /**********************************************************************/
 
 
@@ -563,7 +566,7 @@ public class VideoFragment extends Fragment {
 
                     getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
                     System.out.println("Current emotion: "+getName);
-
+                    getVideo= ((VideoView)viewGroup2.getChildAt(0));
                     /**********************************************************************/
 
 

@@ -178,78 +178,78 @@ public class RestartFragment extends Fragment {
         });
 
 
-        Button restartiButton = view.findViewById(R.id.bRestartImages);
-        restartiButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), ImageActivity.class));
-            }
-        });
-
-        ImageView restarti1Button = view.findViewById(R.id.brImage);
-        restarti1Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), ImageActivity.class));
-            }
-        });
-
-        Button restartvButton = view.findViewById(R.id.bRestartVideos);
-        restartvButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isConnected(getContext());
-                if (isConnected(getContext())==true) {
-                    startActivity(new Intent(getContext(),VideoActivity.class));
-                }
-            }
-        });
-
-        ImageView restartv1Button = view.findViewById(R.id.brVideo);
-        restartv1Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isConnected(getContext());
-                if (isConnected(getContext())==true) {
-                    startActivity(new Intent(getContext(),VideoActivity.class));
-                }
-            }
-        });
+//        Button restartiButton = view.findViewById(R.id.bRestartImages);
+//        restartiButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getContext(), ImageActivity.class));
+//            }
+//        });
+//
+//        ImageView restarti1Button = view.findViewById(R.id.brImage);
+//        restarti1Button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getContext(), ImageActivity.class));
+//            }
+//        });
+//
+//        Button restartvButton = view.findViewById(R.id.bRestartVideos);
+//        restartvButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//              //  isConnected(getContext());
+//              //  if (isConnected(getContext())==true) {
+//                    startActivity(new Intent(getContext(),VideoActivity.class));
+//             //   }
+//            }
+//        });
+//
+//        ImageView restartv1Button = view.findViewById(R.id.brVideo);
+//        restartv1Button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //isConnected(getContext());
+//              //  if (isConnected(getContext())==true) {
+//                    startActivity(new Intent(getContext(),VideoActivity.class));
+//               // }
+//            }
+//        });
 
         return view;
     }
 
-    public boolean isConnected(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo mobileInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+//    public boolean isConnected(Context context) {
+//        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+//        NetworkInfo mobileInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+//
+//        if ((wifiInfo != null && wifiInfo.isConnected()) || (mobileInfo != null && mobileInfo.isConnected())) {
+//            return true;
+//        } else {
+//            showDialog();
+//            return false;
+//        }
+//    }
 
-        if ((wifiInfo != null && wifiInfo.isConnected()) || (mobileInfo != null && mobileInfo.isConnected())) {
-            return true;
-        } else {
-            showDialog();
-            return false;
-        }
-    }
-
-    private void showDialog()
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Connect to wifi or quit")
-                .setCancelable(false)
-                .setPositiveButton("Connect to WIFI", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-                    }
-                })
-                .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        getActivity().finish();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
+//    private void showDialog()
+//    {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//        builder.setMessage("Connect to wifi or quit")
+//                .setCancelable(false)
+//                .setPositiveButton("Connect to WIFI", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+//                    }
+//                })
+//                .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        getActivity().finish();
+//                    }
+//                });
+//        AlertDialog alert = builder.create();
+//        alert.show();
+//    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -269,8 +269,8 @@ public class RestartFragment extends Fragment {
                 // Get the Image from data
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
                 ArrayList<String> imagesEncodedList = new ArrayList<>();
-                ArrayList<String> imagesNameList = new ArrayList<>();
-                ArrayList<Uri> mArrayUri = new ArrayList<>();
+                final ArrayList<String> imagesNameList = new ArrayList<>();
+                final ArrayList<Uri> mArrayUri = new ArrayList<>();
                 String imageEncoded;
                 String imageName;
                 if (data.getData() != null) {
@@ -312,101 +312,77 @@ public class RestartFragment extends Fragment {
                     }
                 }
 
-                for (int i =0 ; i < mArrayUri.size(); i++) {
-                    if (mArrayUri.get(i) != null) {
-                        InputStream imageStream = null;
-                        try {
-                            imageStream = getActivity().getContentResolver().openInputStream(mArrayUri.get(i));
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        Bitmap bmp = BitmapFactory.decodeStream(imageStream);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Confirm sharing images?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                for (int i =0 ; i < mArrayUri.size(); i++) {
+                                    if (mArrayUri.get(i) != null) {
+                                        InputStream imageStream = null;
+                                        try {
+                                            imageStream = getActivity().getContentResolver().openInputStream(mArrayUri.get(i));
+                                        } catch (FileNotFoundException e) {
+                                            e.printStackTrace();
+                                        }
+                                        Bitmap bmp = BitmapFactory.decodeStream(imageStream);
 
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bmp.compress(Bitmap.CompressFormat.PNG, 25, stream);
-                        String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bmp, imagesNameList.get(i), null);
-                        //Bitmap compressed = BitmapFactory.decodeStream(new ByteArrayInputStream(stream.toByteArray()));
-                        final Uri compressed= Uri.parse(path);
-                        byte[] byteArray = stream.toByteArray();
-                        try {
-                            stream.close();
-                            stream = null;
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                        bmp.compress(Bitmap.CompressFormat.PNG, 25, stream);
+                                        String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bmp, imagesNameList.get(i), null);
+                                        //Bitmap compressed = BitmapFactory.decodeStream(new ByteArrayInputStream(stream.toByteArray()));
+                                        final Uri compressed= Uri.parse(path);
+                                        byte[] byteArray = stream.toByteArray();
+                                        try {
+                                            stream.close();
+                                            stream = null;
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
 
-//                    final ProgressDialog progressDialog = new ProgressDialog(mContext);
-//                    progressDialog.setTitle("Uploading...");
-//                    progressDialog.show();
+                                        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+                                        progressDialog.setTitle("Uploading...");
+                                        progressDialog.show();
 
-                        //Replace UUID.randomUUID().toString()  to image name
-                        StorageReference ref = storageReference.child("images/"+userID+"/"+ imagesNameList.get(i));
-                        ref.putFile(compressed)
-                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        getActivity().getContentResolver().delete(compressed, null, null);
-                                        //progressDialog.dismiss();
-                                        System.out.println("uploaded");
-                                        //Toast.makeText(mContext, "Uploaded", Toast.LENGTH_SHORT).show();
+                                        //Replace UUID.randomUUID().toString()  to image name
+                                        StorageReference ref = storageReference.child("images/"+userID+"/"+ imagesNameList.get(i));
+                                        ref.putFile(compressed)
+                                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                        getActivity().getContentResolver().delete(compressed, null, null);
+                                                        progressDialog.dismiss();
+                                                        System.out.println("uploaded");
+                                                        Toast.makeText(getContext(), "Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        progressDialog.dismiss();
+                                                        Toast.makeText(getContext(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                })
+                                                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                                    @Override
+                                                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                                        double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+                                                                .getTotalByteCount());
+                                                        progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                                                    }
+                                                });
                                     }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        //  progressDialog.dismiss();
-                                        //Toast.makeText(mContext, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                })
-                                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                        double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
-                                                .getTotalByteCount());
-                                        //progressDialog.setMessage("Uploaded " + (int) progress + "%");
-                                    }
-                                });
-                    }
-                }
+                                }
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
 
-//                System.out.println("File "+filePathColumn);
-//                System.out.println("encoded "+imagesEncodedList);
-//                System.out.println("array "+mArrayUri);
-//                System.out.println("array size "+mArrayUri.size());
-//                  List<Intent> targetShareIntents=new ArrayList<Intent>();
-//                  Intent shareIntent=new Intent();
-//                  shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
-//                  shareIntent.setType("image/*");
-//                  List<ResolveInfo> resInfos=getActivity().getPackageManager().queryIntentActivities(shareIntent, 0);
-//                  System.out.println(resInfos);
-//                  if(!resInfos.isEmpty()){
-//                    System.out.println("Have package");
-//                        for(ResolveInfo resInfo : resInfos){
-//                            String packageName=resInfo.activityInfo.packageName;
-//                           // Log.i("Package Name", packageName);
-//                             if(packageName.contains("com.google.android.apps.docs")){
-//                                Intent intent=new Intent();
-//                                intent.setComponent(new ComponentName(packageName, resInfo.activityInfo.name));
-//                                System.out.println(packageName);
-//                                System.out.println(resInfo.activityInfo.name);
-//                                intent.setAction(Intent.ACTION_SEND_MULTIPLE);
-//                                intent.setType("image/*");
-//                                intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, mArrayUri);
-//                                intent.setPackage(packageName);
-//                                targetShareIntents.add(intent);
-//                            }
-//                        }
-//                    if(!targetShareIntents.isEmpty()){
-//                        System.out.println("Have Intent");
-//                        Intent chooserIntent=Intent.createChooser(targetShareIntents.remove(0), "Choose app to share");
-//                        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetShareIntents.toArray(new Parcelable[]{}));
-//                        System.out.println(Intent.EXTRA_INITIAL_INTENTS);
-//                        startActivity(chooserIntent);
-//                    }
-//                    else {
-//                    System.out.println("Do not Have Intent");
-//                    }
-//              }
             } else {
                 System.out.println("Image not picked");
             }

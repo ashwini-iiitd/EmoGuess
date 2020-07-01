@@ -99,10 +99,10 @@ public class PlayFragment extends Fragment {
         videoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isConnected(getContext());
-                if (isConnected(getContext())==true) {
+               // isConnected(getContext());
+              //  if (isConnected(getContext())==true) {
                     startActivity(new Intent(getContext(),VideoActivity.class));
-                }
+               // }
             }
         });
 
@@ -110,11 +110,11 @@ public class PlayFragment extends Fragment {
         videoView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isConnected(getContext());
-                if (isConnected(getContext())==true) {
+               // isConnected(getContext());
+               // if (isConnected(getContext())==true) {
                     startActivity(new Intent(getContext(),VideoActivity.class));
                 }
-            }
+           // }
         });
 
         //   Toast toast=Toast. makeText(getActivity(),"play fragment",Toast. LENGTH_SHORT);
@@ -122,37 +122,37 @@ public class PlayFragment extends Fragment {
         return view;
     }
 
-    public boolean isConnected(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo mobileInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+//    public boolean isConnected(Context context) {
+//        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+//        NetworkInfo mobileInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+//
+//        if ((wifiInfo != null && wifiInfo.isConnected()) || (mobileInfo != null && mobileInfo.isConnected())) {
+//            return true;
+//        } else {
+//            showDialog();
+//            return false;
+//        }
+//    }
 
-        if ((wifiInfo != null && wifiInfo.isConnected()) || (mobileInfo != null && mobileInfo.isConnected())) {
-            return true;
-        } else {
-            showDialog();
-            return false;
-        }
-    }
-
-        private void showDialog()
-        {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Connect to wifi or quit")
-                    .setCancelable(false)
-                    .setPositiveButton("Connect to WIFI", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-                        }
-                    })
-                    .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            getActivity().finish();
-                        }
-                    });
-            AlertDialog alert = builder.create();
-            alert.show();
-        }
+//        private void showDialog()
+//        {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//            builder.setMessage("Connect to wifi or quit")
+//                    .setCancelable(false)
+//                    .setPositiveButton("Connect to WIFI", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+//                        }
+//                    })
+//                    .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            getActivity().finish();
+//                        }
+//                    });
+//            AlertDialog alert = builder.create();
+//            alert.show();
+//        }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
