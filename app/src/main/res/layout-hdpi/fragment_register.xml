@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg3"
+    android:backgroundTint="@color/colorOrange"
+    android:backgroundTintMode="screen"
+    tools:context=".RegisterFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.v7.widget.CardView
+        android:layout_width="70dp"
+        android:layout_height="20dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="20dp"
+        app:cardBackgroundColor="@color/colorOrange"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/editName"
+                android:layout_width="70dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorOrange"
+                android:fontFamily="@font/atma"
+                android:textStyle="bold"
+                android:textSize="10dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Name" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="70dp"
+        android:layout_height="20dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="47dp"
+        app:cardBackgroundColor="@color/colorOrange"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/editEmail"
+                android:layout_width="70dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorOrange"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:hint="Email Address"
+                android:fontFamily="@font/atma"
+                android:textStyle="bold"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="70dp"
+        android:layout_height="20dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="74dp"
+        app:cardBackgroundColor="@color/colorOrange"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/editPassword"
+                android:layout_width="70dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorOrange"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:hint="Password"
+                android:fontFamily="@font/atma"
+                android:textStyle="bold"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="70dp"
+        android:layout_height="20dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="101dp"
+        app:cardBackgroundColor="@color/colorOrange"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/editContact"
+                android:layout_width="70dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorOrange"
+                android:ems="10"
+                android:inputType="text|phone"
+                android:hint="Contact Number"
+                android:fontFamily="@font/atma"
+                android:textStyle="bold"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="130dp"
+        app:cardBackgroundColor="@color/colorAccentLight"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/registerButton"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorAccentLight"
+                android:text="Register"
+                android:fontFamily="@font/atma"
+                android:textStyle="bold"
+                android:textSize="10dp"
+                android:textColor="#fff"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    android:onClick="Register"
+    android:textColor="#fff">
+
+    <TextView
+        android:id="@+id/textLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="152dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/atma"
+        android:textStyle="bold"
+        android:textSize="5dp"
+        android:text="Already Registered? Sign in">
+    </TextView>
+
+    <ProgressBar
+        android:id="@+id/progBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textLogin"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+
+</RelativeLayout>

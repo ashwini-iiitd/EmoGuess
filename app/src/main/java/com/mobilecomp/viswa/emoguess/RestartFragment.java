@@ -129,7 +129,7 @@ public class RestartFragment extends Fragment {
         score.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score), Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score) + " out of " + String.valueOf(ImageFragment.attempts), Toast.LENGTH_LONG);
                 toast.show();
 //                if (ImageFragment.timelefttext.compareTo("0:00") == 0) {
 //                    System.out.println("score");

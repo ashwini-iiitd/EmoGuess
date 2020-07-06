@@ -7,6 +7,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -14,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -35,7 +37,7 @@ public class VideoFragment extends Fragment {
     static HorizontalViewPagerVideo horizontalViewPagerVideo;
     private Context mContext;
     private TypedArray videosArray;
-    static int score;
+    //static int score;
 
     private TextView timertext;
     private Button timerbutton;
@@ -131,6 +133,7 @@ public class VideoFragment extends Fragment {
         } else {
             starttimer();
             horizontalViewPagerVideo.setAdapter(new ViewPagerAdapterVideo(mContext, emos));
+            ImageFragment.attempts++;
             try {
 
 
@@ -175,7 +178,7 @@ public class VideoFragment extends Fragment {
         /**
          * Minimum movement force to consider.
          */
-        private static final int MIN_FORCE = 10;
+        private static final int MIN_FORCE = 20;
 
         /**
          * Minimum times in a shake gesture that the direction of movement needs to
@@ -277,6 +280,7 @@ public class VideoFragment extends Fragment {
 
                 if (z > FLIPCONSTANT && deltaZ > 0) { //pass
                     horizontalViewPagerVideo.arrowScroll(View.FOCUS_RIGHT);
+                    ImageFragment.attempts++;
                     try {
 
 
@@ -307,7 +311,8 @@ public class VideoFragment extends Fragment {
 
                 } else if (z < -1 * FLIPCONSTANT && deltaZ > 0) {//got word
                     horizontalViewPagerVideo.arrowScroll(View.FOCUS_RIGHT);
-                    score++;
+                    ImageFragment.attempts++;
+                    ImageFragment.score++;
                     try {
 
 
@@ -405,7 +410,10 @@ public class VideoFragment extends Fragment {
 
 
     public void starttimer() {
-        score=0;
+        horizontalViewPagerVideo.setOnTouchListener(null);
+        VideoActivity.mSensorManager.registerListener(VideoActivity.mSensorListener,
+                 VideoActivity.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_UI);
         timer = new CountDownTimer(timeleft, 1000) {
             @Override
             public void onTick(long l) {
@@ -426,7 +434,16 @@ public class VideoFragment extends Fragment {
         timer.cancel();
         timerbutton.setText("RESUME");
         timerrunning = false;
+        VideoActivity.mSensorManager.unregisterListener(VideoActivity.mSensorListener);
+        horizontalViewPagerVideo.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                return true;
+            }
+        });
     }
+
+
 
     public void updatetimer() {
         int minutes = (int) timeleft / 60000;
@@ -439,7 +456,7 @@ public class VideoFragment extends Fragment {
         timertext.setText(timelefttext);
         if (timelefttext.compareTo("0:00") == 0) {
             startActivity(new Intent(getContext(), RestartActivity.class));
-            Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score) + " out of " + String.valueOf(ImageFragment.attempts), Toast.LENGTH_SHORT);
             toast.show();
         }
     }
@@ -491,7 +508,36 @@ public class VideoFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
+//                try {
+//
+//
+//
+//
+//
+//                    /********* To get current emotion displayed on the screen *********/
+//                    /*******Code in ViewPagerAdapter to set the current view***************/
+//                    currentView = ViewPagerAdapter.mCurrentView;
+//
+//                    ViewGroup viewGroup = ((ViewGroup)currentView);
+//                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+//                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+//                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+//                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+//
+//                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+//                    System.out.println("Current emotion: "+getName);
+//
+//                    /**********************************************************************/
+//
+//
+//
+//
+//                }catch (Exception e){
+//                    System.out.println(e);
+//                    // Toaster.showShortMessage("Extra Page!");
+//                }
                 if (position == 0) {
+                    ImageFragment.attempts++;
                     leftNav.setVisibility(View.INVISIBLE);
                 } else
                     leftNav.setVisibility(View.VISIBLE);
@@ -499,6 +545,7 @@ public class VideoFragment extends Fragment {
                 if (position == emotions.length - 1) {
                     rightNav.setVisibility(View.INVISIBLE);
                 } else {
+                    ImageFragment.attempts++;
                     rightNav.setVisibility(View.VISIBLE);
                 }
             }
@@ -548,6 +595,7 @@ public class VideoFragment extends Fragment {
         rightNav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ImageFragment.attempts++;
                 try {
                     horizontalViewPagerVideo.arrowScroll(View.FOCUS_RIGHT);
 

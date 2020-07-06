@@ -62,8 +62,8 @@ import java.util.Arrays;
 
 public class VideoActivity extends HiddenCameraActivity implements VideoFragment.OnFragmentInteractionListener{
     private static final int REQUEST_WRITE_STORAGE = 1254;
-    private SensorManager mSensorManager;
-    private VideoFragment.ShakeEventListener mSensorListener;
+    public static SensorManager mSensorManager;
+    public static VideoFragment.ShakeEventListener mSensorListener;
     private static final int REQ_CODE_CAMERA_PERMISSION = 1253;
     private CameraConfig mCameraConfig;
 

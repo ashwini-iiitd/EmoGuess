@@ -116,25 +116,6 @@ public static HomeFragment newInstance(String param1, String param2) {
 
     }
 
-//    private void showDialog()
-//    {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//        builder.setMessage("Confirm sharing images?")
-//                .setCancelable(false)
-//                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        startActivityForResult(intent1, 1);
-//                    }
-//                })
-//                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // do nothing
-//                    }
-//                });
-//        AlertDialog alert = builder.create();
-//        alert.show();
-//    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

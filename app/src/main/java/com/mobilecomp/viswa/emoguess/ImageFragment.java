@@ -1,8 +1,7 @@
 package com.mobilecomp.viswa.emoguess;
 
-import java.io.File;
-
-import android.app.Activity;
+import android.app.KeyguardManager;
+import android.os.PowerManager;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -18,19 +17,20 @@ import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+
+import static android.content.Context.POWER_SERVICE;
 
 public class ImageFragment extends Fragment {
 
@@ -41,15 +41,16 @@ public class ImageFragment extends Fragment {
     private Context mContext;
     private TypedArray imagesArray;
     static int score;
+    static int attempts;
     private TextView timertext;
-    static private Button timerbutton;
-    static private CountDownTimer timer;
+    private Button timerbutton;
+    private CountDownTimer timer;
     private long timeleft = 60000;
-    static private boolean timerrunning;
+    private boolean timerrunning;
     static String timelefttext;
-    private OnFragmentInteractionListener mListener;
     private static View currentView;
     static String getName;
+    private OnFragmentInteractionListener mListener;
 
     public ImageFragment() {
         // Required empty public constructor
@@ -61,8 +62,6 @@ public class ImageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_image, container, false);
-
-
         timertext = view.findViewById(R.id.countdown_text);
         timerbutton = view.findViewById(R.id.countdown_button);
         timerbutton.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +76,7 @@ public class ImageFragment extends Fragment {
         Bundle bundle = this.getArguments();
         ArrayList<String> q = bundle.getStringArrayList("emotions");
         emotions = (q).toArray(new String[q.size()]);
-        imagesArray = getResources().obtainTypedArray(R.array.emo_images);
+//        imagesArray = getResources().obtainTypedArray(R.array.emo_images);
         horizontalViewPager = view.findViewById(R.id.viewPager);
         return view;
     }
@@ -195,6 +194,7 @@ public class ImageFragment extends Fragment {
         } else {
             starttimer();
             horizontalViewPager.setAdapter(new ViewPagerAdapter(mContext, emos));
+            attempts++;
             try {
 
 
@@ -237,7 +237,7 @@ public class ImageFragment extends Fragment {
         /**
          * Minimum movement force to consider.
          */
-        private static final int MIN_FORCE = 10;
+        private static final int MIN_FORCE = 20;
 
         /**
          * Minimum times in a shake gesture that the direction of movement needs to
@@ -338,6 +338,7 @@ public class ImageFragment extends Fragment {
 
                 if (z > FLIPCONSTANT && deltaZ > 0) { //pass
                     horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
+                    attempts++;
                     try {
 
 
@@ -369,6 +370,7 @@ public class ImageFragment extends Fragment {
 
                 } else if (z < -1 * FLIPCONSTANT && deltaZ > 0) {//got word
                     horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
+                    attempts++;
                     score++;
                     try {
 
@@ -467,7 +469,10 @@ public class ImageFragment extends Fragment {
 
 
     public void starttimer() {
-        score=0;
+        horizontalViewPager.setOnTouchListener(null);
+        ImageActivity.mSensorManager.registerListener(ImageActivity.mSensorListener,
+                ImageActivity.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_UI);
         timer = new CountDownTimer(timeleft, 1000) {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -485,12 +490,44 @@ public class ImageFragment extends Fragment {
         timerrunning = true;
     }
 
-    public static void stoptimer() {
+    public void stoptimer() {
         timer.cancel();
         timerbutton.setText("RESUME");
         timerrunning = false;
+        ImageActivity.mSensorManager.unregisterListener(ImageActivity.mSensorListener);
+        horizontalViewPager.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                return true;
+            }
+        });
     }
 
+    public void OnScreen() {
+        PowerManager powerManager = (PowerManager) mContext.getSystemService(POWER_SERVICE);
+        boolean isScreenOn = powerManager.isScreenOn();
+
+        if (!isScreenOn) {
+            System.out.println("screen off");
+            // The screen has been locked
+            // do stuff...
+        }
+        else {
+            System.out.println("screen off");
+        }
+    }
+
+    private boolean isPhoneLocked(Context context) {
+        boolean isPhoneLock = false;
+        if (context != null) {
+            KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+            if (myKM != null && myKM.isKeyguardLocked()) {
+                isPhoneLock = true;
+            }
+        }
+        System.out.println(isPhoneLock);
+        return isPhoneLock;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void updatetimer() {
@@ -504,7 +541,7 @@ public class ImageFragment extends Fragment {
         timertext.setText(timelefttext);
         if (timelefttext.compareTo("0:00") == 0) {
             startActivity(new Intent(getContext(), RestartActivity.class));
-            Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(score), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(score) +" out of "+ String.valueOf(attempts), Toast.LENGTH_SHORT);
             toast.show();
         }
     }
@@ -584,7 +621,36 @@ public class ImageFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
+//                try {
+//
+//
+//
+//
+//
+//                    /********* To get current emotion displayed on the screen *********/
+//                    /*******Code in ViewPagerAdapter to set the current view***************/
+//                    currentView = ViewPagerAdapter.mCurrentView;
+//
+//                    ViewGroup viewGroup = ((ViewGroup)currentView);
+//                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+//                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+//                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+//                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+//
+//                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+//                    System.out.println("Current emotion: "+getName);
+//
+//                    /**********************************************************************/
+//
+//
+//
+//
+//                }catch (Exception e){
+//                    System.out.println(e);
+//                    // Toaster.showShortMessage("Extra Page!");
+//                }
                 if (position == 0) {
+                    attempts++;
                     leftNav.setVisibility(View.INVISIBLE);
                 } else
                     leftNav.setVisibility(View.VISIBLE);
@@ -592,6 +658,7 @@ public class ImageFragment extends Fragment {
                 if (position==emos.length-1){
                     rightNav.setVisibility(View.INVISIBLE);
                 } else {
+                    attempts++;
                     rightNav.setVisibility(View.VISIBLE);
                 }
             }
@@ -643,6 +710,7 @@ public class ImageFragment extends Fragment {
         rightNav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                attempts++;
                 try {
                     horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
 

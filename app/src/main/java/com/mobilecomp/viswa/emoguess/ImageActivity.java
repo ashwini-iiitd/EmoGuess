@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.PowerManager;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
@@ -59,8 +60,8 @@ import com.androidhiddencamera.config.CameraRotation;
 
 public class ImageActivity extends HiddenCameraActivity implements ImageFragment.OnFragmentInteractionListener {
     private static final int REQUEST_WRITE_STORAGE = 1254;
-    private SensorManager mSensorManager;
-    private ImageFragment.ShakeEventListener mSensorListener;
+    public static SensorManager mSensorManager;
+    public static ImageFragment.ShakeEventListener mSensorListener;
     private static final int REQ_CODE_CAMERA_PERMISSION = 1253;
     private CameraConfig mCameraConfig;
     private Context mContext;
@@ -123,10 +124,10 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
 
             //Start camera preview
             startCamera(mCameraConfig);
-        } else {
+        }// else {
 //            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
 //                    REQ_CODE_CAMERA_PERMISSION);
-        }
+       // }
 
         //Take a picture
 
@@ -143,16 +144,12 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)){
             takePicture();
-            ImageFragment.stoptimer();
         }
-        return true;
-    }
-
-//    KeyguardManager myKM = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
-//        if( myKM.isKeyguardLocked()) {
+//        if ((keyCode == KeyEvent.KEYCODE_POWER)){
 //            ImageFragment.stoptimer();
 //        }
-
+        return true;
+    }
 
     @SuppressLint("MissingPermission")
     @Override

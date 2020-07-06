@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg8"
+    android:backgroundTint="@color/colorOrange"
+    android:backgroundTintMode="screen"
+    tools:context=".ImageFragment">
+
+    <com.mobilecomp.viswa.emoguess.HorizontalViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:screenOrientation="landscape" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/countdown_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|end"
+        android:gravity="right"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/atma"
+        android:textStyle="bold"
+        android:text="1:00"
+        android:textSize="47dp"
+        android:textColor="@color/colorOrange2"
+        android:layout_alignParentRight="@id/viewPager" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_marginRight="15dp"
+        android:layout_gravity="center_horizontal|end"
+        android:layout_alignRight="@id/viewPager"
+        android:layout_below="@id/countdown_text"
+        app:cardBackgroundColor="@color/colorAccentLight"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+            <Button
+                android:id="@+id/countdown_button"
+                android:theme="@style/AppTheme.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/atma"
+                android:textStyle="bold"
+                android:textSize="35dp"
+                android:text="Start" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <ImageButton
+        android:id="@+id/left_nav"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal|start"
+        app:srcCompat="@drawable/ic_action_left"
+        android:visibility="gone"
+        android:background="@null"
+        android:layout_below="@id/card"
+        android:layout_alignLeft="@id/viewPager" />
+
+    <ImageButton
+        android:id="@+id/right_nav"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal|end"
+        android:fadingEdge="horizontal"
+        app:srcCompat="@drawable/ic_action_right"
+        android:background="@null"
+        android:layout_below="@id/card"
+        android:layout_alignRight="@id/viewPager" />/>
+
+</RelativeLayout>

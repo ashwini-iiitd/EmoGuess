@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -80,6 +81,8 @@ public class PlayFragment extends Fragment {
         imView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ImageFragment.score=0;
+                ImageFragment.attempts=0;
                 startActivity(new Intent(getContext(),ImageActivity.class));
             }
         });
@@ -88,6 +91,8 @@ public class PlayFragment extends Fragment {
         immView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ImageFragment.score=0;
+                ImageFragment.attempts=0;
                 startActivity(new Intent(getContext(),ImageActivity.class));
             }
         });
@@ -101,6 +106,8 @@ public class PlayFragment extends Fragment {
             public void onClick(View view) {
                // isConnected(getContext());
               //  if (isConnected(getContext())==true) {
+                ImageFragment.score=0;
+                ImageFragment.attempts=0;
                     startActivity(new Intent(getContext(),VideoActivity.class));
                // }
             }
@@ -112,6 +119,8 @@ public class PlayFragment extends Fragment {
             public void onClick(View view) {
                // isConnected(getContext());
                // if (isConnected(getContext())==true) {
+                ImageFragment.score=0;
+                ImageFragment.attempts=0;
                     startActivity(new Intent(getContext(),VideoActivity.class));
                 }
            // }
