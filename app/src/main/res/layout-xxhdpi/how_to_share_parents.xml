@@ -25,7 +25,7 @@
             android:text= "@string/how_to_share_parents"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="13.7dp"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
     </LinearLayout>

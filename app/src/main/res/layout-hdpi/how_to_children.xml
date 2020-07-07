@@ -25,7 +25,7 @@
             android:text="@string/how_to_children"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="13.7dp"
+            android:textSize="13dp"
             android:textStyle="bold"/>
 
     </LinearLayout>
