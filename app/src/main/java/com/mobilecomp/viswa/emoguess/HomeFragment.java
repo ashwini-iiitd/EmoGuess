@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -69,6 +70,20 @@ public static HomeFragment newInstance(String param1, String param2) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
         Log.i("CONNECT","Connected");
+        ImageView play = view.findViewById(R.id.pb);
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), PlayActivity.class));
+            }
+        });
+        ImageView howto = view.findViewById(R.id.ib);
+        howto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), HowToActivity.class));
+            }
+        });
         Button playButton = view.findViewById(R.id.bPlay);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -10,4 +10,6 @@
     <item name="bRestartVideo" type="id" />
     <item name="restartvideo_layout" type="id" />
     <item name="regButton" type="id" />
+    <item name="pb" type="id" />
+    <item name="ib" type="id" />
 </resources>

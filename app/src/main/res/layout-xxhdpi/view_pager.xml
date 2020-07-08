@@ -8,6 +8,7 @@
     android:layout_gravity="center"
     android:layout_margin="10dp"
     card_view:cardCornerRadius="2dp"
+    android:keepScreenOn="true"
     card_view:cardElevation="10dp"
     card_view:cardUseCompatPadding="true"
     card_view:contentPadding="10dp">

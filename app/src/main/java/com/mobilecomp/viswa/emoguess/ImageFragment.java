@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -237,13 +238,13 @@ public class ImageFragment extends Fragment {
         /**
          * Minimum movement force to consider.
          */
-        private static final int MIN_FORCE = 20;
+        private static final int MIN_FORCE = 100;
 
         /**
          * Minimum times in a shake gesture that the direction of movement needs to
          * change.
          */
-        private static final int MIN_DIRECTION_CHANGE = 3;
+        private static final int MIN_DIRECTION_CHANGE = 100;
 
         /**
          * Maximum pause between movements.
@@ -284,7 +285,7 @@ public class ImageFragment extends Fragment {
          * The last z position.
          */
         private float lastZ = 0;
-        private final float NOISE = (float) 1.0;
+        private final float NOISE = (float) 10.0;
 
         /**
          * OnShakeListener that is called when shake is detected.

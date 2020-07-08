@@ -9,6 +9,7 @@
     android:layout_margin="10dp"
     card_view:cardCornerRadius="2dp"
     card_view:cardElevation="10dp"
+    android:keepScreenOn="true"
     card_view:cardUseCompatPadding="true"
     card_view:contentPadding="10dp">
 

@@ -38,9 +38,12 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <ImageView
-                    android:layout_width="126dp"
-                    android:layout_height="128dp"
+                <ImageButton
+                    android:id="@+id/pb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="130dp"
+                    android:scaleType="fitCenter"
+                    android:background="@color/colorOrange2"
                     android:src="@drawable/play" />
 
                 <Button
@@ -73,10 +76,13 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <ImageView
-                    android:layout_width="100dp"
+                <ImageButton
+                    android:id="@+id/ib"
+                    android:layout_width="wrap_content"
                     android:layout_height="130dp"
-                    android:layout_marginLeft="20dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginLeft="0dp"
+                    android:background="@color/colorOrange2"
                     android:src="@drawable/howtoplay" />
 
                 <Button
