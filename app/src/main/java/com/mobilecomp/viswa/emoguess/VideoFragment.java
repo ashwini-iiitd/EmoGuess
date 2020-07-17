@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -28,14 +29,15 @@ import android.widget.VideoView;
 
 import java.util.ArrayList;
 
-public class VideoFragment extends Fragment {
+import static com.mobilecomp.viswa.emoguess.ViewPagerAdapterVideo.video;
 
+public class VideoFragment extends Fragment {
 
     ImageButton leftNav, rightNav;
     View view;
     String[] emotions;
     static HorizontalViewPagerVideo horizontalViewPagerVideo;
-    private Context mContext;
+    private static Context mContext;
     private TypedArray videosArray;
     //static int score;
 
@@ -55,7 +57,6 @@ public class VideoFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,31 +64,58 @@ public class VideoFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_video, container, false);
 //        Toast toast=Toast. makeText(getActivity(),"video fragment",Toast. LENGTH_SHORT);
 //        toast.show();
-
         timertext = view.findViewById(R.id.countdown_text);
         timerbutton = view.findViewById(R.id.countdown_button);
-
         timerbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startStop();
             }
         });
-
         mContext = getContext();
 
         //access data from the calling activity, i.e., question and answers
         Bundle bundle = this.getArguments();
         ArrayList<String> q = bundle.getStringArrayList("emotions");
         emotions = (q).toArray(new String[q.size()]);
-
-        //videosArray = getResources().obtainTypedArray(R.array.emo_videos);
-
         horizontalViewPagerVideo = view.findViewById(R.id.viewPagerVideo);
+        horizontalViewPagerVideo.setOffscreenPageLimit(0);
+        horizontalViewPagerVideo.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                return true;
+            }
+        });
         return view;
     }
 
-    public class Emo {
+//    public void loadData(){
+//        // data for fragment when it visible here
+//    }
+//
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser)
+//    {
+//        System.out.println("visi1");
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser && isResumed()) {
+//            System.out.println("visi");// fragment is visible and have created
+//            loadData();
+//        }
+//    }
+
+//    @Override
+//    public void setMenuVisibility(final boolean visible) {
+//        super.setMenuVisibility(visible);
+//        if (visible) {
+//            System.out.println("visi");
+//        }
+//        else {
+//            System.out.println("invisi");
+//        }
+//    }
+
+    public static class Emo {
         private String video;
         private String text;
 
@@ -105,23 +133,23 @@ public class VideoFragment extends Fragment {
         }
     }
 
-    Emo e1 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_angry1.mp4?alt=media&token=741fe80b-5144-4ef6-b830-30cd305f363e", "Angry");
-    Emo e2 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_angry.mp4?alt=media&token=b6fe23b3-38d8-4feb-a993-8c9441aa1713", "Angry");
-    Emo e3 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_fear1.mp4?alt=media&token=b8577913-ed62-45f8-a999-b5158cb557ed", "Fear");
-    Emo e4 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_fear2.mp4?alt=media&token=d0a8e54c-7b83-45ce-9488-f3e7da21bb56", "Fear");
-    Emo e5 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_happy1.mp4?alt=media&token=4d221cf2-cd16-43a9-876d-fb044825eacc", "Happy");
-    Emo e6 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_happy2.mp4?alt=media&token=55a4bd73-a1f4-488a-a3ea-e5f98a670476", "Happy");
-    Emo e7 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_neutral1.mp4?alt=media&token=59b190ed-c86b-463d-a019-6b42f322ebb5", "Neutral");
-    Emo e8 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_neutral2.mp4?alt=media&token=dfbc7585-35dd-4b45-820b-b9070e47b93e", "Neutral");
-    Emo e9 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_sad1.mp4?alt=media&token=caa6e3ea-4c78-4a4b-856e-34e325902bfd", "Sad");
-    Emo e10 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_surprise1.mp4?alt=media&token=20210e4a-2597-4125-a462-21a3e81f9505", "Surprise");
-    Emo e11 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_surprise2.mp4?alt=media&token=851350c1-49cd-4bdc-9048-9c5d63e05208", "Surprise");
-    Emo e12 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fjerry_disgust1.mp4?alt=media&token=8ce63469-7f8a-4c3e-ad1a-51b17ec0aa8b", "Disgust");
-    Emo e13 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fjerry_disgust2.mp4?alt=media&token=28e8aa34-04a0-4432-9b0a-570447ab24e5", "Disgust");
-    Emo e14 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fjerry_sad2.mp4?alt=media&token=942b43ab-3dfc-4f0f-b9c6-6c7478223d63", "Sad");
-    Emo e15 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fjerry_sad3.mp4?alt=media&token=d129eb50-ba83-481a-b465-0246137110ba", "Sad");
+    static Emo e1 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_angry1.mp4?alt=media&token=741fe80b-5144-4ef6-b830-30cd305f363e", "Angry");
+    static Emo e2 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_angry.mp4?alt=media&token=b6fe23b3-38d8-4feb-a993-8c9441aa1713", "Angry");
+    static Emo e3 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_fear1.mp4?alt=media&token=b8577913-ed62-45f8-a999-b5158cb557ed", "Fear");
+    static Emo e4 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_fear2.mp4?alt=media&token=d0a8e54c-7b83-45ce-9488-f3e7da21bb56", "Fear");
+    static Emo e5 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_happy1.mp4?alt=media&token=4d221cf2-cd16-43a9-876d-fb044825eacc", "Happy");
+    static Emo e6 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_happy2.mp4?alt=media&token=55a4bd73-a1f4-488a-a3ea-e5f98a670476", "Happy");
+    static Emo e7 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_neutral1.mp4?alt=media&token=59b190ed-c86b-463d-a019-6b42f322ebb5", "Neutral");
+    static Emo e8 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_neutral2.mp4?alt=media&token=dfbc7585-35dd-4b45-820b-b9070e47b93e", "Neutral");
+    static Emo e9 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_sad1.mp4?alt=media&token=caa6e3ea-4c78-4a4b-856e-34e325902bfd", "Sad");
+    static Emo e10 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_surprise1.mp4?alt=media&token=20210e4a-2597-4125-a462-21a3e81f9505", "Surprise");
+    static Emo e11 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fbheem_surprise2.mp4?alt=media&token=851350c1-49cd-4bdc-9048-9c5d63e05208", "Surprise");
+    static Emo e12 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fjerry_disgust1.mp4?alt=media&token=8ce63469-7f8a-4c3e-ad1a-51b17ec0aa8b", "Disgust");
+    static Emo e13 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fjerry_disgust2.mp4?alt=media&token=28e8aa34-04a0-4432-9b0a-570447ab24e5", "Disgust");
+    static Emo e14 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fjerry_sad2.mp4?alt=media&token=942b43ab-3dfc-4f0f-b9c6-6c7478223d63", "Sad");
+    static Emo e15 = new Emo("https://firebasestorage.googleapis.com/v0/b/emoguess-fe113.appspot.com/o/videos%2Fjerry_sad3.mp4?alt=media&token=d129eb50-ba83-481a-b465-0246137110ba", "Sad");
 
-    Emo[] emos = new Emo[]{
+    static Emo[] emos = new Emo[]{
             e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15,
     };
 
@@ -135,10 +163,6 @@ public class VideoFragment extends Fragment {
             horizontalViewPagerVideo.setAdapter(new ViewPagerAdapterVideo(mContext, emos));
             ImageFragment.attempts++;
             try {
-
-
-
-
                 /********* To get current emotion displayed on the screen *********/
                 /*******Code in ViewPagerAdapter to set the current view***************/
                 currentView = ViewPagerAdapterVideo.mCurrentView;
@@ -152,7 +176,16 @@ public class VideoFragment extends Fragment {
                 getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
                 System.out.println("Current emotion: "+getName);
                 getVideo= ((VideoView)viewGroup2.getChildAt(0));
-                System.out.println("Current emotion: "+getVideo);
+                System.out.println("Current video: "+getVideo);
+                getVideo.requestFocus();
+                getVideo.start();
+                getVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.setLooping(true);
+                        //mp.pause();
+                    }
+                });
 
                 /**********************************************************************/
 
@@ -278,7 +311,7 @@ public class VideoFragment extends Fragment {
                 lastZ = z;
 
                 if (z > FLIPCONSTANT && deltaZ > 0) { //pass
-                    horizontalViewPagerVideo.arrowScroll(View.FOCUS_RIGHT);
+                    horizontalViewPagerVideo.setAdapter(new ViewPagerAdapterVideo(mContext, emos));
                     ImageFragment.attempts++;
                     try {
 
@@ -298,6 +331,16 @@ public class VideoFragment extends Fragment {
                         getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
                         System.out.println("Current emotion: "+getName);
                         getVideo= ((VideoView)viewGroup2.getChildAt(0));
+                        System.out.println("Current video: "+getVideo);
+                        getVideo.requestFocus();
+                        getVideo.start();
+                        getVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                            @Override
+                            public void onPrepared(MediaPlayer mp) {
+                                mp.setLooping(true);
+                                //mp.pause();
+                            }
+                        });
                         /**********************************************************************/
 
 
@@ -309,7 +352,7 @@ public class VideoFragment extends Fragment {
                     }
 
                 } else if (z < -1 * FLIPCONSTANT && deltaZ > 0) {//got word
-                    horizontalViewPagerVideo.arrowScroll(View.FOCUS_RIGHT);
+                    horizontalViewPagerVideo.setAdapter(new ViewPagerAdapterVideo(mContext, emos));
                     ImageFragment.attempts++;
                     ImageFragment.score++;
                     try {
@@ -330,6 +373,16 @@ public class VideoFragment extends Fragment {
                         getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
                         System.out.println("Current emotion: "+getName);
                         getVideo= ((VideoView)viewGroup2.getChildAt(0));
+                        System.out.println("Current video: "+getVideo);
+                        getVideo.requestFocus();
+                        getVideo.start();
+                        getVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                            @Override
+                            public void onPrepared(MediaPlayer mp) {
+                                mp.setLooping(true);
+                                //mp.pause();
+                            }
+                        });
                         /**********************************************************************/
 
 
@@ -409,7 +462,7 @@ public class VideoFragment extends Fragment {
 
 
     public void starttimer() {
-        horizontalViewPagerVideo.setOnTouchListener(null);
+        //horizontalViewPagerVideo.setOnTouchListener(null);
         VideoActivity.mSensorManager.registerListener(VideoActivity.mSensorListener,
                  VideoActivity.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_UI);
@@ -434,12 +487,12 @@ public class VideoFragment extends Fragment {
         timerbutton.setText("RESUME");
         timerrunning = false;
         VideoActivity.mSensorManager.unregisterListener(VideoActivity.mSensorListener);
-        horizontalViewPagerVideo.setOnTouchListener(new View.OnTouchListener() {
-
-            public boolean onTouch(View arg0, MotionEvent arg1) {
-                return true;
-            }
-        });
+//        horizontalViewPagerVideo.setOnTouchListener(new View.OnTouchListener() {
+//
+//            public boolean onTouch(View arg0, MotionEvent arg1) {
+//                return true;
+//            }
+//        });
     }
 
 
@@ -477,6 +530,37 @@ public class VideoFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onPause() {
+        if (timerrunning) {
+            stoptimer();
+        }
+        System.out.println("p");
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        if (timerrunning) {
+            stoptimer();
+        }
+        System.out.println("s");
+        super.onStop();
+    }
+
+    @Override
+    public void onResume() {
+        if (!timerrunning) {
+            VideoActivity.mSensorManager.unregisterListener(VideoActivity.mSensorListener);
+        }
+        else {
+            VideoActivity.mSensorManager.registerListener(VideoActivity.mSensorListener,
+                    VideoActivity.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                    SensorManager.SENSOR_DELAY_UI);
+        }
+        super.onResume();
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -496,8 +580,8 @@ public class VideoFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         horizontalViewPagerVideo.setOffscreenPageLimit(1);
-        leftNav = view.findViewById(R.id.left_nav);
-        rightNav = view.findViewById(R.id.right_nav);
+       // leftNav = view.findViewById(R.id.left_nav);
+       // rightNav = view.findViewById(R.id.right_nav);
 
         horizontalViewPagerVideo.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -536,16 +620,16 @@ public class VideoFragment extends Fragment {
 //                    // Toaster.showShortMessage("Extra Page!");
 //                }
                 if (position == 0) {
-                    ImageFragment.attempts++;
-                    leftNav.setVisibility(View.INVISIBLE);
+                    //ImageFragment.attempts++;
+                   // leftNav.setVisibility(View.INVISIBLE);
                 } else
-                    leftNav.setVisibility(View.VISIBLE);
+                   // leftNav.setVisibility(View.VISIBLE);
 
-                if (position == emotions.length - 1) {
-                    rightNav.setVisibility(View.INVISIBLE);
+                if (position == emos.length - 1) {
+                   // rightNav.setVisibility(View.INVISIBLE);
                 } else {
-                    ImageFragment.attempts++;
-                    rightNav.setVisibility(View.VISIBLE);
+                    //ImageFragment.attempts++;
+                   // rightNav.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -556,74 +640,74 @@ public class VideoFragment extends Fragment {
         });
 
         // Images left navigation
-        leftNav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                horizontalViewPagerVideo.arrowScroll(View.FOCUS_LEFT);
-                try {
-
-
-
-
-                    /********* To get current emotion displayed on the screen *********/
-                    /*******Code in ViewPagerAdapter to set the current view***************/
-                    currentView = ViewPagerAdapterVideo.mCurrentView;
-
-                    ViewGroup viewGroup = ((ViewGroup)currentView);
-                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
-
-                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-                    System.out.println("Current emotion: "+getName);
-                    getVideo= ((VideoView)viewGroup2.getChildAt(0));
-                    /**********************************************************************/
-
-
-
-
-                }catch (Exception e){
-                    System.out.println(e);
-                    // Toaster.showShortMessage("Extra Page!");
-                }
-            }
-        });
-
-        // Images right navigatin
-        rightNav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImageFragment.attempts++;
-                try {
-                    horizontalViewPagerVideo.arrowScroll(View.FOCUS_RIGHT);
-
-
-
-
-                    /********* To get current emotion displayed on the screen *********/
-                    /*******Code in ViewPagerAdapter to set the current view***************/
-                    currentView = ViewPagerAdapterVideo.mCurrentView;
-
-                    ViewGroup viewGroup = ((ViewGroup)currentView);
-                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
-
-                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-                    System.out.println("Current emotion: "+getName);
-                    getVideo= ((VideoView)viewGroup2.getChildAt(0));
-                    /**********************************************************************/
-
-
-
-
-                }catch (Exception e){
-                    System.out.println(e);
-                    // Toaster.showShortMessage("Extra Page!");
-                }
-            }
-        });
+//        leftNav.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                horizontalViewPagerVideo.arrowScroll(View.FOCUS_LEFT);
+//                try {
+//
+//
+//
+//
+//                    /********* To get current emotion displayed on the screen *********/
+//                    /*******Code in ViewPagerAdapter to set the current view***************/
+//                    currentView = ViewPagerAdapterVideo.mCurrentView;
+//
+//                    ViewGroup viewGroup = ((ViewGroup)currentView);
+//                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+//                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+//                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+//                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+//
+//                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+//                    System.out.println("Current emotion: "+getName);
+//                    getVideo= ((VideoView)viewGroup2.getChildAt(0));
+//                    /**********************************************************************/
+//
+//
+//
+//
+//                }catch (Exception e){
+//                    System.out.println(e);
+//                    // Toaster.showShortMessage("Extra Page!");
+//                }
+//            }
+//        });
+//
+//        // Images right navigatin
+//        rightNav.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ImageFragment.attempts++;
+//                try {
+//                    horizontalViewPagerVideo.arrowScroll(View.FOCUS_RIGHT);
+//
+//
+//
+//
+//                    /********* To get current emotion displayed on the screen *********/
+//                    /*******Code in ViewPagerAdapter to set the current view***************/
+//                    currentView = ViewPagerAdapterVideo.mCurrentView;
+//
+//                    ViewGroup viewGroup = ((ViewGroup)currentView);
+//                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+//                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+//                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+//                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+//
+//                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+//                    System.out.println("Current emotion: "+getName);
+//                    getVideo= ((VideoView)viewGroup2.getChildAt(0));
+//                    /**********************************************************************/
+//
+//
+//
+//
+//                }catch (Exception e){
+//                    System.out.println(e);
+//                    // Toaster.showShortMessage("Extra Page!");
+//                }
+//            }
+//        });
     }
 }

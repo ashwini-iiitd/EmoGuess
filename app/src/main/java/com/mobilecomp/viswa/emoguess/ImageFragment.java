@@ -79,6 +79,12 @@ public class ImageFragment extends Fragment {
         emotions = (q).toArray(new String[q.size()]);
 //        imagesArray = getResources().obtainTypedArray(R.array.emo_images);
         horizontalViewPager = view.findViewById(R.id.viewPager);
+        horizontalViewPager.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                return true;
+            }
+        });
         return view;
     }
 
@@ -470,7 +476,7 @@ public class ImageFragment extends Fragment {
 
 
     public void starttimer() {
-        horizontalViewPager.setOnTouchListener(null);
+        //horizontalViewPager.setOnTouchListener(null);
         ImageActivity.mSensorManager.registerListener(ImageActivity.mSensorListener,
                 ImageActivity.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_UI);
@@ -496,39 +502,39 @@ public class ImageFragment extends Fragment {
         timerbutton.setText("RESUME");
         timerrunning = false;
         ImageActivity.mSensorManager.unregisterListener(ImageActivity.mSensorListener);
-        horizontalViewPager.setOnTouchListener(new View.OnTouchListener() {
-
-            public boolean onTouch(View arg0, MotionEvent arg1) {
-                return true;
-            }
-        });
+//        horizontalViewPager.setOnTouchListener(new View.OnTouchListener() {
+//
+//            public boolean onTouch(View arg0, MotionEvent arg1) {
+//                return true;
+//            }
+//        });
     }
 
-    public void OnScreen() {
-        PowerManager powerManager = (PowerManager) mContext.getSystemService(POWER_SERVICE);
-        boolean isScreenOn = powerManager.isScreenOn();
-
-        if (!isScreenOn) {
-            System.out.println("screen off");
-            // The screen has been locked
-            // do stuff...
-        }
-        else {
-            System.out.println("screen off");
-        }
-    }
-
-    private boolean isPhoneLocked(Context context) {
-        boolean isPhoneLock = false;
-        if (context != null) {
-            KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-            if (myKM != null && myKM.isKeyguardLocked()) {
-                isPhoneLock = true;
-            }
-        }
-        System.out.println(isPhoneLock);
-        return isPhoneLock;
-    }
+//    public void OnScreen() {
+//        PowerManager powerManager = (PowerManager) mContext.getSystemService(POWER_SERVICE);
+//        boolean isScreenOn = powerManager.isScreenOn();
+//
+//        if (!isScreenOn) {
+//            System.out.println("screen off");
+//            // The screen has been locked
+//            // do stuff...
+//        }
+//        else {
+//            System.out.println("screen off");
+//        }
+//    }
+//
+//    private boolean isPhoneLocked(Context context) {
+//        boolean isPhoneLock = false;
+//        if (context != null) {
+//            KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+//            if (myKM != null && myKM.isKeyguardLocked()) {
+//                isPhoneLock = true;
+//            }
+//        }
+//        System.out.println(isPhoneLock);
+//        return isPhoneLock;
+//    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void updatetimer() {
@@ -560,8 +566,41 @@ public class ImageFragment extends Fragment {
 
     @Override
     public void onDetach() {
+        System.out.println("d");
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onPause() {
+        if (timerrunning) {
+            stoptimer();
+        }
+        System.out.println("p");
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        if (timerrunning) {
+            stoptimer();
+        }
+        System.out.println("s");
+        super.onStop();
+    }
+
+    @Override
+    public void onResume() {
+        System.out.println("r");
+        if (!timerrunning) {
+            ImageActivity.mSensorManager.unregisterListener(ImageActivity.mSensorListener);
+        }
+        else {
+            ImageActivity.mSensorManager.registerListener(ImageActivity.mSensorListener,
+                    ImageActivity.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                    SensorManager.SENSOR_DELAY_UI);
+        }
+        super.onResume();
     }
 
     /**
@@ -583,8 +622,8 @@ public class ImageFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         horizontalViewPager.setOffscreenPageLimit(1);
-        leftNav = view.findViewById(R.id.left_nav);
-        rightNav = view.findViewById(R.id.right_nav);
+       // leftNav = view.findViewById(R.id.left_nav);
+      //  rightNav = view.findViewById(R.id.right_nav);
 
 
         horizontalViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -651,16 +690,16 @@ public class ImageFragment extends Fragment {
 //                    // Toaster.showShortMessage("Extra Page!");
 //                }
                 if (position == 0) {
-                    attempts++;
-                    leftNav.setVisibility(View.INVISIBLE);
+                    //attempts++;
+                   // leftNav.setVisibility(View.INVISIBLE);
                 } else
-                    leftNav.setVisibility(View.VISIBLE);
+                   // leftNav.setVisibility(View.VISIBLE);
 
                 if (position==emos.length-1){
-                    rightNav.setVisibility(View.INVISIBLE);
+                   // rightNav.setVisibility(View.INVISIBLE);
                 } else {
-                    attempts++;
-                    rightNav.setVisibility(View.VISIBLE);
+                   // attempts++;
+                   // rightNav.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -671,76 +710,76 @@ public class ImageFragment extends Fragment {
         });
 
         // Images left navigation
-        leftNav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                horizontalViewPager.arrowScroll(View.FOCUS_LEFT);
-                try {
-
-
-
-
-
-                    /********* To get current emotion displayed on the screen *********/
-                    /*******Code in ViewPagerAdapter to set the current view***************/
-                    currentView = ViewPagerAdapter.mCurrentView;
-
-                    ViewGroup viewGroup = ((ViewGroup)currentView);
-                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
-
-                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-                    System.out.println("Current emotion: "+getName);
-
-                    /**********************************************************************/
-
-
-
-
-                }catch (Exception e){
-                    System.out.println(e);
-                    // Toaster.showShortMessage("Extra Page!");
-                }
-
-            }
-        });
-
-        // Images right navigatin
-        rightNav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                attempts++;
-                try {
-                    horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
-
-
-
-
-                    /********* To get current emotion displayed on the screen *********/
-                    /*******Code in ViewPagerAdapter to set the current view***************/
-                    currentView = ViewPagerAdapter.mCurrentView;
-
-                    ViewGroup viewGroup = ((ViewGroup)currentView);
-                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
-
-                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-                    System.out.println("Current emotion: "+getName);
-
-                    /**********************************************************************/
-
-
-
-
-                }catch (Exception e){
-                    System.out.println(e);
-                    // Toaster.showShortMessage("Extra Page!");
-                }
-            }
-        });
+//        leftNav.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                horizontalViewPager.arrowScroll(View.FOCUS_LEFT);
+//                try {
+//
+//
+//
+//
+//
+//                    /********* To get current emotion displayed on the screen *********/
+//                    /*******Code in ViewPagerAdapter to set the current view***************/
+//                    currentView = ViewPagerAdapter.mCurrentView;
+//
+//                    ViewGroup viewGroup = ((ViewGroup)currentView);
+//                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+//                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+//                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+//                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+//
+//                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+//                    System.out.println("Current emotion: "+getName);
+//
+//                    /**********************************************************************/
+//
+//
+//
+//
+//                }catch (Exception e){
+//                    System.out.println(e);
+//                    // Toaster.showShortMessage("Extra Page!");
+//                }
+//
+//            }
+//        });
+//
+//        // Images right navigatin
+//        rightNav.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                attempts++;
+//                try {
+//                    horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
+//
+//
+//
+//
+//                    /********* To get current emotion displayed on the screen *********/
+//                    /*******Code in ViewPagerAdapter to set the current view***************/
+//                    currentView = ViewPagerAdapter.mCurrentView;
+//
+//                    ViewGroup viewGroup = ((ViewGroup)currentView);
+//                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+//                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+//                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+//                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+//
+//                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+//                    System.out.println("Current emotion: "+getName);
+//
+//                    /**********************************************************************/
+//
+//
+//
+//
+//                }catch (Exception e){
+//                    System.out.println(e);
+//                    // Toaster.showShortMessage("Extra Page!");
+//                }
+//            }
+//        });
     }
 }

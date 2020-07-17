@@ -146,7 +146,7 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
             takePicture();
         }
 //        if ((keyCode == KeyEvent.KEYCODE_POWER)){
-//            ImageFragment.stoptimer();
+//            System.out.println("p");
 //        }
         return true;
     }

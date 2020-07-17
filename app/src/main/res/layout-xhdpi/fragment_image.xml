@@ -67,26 +67,26 @@
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
-    <ImageButton
-        android:id="@+id/left_nav"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal|start"
-        app:srcCompat="@drawable/ic_action_left"
-        android:visibility="gone"
-        android:background="@null"
-        android:layout_below="@id/card"
-        android:layout_alignLeft="@id/viewPager" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/left_nav"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:layout_gravity="center_horizontal|start"-->
+<!--        app:srcCompat="@drawable/ic_action_left"-->
+<!--        android:visibility="gone"-->
+<!--        android:background="@null"-->
+<!--        android:layout_below="@id/card"-->
+<!--        android:layout_alignLeft="@id/viewPager" />-->
 
-    <ImageButton
-        android:id="@+id/right_nav"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal|end"
-        android:fadingEdge="horizontal"
-        app:srcCompat="@drawable/ic_action_right"
-        android:background="@null"
-        android:layout_below="@id/card"
-        android:layout_alignRight="@id/viewPager" />/>
+<!--    <ImageButton-->
+<!--        android:id="@+id/right_nav"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:layout_gravity="center_horizontal|end"-->
+<!--        android:fadingEdge="horizontal"-->
+<!--        app:srcCompat="@drawable/ic_action_right"-->
+<!--        android:background="@null"-->
+<!--        android:layout_below="@id/card"-->
+<!--        android:layout_alignRight="@id/viewPager" />/>-->
 
 </RelativeLayout>

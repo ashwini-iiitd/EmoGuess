@@ -117,11 +117,11 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        if (Build.VERSION.SDK_INT<=23) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},2);
-        }
+//        if (Build.VERSION.SDK_INT<=23) {
+//            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},2);
+//        }
 
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA},
+        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.INTERNET},
                 REQ_CODE_CAMERA_PERMISSION);
 
         txtRegister.setOnClickListener(new View.OnClickListener() {
