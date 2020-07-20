@@ -19,12 +19,14 @@
 
         <activity
             android:name=".VideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape"
             android:parentActivityName=".PlayActivity"/>
 
         <activity
             android:name=".ImageActivity"
             android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:parentActivityName=".PlayActivity"/>
 <!--        android:configChanges="keyboardHidden|orientation"-->
 
