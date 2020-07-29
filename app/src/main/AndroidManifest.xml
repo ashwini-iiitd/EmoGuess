@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mobilecomp.viswa.emoguess">
-    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="15" />
+<!--    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="15" />-->
 
     <application
         android:allowBackup="true"
@@ -20,7 +20,7 @@
         <activity
             android:name=".VideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="landscape" 
+            android:screenOrientation="landscape"
             android:parentActivityName=".PlayActivity"/>
 
         <activity
