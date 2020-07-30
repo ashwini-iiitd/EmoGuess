@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/login_layout"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_centerVertical="true"
     android:background="@drawable/bg3"
     android:backgroundTint="@color/colorOrange"
     android:backgroundTintMode="screen"
-    android:layout_centerVertical="true"
+    android:orientation="vertical"
     tools:context=".LoginFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardView4"
         android:layout_width="70dp"
         android:layout_height="20dp"
         android:layout_rowWeight="1"
@@ -23,13 +24,15 @@
         android:layout_marginTop="30dp"
         app:cardBackgroundColor="@color/colorOrange"
         app:cardCornerRadius="12dp"
-        app:cardElevation="6dp">
+        app:cardElevation="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/editLogEmail"
@@ -38,15 +41,16 @@
                 android:layout_centerHorizontal="true"
                 android:background="@color/colorOrange"
                 android:ems="10"
-                android:inputType="textEmailAddress"
                 android:fontFamily="@font/atma"
-                android:textStyle="bold"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
                 android:textSize="10dp"
-                android:hint="Email" />
+                android:textStyle="bold" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardView5"
         android:layout_width="70dp"
         android:layout_height="20dp"
         android:layout_rowWeight="1"
@@ -55,13 +59,15 @@
         android:layout_marginTop="57dp"
         app:cardBackgroundColor="@color/colorOrange"
         app:cardCornerRadius="12dp"
-        app:cardElevation="6dp">
+        app:cardElevation="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/editLogPassword"
@@ -70,15 +76,16 @@
                 android:layout_centerHorizontal="true"
                 android:background="@color/colorOrange"
                 android:ems="10"
-                android:inputType="textPassword"
-                android:hint="Password"
                 android:fontFamily="@font/atma"
-                android:textStyle="bold"
-                android:textSize="10dp" />
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textSize="10dp"
+                android:textStyle="bold" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardView6"
         android:layout_width="70dp"
         android:layout_height="20dp"
         android:layout_rowWeight="1"
@@ -87,24 +94,27 @@
         android:layout_marginTop="90dp"
         app:cardBackgroundColor="@color/colorAccentLight"
         app:cardCornerRadius="12dp"
-        app:cardElevation="6dp">
+        app:cardElevation="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
             <Button
-                android:theme="@style/AppTheme.Button"
-                android:id = "@+id/loginButton"
+                android:id="@+id/loginButton"
                 android:layout_width="70dp"
                 android:layout_height="20dp"
                 android:layout_margin="1dp"
                 android:background="@color/colorAccentLight"
                 android:fontFamily="@font/atma"
-                android:textStyle="bold"
+                android:text="Login"
                 android:textSize="10dp"
-                android:text="Login" />
+                android:textStyle="bold"
+                android:theme="@style/AppTheme.Button" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -113,19 +123,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="115dp"
-        android:layout_centerHorizontal="true"
         android:fontFamily="@font/atma"
-        android:textStyle="bold"
+        android:text="New User? Register Here"
         android:textSize="5dp"
-        android:text="New User? Register Here">
-    </TextView>
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
 
     <ProgressBar
         android:id="@+id/progLoginBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textRegister"
         android:layout_marginTop="108dp"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textRegister" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
