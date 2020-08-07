@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,6 +12,7 @@
     <!-- TODO: Update blank fragment layout -->
 
     <GridLayout
+        android:id="@+id/grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:alignmentMode="alignMargins"
@@ -20,27 +21,25 @@
         android:rowCount="1">
 
         <android.support.v7.widget.CardView
-            android:layout_width="150dp"
-            android:layout_height="200dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_marginTop="200dp"
-            android:layout_margin="12dp"
-            app:cardCornerRadius="12dp"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_170sdp"
+            android:layout_marginTop="@dimen/_170sdp"
+            android:layout_margin="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_13sdp"
             app:cardBackgroundColor="@color/colorOrange2"
-            app:cardElevation="6dp">
+            app:cardElevation="@dimen/_13sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="@dimen/_3sdp">
 
                 <ImageButton
                     android:id="@+id/bImage"
-                    android:layout_width="138dp"
-                    android:layout_height="130dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_110sdp"
                     android:background="@drawable/bg6" />
                 <Button
                     android:id="@+id/bbImage"
@@ -48,34 +47,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/atma"
-                    android:textSize="17dp"
+                    android:textSize="@dimen/_15ssp"
                     android:textStyle="bold"
                     android:text="Image Play" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:layout_width="150dp"
-            android:layout_height="200dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_marginTop="200dp"
-            android:layout_margin="12dp"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_170sdp"
+            android:layout_marginTop="@dimen/_170sdp"
+            android:layout_margin="@dimen/_6sdp"
+            app:cardCornerRadius="@dimen/_13sdp"
             app:cardBackgroundColor="@color/colorOrange2"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="6dp">
+            app:cardElevation="@dimen/_13sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="@dimen/_3sdp">
 
                 <ImageButton
                     android:id="@+id/bVideo"
-                    android:layout_width="143dp"
-                    android:layout_height="131dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_110sdp"
                     android:background="@drawable/test" />
                 <Button
                     android:id="@+id/bbVideo"
@@ -83,7 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/atma"
-                    android:textSize="17dp"
+                    android:textSize="@dimen/_15ssp"
                     android:textStyle="bold"
                     android:text="Video Play" />
             </LinearLayout>
@@ -91,4 +88,31 @@
 
     </GridLayout>
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.CardView
+        android:id="@+id/sh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_130sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        app:cardBackgroundColor="@color/colorAccentLight"
+        android:layout_below="@+id/grid"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_12sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/share"
+                android:theme="@style/AppTheme.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_share" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

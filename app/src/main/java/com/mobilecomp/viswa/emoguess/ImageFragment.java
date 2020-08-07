@@ -238,24 +238,24 @@ public class ImageFragment extends Fragment {
      */
     public static class ShakeEventListener implements SensorEventListener {
 
-        private final int FLIPCONSTANT = 8;
+        private final int FLIPCONSTANT = 5;
         private boolean mInitialized;
 
         /**
          * Minimum movement force to consider.
          */
-        private static final int MIN_FORCE = 100;
+        private static final int MIN_FORCE = 50;
 
         /**
          * Minimum times in a shake gesture that the direction of movement needs to
          * change.
          */
-        private static final int MIN_DIRECTION_CHANGE = 100;
+        private static final int MIN_DIRECTION_CHANGE = 70;
 
         /**
          * Maximum pause between movements.
          */
-        private static final int MAX_PAUSE_BETHWEEN_DIRECTION_CHANGE = 200;
+        private static final int MAX_PAUSE_BETWEEN_DIRECTION_CHANGE = 200;
 
         /**
          * Maximum allowed time for shake gesture.
@@ -427,7 +427,7 @@ public class ImageFragment extends Fragment {
 
                 // check if the last movement was not long ago
                 long lastChangeWasAgo = now - mLastDirectionChangeTime;
-                if (lastChangeWasAgo < MAX_PAUSE_BETHWEEN_DIRECTION_CHANGE) {
+                if (lastChangeWasAgo < MAX_PAUSE_BETWEEN_DIRECTION_CHANGE) {
 
                     // store movement data
                     mLastDirectionChangeTime = now;
@@ -581,7 +581,14 @@ public class ImageFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+
+    @Override
     public void onStop() {
+//        getActivity().getIntent().putExtras();
         if (timerrunning) {
             stoptimer();
         }
@@ -591,6 +598,7 @@ public class ImageFragment extends Fragment {
 
     @Override
     public void onResume() {
+       // getActivity().getIntent().getExtras();
         System.out.println("r");
         if (!timerrunning) {
             ImageActivity.mSensorManager.unregisterListener(ImageActivity.mSensorListener);

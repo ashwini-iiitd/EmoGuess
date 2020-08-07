@@ -10,5 +10,5 @@
     android:fontFamily="casual"
     android:textAlignment="center"
     android:textColor="@color/white"
-    android:textSize="17sp"
+    android:textSize="@dimen/_14ssp"
     android:textStyle="bold"/>

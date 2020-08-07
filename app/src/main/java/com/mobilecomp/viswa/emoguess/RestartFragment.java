@@ -2,6 +2,7 @@ package com.mobilecomp.viswa.emoguess;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ComponentName;
@@ -13,6 +14,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.media.ExifInterface;
@@ -28,12 +30,16 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -117,6 +123,8 @@ public class RestartFragment extends Fragment {
         storageReference = storage.getReference();
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -129,8 +137,21 @@ public class RestartFragment extends Fragment {
         score.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score) + " out of " + String.valueOf(ImageFragment.attempts), Toast.LENGTH_LONG);
-                toast.show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                final TextView input = new TextView(getContext());
+                input.setText("Score: " + String.valueOf(ImageFragment.score) + " out of " + String.valueOf(ImageFragment.attempts));
+                input.setBackgroundColor(Color.parseColor("#6ab7ff"));
+                input.setTextColor(Color.WHITE);
+                input.setTextSize(25);
+                input.setGravity(Gravity.CENTER);
+                input.setHeight(150);
+                input.setWidth(200);
+                builder.setView(input);
+                AlertDialog alert = builder.create();
+                alert.show();
+
+//                Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score) + " out of " + String.valueOf(ImageFragment.attempts), Toast.LENGTH_LONG);
+//                toast.show();
 //                if (ImageFragment.timelefttext.compareTo("0:00") == 0) {
 //                    System.out.println("score");
 //                    Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score), Toast.LENGTH_LONG);
@@ -152,8 +173,20 @@ public class RestartFragment extends Fragment {
         score1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score) + " out of " + String.valueOf(ImageFragment.attempts), Toast.LENGTH_LONG);
-                toast.show();
+//                Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score) + " out of " + String.valueOf(ImageFragment.attempts), Toast.LENGTH_LONG);
+//                toast.show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                final TextView input = new TextView(getContext());
+                input.setText("Score: " + String.valueOf(ImageFragment.score) + " out of " + String.valueOf(ImageFragment.attempts));
+                input.setBackgroundColor(Color.parseColor("#6ab7ff"));
+                input.setTextColor(Color.WHITE);
+                input.setTextSize(25);
+                input.setGravity(Gravity.CENTER);
+                input.setHeight(150);
+                input.setWidth(200);
+                builder.setView(input);
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         });
 

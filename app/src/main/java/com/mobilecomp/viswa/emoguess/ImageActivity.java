@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import com.androidhiddencamera.HiddenCameraActivity;
 
@@ -65,11 +67,12 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
     private static final int REQ_CODE_CAMERA_PERMISSION = 1253;
     private CameraConfig mCameraConfig;
     private Context mContext;
+    public AudioManager audioManager;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onCreate(final Bundle savedInstanceState) {
-
+        audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mSensorListener = new ImageFragment.ShakeEventListener();
 
@@ -142,12 +145,21 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)){
-            takePicture();
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)){
+            int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+            int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+            float percent = 0.5f;
+            int fiftyVolume = (int) (maxVolume*percent);
+            if (currentVolume<fiftyVolume) {
+                audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
+            }
+            if (currentVolume>fiftyVolume) {
+                audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
+            }
         }
-//        if ((keyCode == KeyEvent.KEYCODE_POWER)){
-//            System.out.println("p");
-//        }
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)){
+           takePicture();
+        }
         return true;
     }
 

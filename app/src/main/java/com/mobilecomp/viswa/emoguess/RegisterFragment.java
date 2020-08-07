@@ -94,6 +94,10 @@ public class RegisterFragment extends Fragment {
                 final String fullname = editName.getText().toString();
                 final String contact = editContact.getText().toString();
 
+                if(TextUtils.isEmpty(fullname)){
+                    editName.setError("Name is required");
+                    return;
+                }
                 if(TextUtils.isEmpty(email)){
                     editEmail.setError("Email is required");
                     return;
@@ -110,7 +114,7 @@ public class RegisterFragment extends Fragment {
                 if(contact.matches(MobilePattern)) {
                     Toast.makeText(getContext(), "Phone number is valid", Toast.LENGTH_SHORT).show();
                 } else if(!contact.matches(MobilePattern)) {
-                    Toast.makeText(getContext(), "Please enter valid 10 digit phone number", Toast.LENGTH_SHORT).show();
+                    editContact.setError("Please enter valid 10 digit phone number");
                     return;
                 }
                 progressBar.setVisibility(view.VISIBLE);

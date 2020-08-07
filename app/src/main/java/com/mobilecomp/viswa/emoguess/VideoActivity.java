@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -66,10 +67,13 @@ public class VideoActivity extends HiddenCameraActivity implements VideoFragment
     public static VideoFragment.ShakeEventListener mSensorListener;
     private static final int REQ_CODE_CAMERA_PERMISSION = 1253;
     private CameraConfig mCameraConfig;
+    public AudioManager audioManager;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onCreate(final Bundle savedInstanceState) {
+        audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mSensorListener = new VideoFragment.ShakeEventListener();
 
@@ -137,11 +141,34 @@ public class VideoActivity extends HiddenCameraActivity implements VideoFragment
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)){
+            int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+            int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+            float percent = 0.5f;
+            int fiftyVolume = (int) (maxVolume*percent);
+            if (currentVolume<fiftyVolume) {
+                audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
+            }
+            if (currentVolume>fiftyVolume) {
+                audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
+            }
+        }
         if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)){
-            takePicture();
+           takePicture();
         }
         return true;
     }
+
+//    @Override
+//    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
+//        if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)){
+//            audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
+//        }
+//        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)){
+//            audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
+//        }
+//        return true;
+//    }
 
     @SuppressLint("MissingPermission")
     @Override
