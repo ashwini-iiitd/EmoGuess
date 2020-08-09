@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -190,26 +191,42 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
         Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
 
         //Display the image to the image view
-     //   ((ImageView) findViewById(R.id.cam_prev)).setImageBitmap(bitmap);
+        //   ((ImageView) findViewById(R.id.cam_prev)).setImageBitmap(bitmap);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     REQUEST_WRITE_STORAGE);
         }
 
-        String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath()+"/EmoGuess";
+        String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/EmoGuess";
         File dir = new File(file_path);
-       // System.out.println(file_path);
-        if(!dir.exists())
+        // System.out.println(file_path);
+        if (!dir.exists())
             dir.mkdirs();
 
-        File file = new File(dir, "emoguess_" + ImageFragment.getName+ new SimpleDateFormat("_yyyyMMdd_HHmmss").format(new Date()) + ".png");
-        FileOutputStream fOut = new FileOutputStream(file);
+        File file = new File(dir, "emoguess_" + ImageFragment.getName + new SimpleDateFormat("_yyyyMMdd_HHmmss").format(new Date()) + ".png");
+        try {
+            if (!file.exists()) {
+                boolean is = file.createNewFile();
+                MediaScannerConnection.scanFile(ImageActivity.this, new String[]{file.getPath()}, new String[]{"image/*"}, null);
+                FileOutputStream ostream = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 85, ostream);
+                ostream.flush();
+                ostream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
 
-        bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
-        fOut.flush();
-        fOut.close();
+        }
     }
+//        //  mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+//        MediaScannerConnection.scanFile(mContext, new String[]  {file.getPath()} , new String[]{"image/*"}, null);
+//        FileOutputStream fOut = new FileOutputStream(file);
+//
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+//        fOut.flush();
+//        fOut.close();
+//    }
 
     @Override
     public void onCameraError(@CameraError.CameraErrorCodes int errorCode) {
@@ -253,6 +270,20 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
         }
     }
 
+    public static final String DATA1_KEY = "data1";
+
+    private boolean value1;
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(DATA1_KEY, value1);
+    }
+
+    @Override
+    protected void onRestoreInstanceState (Bundle savedInstanceState) {
+        value1 = savedInstanceState.getBoolean(DATA1_KEY);
+    }
 
     @Override
     public void onResume() {

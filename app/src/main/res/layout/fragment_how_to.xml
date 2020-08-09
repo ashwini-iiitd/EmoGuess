@@ -39,6 +39,24 @@
         app:cardCornerRadius="@dimen/_10sdp"
         app:cardElevation="@dimen/_12sdp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"/>
+
+        <Button
+            android:theme="@style/AppTheme.Button"
+            android:id="@+id/howtoparent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="casual"
+            android:text="For Parents: "
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold" />
+
         <!--        <LinearLayout-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="match_parent"-->
@@ -57,12 +75,12 @@
 <!--                android:textSize="13.7dp"-->
 <!--                android:textStyle="bold" />-->
 
-            <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="casual"
-                android:spinnerMode="dropdown"/>
+<!--            <Spinner-->
+<!--                android:id="@+id/spinner1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:fontFamily="casual"-->
+<!--                android:spinnerMode="dropdown"/>-->
 
 
 <!--            <TextView-->

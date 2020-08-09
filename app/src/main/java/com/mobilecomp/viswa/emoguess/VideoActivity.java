@@ -5,6 +5,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -211,12 +212,19 @@ public class VideoActivity extends HiddenCameraActivity implements VideoFragment
         if(!dir.exists())
             dir.mkdirs();
         File file = new File(dir, "emoguess_" + VideoFragment.getName+ new SimpleDateFormat("_yyyyMMdd_HHmmss").format(new Date()) + ".png");
-        //  System.out.println(file);
-        FileOutputStream fOut = new FileOutputStream(file);
+        try {
+            if (!file.exists()) {
+                boolean is = file.createNewFile();
+                MediaScannerConnection.scanFile(VideoActivity.this, new String[]{file.getPath()}, new String[]{"image/*"}, null);
+                FileOutputStream ostream = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 85, ostream);
+                ostream.flush();
+                ostream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
 
-        bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
-        fOut.flush();
-        fOut.close();
+        }
     }
 
     @Override
@@ -258,6 +266,21 @@ public class VideoActivity extends HiddenCameraActivity implements VideoFragment
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public static final String DATA1_KEY = "data1";
+
+    private boolean value1;
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(DATA1_KEY, value1);
+    }
+
+    @Override
+    protected void onRestoreInstanceState (Bundle savedInstanceState) {
+        value1 = savedInstanceState.getBoolean(DATA1_KEY);
     }
 
 

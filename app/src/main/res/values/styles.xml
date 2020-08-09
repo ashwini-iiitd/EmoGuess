@@ -20,6 +20,12 @@
         <item name="buttonStyle">@style/AppTheme.Button</item>
     </style>
 
+    <style name="AlertDialog" parent="Base.Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorAccentLight</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">casual</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

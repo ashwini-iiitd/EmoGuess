@@ -1,5 +1,6 @@
 package com.mobilecomp.viswa.emoguess;
 
+import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.os.PowerManager;
 import android.support.v4.app.Fragment;
@@ -57,10 +58,12 @@ public class ImageFragment extends Fragment {
         // Required empty public constructor
     }
 
+   // @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater,container,savedInstanceState);
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_image, container, false);
         timertext = view.findViewById(R.id.countdown_text);
@@ -79,12 +82,6 @@ public class ImageFragment extends Fragment {
         emotions = (q).toArray(new String[q.size()]);
 //        imagesArray = getResources().obtainTypedArray(R.array.emo_images);
         horizontalViewPager = view.findViewById(R.id.viewPager);
-        horizontalViewPager.setOnTouchListener(new View.OnTouchListener() {
-
-            public boolean onTouch(View arg0, MotionEvent arg1) {
-                return true;
-            }
-        });
         return view;
     }
 
@@ -199,36 +196,32 @@ public class ImageFragment extends Fragment {
             stoptimer();
             //startActivity(new Intent(getContext(), RestartActivity.class));
         } else {
-            starttimer();
-            horizontalViewPager.setAdapter(new ViewPagerAdapter(mContext, emos));
-            attempts++;
-            try {
+            if (timerbutton.getText().equals("START")) {
+                horizontalViewPager.setAdapter(new ViewPagerAdapter(mContext, emos));
+                starttimer();
+                attempts++;
+                try {
+                    /********* To get current emotion displayed on the screen *********/
+                    /*******Code in ViewPagerAdapter to set the current view***************/
+                    currentView = ViewPagerAdapter.mCurrentView;
 
+                    ViewGroup viewGroup = ((ViewGroup)currentView);
+                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
 
+                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+                    System.out.println("Current emotion: "+getName);
 
-
-
-                /********* To get current emotion displayed on the screen *********/
-                /*******Code in ViewPagerAdapter to set the current view***************/
-                currentView = ViewPagerAdapter.mCurrentView;
-
-                ViewGroup viewGroup = ((ViewGroup)currentView);
-                ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-                ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-                LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-                ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
-
-                getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-                System.out.println("Current emotion: "+getName);
-
-                /**********************************************************************/
-
-
-
-
-            }catch (Exception e){
-                System.out.println(e);
-                // Toaster.showShortMessage("Extra Page!");
+                    /**********************************************************************/
+                }catch (Exception e){
+                    System.out.println(e);
+                    // Toaster.showShortMessage("Extra Page!");
+                }
+            }
+            else {
+                starttimer();
             }
         }
     }
@@ -580,15 +573,10 @@ public class ImageFragment extends Fragment {
         super.onPause();
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
 
     @Override
     public void onStop() {
-//        getActivity().getIntent().putExtras();
+        //getActivity().getIntent().putExtras();
         if (timerrunning) {
             stoptimer();
         }

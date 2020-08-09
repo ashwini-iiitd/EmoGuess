@@ -3,6 +3,7 @@ package com.mobilecomp.viswa.emoguess;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -50,6 +51,7 @@ public class VideoFragment extends Fragment {
     private static View currentView;
     static String getName;
     static VideoView getVideo;
+    static int stopPosition;
 
     private OnFragmentInteractionListener mListener;
 
@@ -79,13 +81,6 @@ public class VideoFragment extends Fragment {
         ArrayList<String> q = bundle.getStringArrayList("emotions");
         emotions = (q).toArray(new String[q.size()]);
         horizontalViewPagerVideo = view.findViewById(R.id.viewPagerVideo);
-        horizontalViewPagerVideo.setOffscreenPageLimit(0);
-        horizontalViewPagerVideo.setOnTouchListener(new View.OnTouchListener() {
-
-            public boolean onTouch(View arg0, MotionEvent arg1) {
-                return true;
-            }
-        });
         return view;
     }
 
@@ -159,42 +154,53 @@ public class VideoFragment extends Fragment {
             stoptimer();
             //startActivity(new Intent(getContext(), RestartActivity.class));
         } else {
-            starttimer();
-            horizontalViewPagerVideo.setAdapter(new ViewPagerAdapterVideo(mContext, emos));
-            ImageFragment.attempts++;
-            try {
-                /********* To get current emotion displayed on the screen *********/
-                /*******Code in ViewPagerAdapter to set the current view***************/
-                currentView = ViewPagerAdapterVideo.mCurrentView;
+            if (timerbutton.getText().equals("START")) {
+                horizontalViewPagerVideo.setAdapter(new ViewPagerAdapterVideo(mContext, emos));
+                starttimer();
+                ImageFragment.attempts++;
+                try {
+                    /********* To get current emotion displayed on the screen *********/
+                    /*******Code in ViewPagerAdapter to set the current view***************/
+                    currentView = ViewPagerAdapterVideo.mCurrentView;
 
-                ViewGroup viewGroup = ((ViewGroup)currentView);
-                ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-                ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-                LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-                ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+                    ViewGroup viewGroup = ((ViewGroup)currentView);
+                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
 
-                getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-                System.out.println("Current emotion: "+getName);
-                getVideo= ((VideoView)viewGroup2.getChildAt(0));
-                System.out.println("Current video: "+getVideo);
-                getVideo.requestFocus();
-                getVideo.start();
-                getVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
-                        mp.setLooping(true);
-                        //mp.pause();
-                    }
-                });
+                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+                    System.out.println("Current emotion: "+getName);
+                    getVideo= ((VideoView)viewGroup2.getChildAt(0));
+                    System.out.println("Current video: "+getVideo);
+                    getVideo.requestFocus();
+                    getVideo.start();
+                    getVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                            mp.setLooping(true);
+                            getVideo.setBackgroundColor(Color.TRANSPARENT);
+                            //mp.pause();
+                        }
+                    });
 
-                /**********************************************************************/
+                    /**********************************************************************/
 
 
 
 
-            }catch (Exception e){
-                System.out.println(e);
-                // Toaster.showShortMessage("Extra Page!");
+                }catch (Exception e){
+                    System.out.println(e);
+                    // Toaster.showShortMessage("Extra Page!");
+                }
+
+            }
+            else {
+                starttimer();
+                if (getVideo != null){
+                    getVideo.start();
+                }
+               // getVideo.resume();
             }
         }
     }
@@ -338,6 +344,7 @@ public class VideoFragment extends Fragment {
                             @Override
                             public void onPrepared(MediaPlayer mp) {
                                 mp.setLooping(true);
+                                getVideo.setBackgroundColor(Color.TRANSPARENT);
                                 //mp.pause();
                             }
                         });
@@ -380,6 +387,7 @@ public class VideoFragment extends Fragment {
                             @Override
                             public void onPrepared(MediaPlayer mp) {
                                 mp.setLooping(true);
+                                getVideo.setBackgroundColor(Color.TRANSPARENT);
                                 //mp.pause();
                             }
                         });
@@ -483,6 +491,9 @@ public class VideoFragment extends Fragment {
     }
 
     public void stoptimer() {
+        if (getVideo != null){
+            getVideo.pause();
+        }
         timer.cancel();
         timerbutton.setText("RESUME");
         timerrunning = false;
@@ -536,6 +547,9 @@ public class VideoFragment extends Fragment {
             stoptimer();
         }
         System.out.println("p");
+        if (getVideo != null){
+            getVideo.pause();
+        }
         super.onPause();
     }
 
@@ -545,6 +559,9 @@ public class VideoFragment extends Fragment {
             stoptimer();
         }
         System.out.println("s");
+        if (getVideo != null){
+            getVideo.pause();
+        }
         super.onStop();
     }
 
@@ -554,6 +571,9 @@ public class VideoFragment extends Fragment {
             VideoActivity.mSensorManager.unregisterListener(VideoActivity.mSensorListener);
         }
         else {
+            if (getVideo != null){
+                getVideo.start();
+            }
             VideoActivity.mSensorManager.registerListener(VideoActivity.mSensorListener,
                     VideoActivity.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                     SensorManager.SENSOR_DELAY_UI);

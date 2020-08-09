@@ -7,12 +7,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.TypefaceSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +26,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.common.base.Strings;
 
 
 /**
@@ -92,42 +99,80 @@ public class HowToFragment extends Fragment implements AdapterView.OnItemSelecte
             }
         });
 
-        Spinner dropdown = view.findViewById(R.id.spinner1);
-        //Button b= view.findViewById(R.id.t);
-        String[] items = new String[]{"How to Play", "How to Share"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, items) {
-
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View v = super.getView(position, convertView, parent);
-                Typeface externalFont=Typeface.create("casual", Typeface.BOLD);
-                ((TextView) v).setTextColor(Color.WHITE);
-                ((TextView) v).setTypeface(externalFont);
-
-                return v;
+        Button b1=view.findViewById(R.id.howtoparent);
+        b1.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View view) {
+                final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity(),R.style.AlertDialog);
+                //builder.setTitle("For Parents: ");
+                final SpannableString okString = new SpannableString("How to Play");
+                okString.setSpan(new ForegroundColorSpan(Color.WHITE), 0, 11, 0);
+                okString.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 11, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                final SpannableString okString1 = new SpannableString("How to Share");
+                okString1.setSpan(new ForegroundColorSpan(Color.WHITE), 0, 12, 0);
+                okString1.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 12, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                final SpannableString[] options = {okString, okString1};
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // the user clicked on colors[which]
+                        if (okString.equals(options[which])) {
+                            final Dialog dg = new Dialog(getContext());
+                            dg.setContentView(R.layout.how_to_play_parents);
+                            dg.setTitle("How to Play:");
+                            dg.show();
+                        }
+                        if (okString1.equals(options[which])) {
+                            final Dialog dg = new Dialog(getContext());
+                            dg.setContentView(R.layout.how_to_share_parents);
+                            dg.setTitle("How to Share:");
+                            dg.show();
+                        }
+                    }
+                });
+                AlertDialog dia = builder.create();
+                dia.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#6ab7ff")));
+                dia.show();
             }
+        });
 
-
-            public View getDropDownView(int position,  View convertView,  ViewGroup parent) {
-                View v =super.getDropDownView(position, convertView, parent);
-
-                Typeface externalFont=Typeface.create("casual", Typeface.BOLD);
-                ((TextView) v).setTypeface(externalFont);
-                v.setBackgroundColor(Color.parseColor("#FDA172"));
-                ((TextView) v).setTextColor(Color.WHITE);
-
-                return v;
-            }
-        };
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //dropdown.setAdapter(adapter);
-        dropdown.setAdapter(
-                new NothingSelectedSpinnerAdapter(
-                        adapter,
-                        R.layout.contact_spinner_row_nothing_selected,
-                        // R.layout.contact_spinner_nothing_selected_dropdown, // Optional
-                        getContext()));
-        dropdown.setOnItemSelectedListener(this);
-       // dropdown.setPrompt("For Parents: ");
+//        Spinner dropdown = view.findViewById(R.id.spinner1);
+//        //Button b= view.findViewById(R.id.t);
+//        String[] items = new String[]{"How to Play", "How to Share"};
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, items) {
+//
+//            public View getView(int position, View convertView, ViewGroup parent) {
+//                View v = super.getView(position, convertView, parent);
+//                Typeface externalFont=Typeface.create("casual", Typeface.BOLD);
+//                ((TextView) v).setTextColor(Color.WHITE);
+//                ((TextView) v).setTypeface(externalFont);
+//
+//                return v;
+//            }
+//
+//
+//            public View getDropDownView(int position,  View convertView,  ViewGroup parent) {
+//                View v =super.getDropDownView(position, convertView, parent);
+//
+//                Typeface externalFont=Typeface.create("casual", Typeface.BOLD);
+//                ((TextView) v).setTypeface(externalFont);
+//                v.setBackgroundColor(Color.parseColor("#FDA172"));
+//                ((TextView) v).setTextColor(Color.WHITE);
+//
+//                return v;
+//            }
+//        };
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        //dropdown.setAdapter(adapter);
+//        dropdown.setAdapter(
+//                new NothingSelectedSpinnerAdapter(
+//                        adapter,
+//                        R.layout.contact_spinner_row_nothing_selected,
+//                        // R.layout.contact_spinner_nothing_selected_dropdown, // Optional
+//                        getContext()));
+//        dropdown.setOnItemSelectedListener(this);
+//       // dropdown.setPrompt("For Parents: ");
         return view;
     }
 

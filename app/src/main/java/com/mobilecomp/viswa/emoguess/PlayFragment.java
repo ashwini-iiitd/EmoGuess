@@ -98,10 +98,10 @@ public class PlayFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-            storage = FirebaseStorage.getInstance();
-            fAuth = FirebaseAuth.getInstance();
-            storageReference = storage.getReference();
         }
+        storage = FirebaseStorage.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        storageReference = storage.getReference();
     }
 
 
