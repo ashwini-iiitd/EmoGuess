@@ -33,7 +33,7 @@ import java.util.Map;
 
 public class RegisterFragment extends Fragment {
 
-    EditText editName, editEmail, editContact, editPassword;
+    EditText editName, editEmail, editContact, editPassword, editAge;
     Button buttonRegister;
     TextView txtLogin;
     ProgressBar progressBar;
@@ -74,6 +74,7 @@ public class RegisterFragment extends Fragment {
         editEmail = view.findViewById(R.id.editEmail);
         editPassword = view.findViewById(R.id.editPassword);
         editContact = view.findViewById(R.id.editContact);
+        editAge = view.findViewById(R.id.editAge);
         buttonRegister = view.findViewById(R.id.registerButton);
         txtLogin = view.findViewById(R.id.textLogin);
         progressBar = view.findViewById(R.id.progBar);
@@ -93,6 +94,7 @@ public class RegisterFragment extends Fragment {
                 String password = editPassword.getText().toString().trim();
                 final String fullname = editName.getText().toString();
                 final String contact = editContact.getText().toString();
+                final String age = editAge.getText().toString();
 
                 if(TextUtils.isEmpty(fullname)){
                     editName.setError("Name is required");
@@ -104,6 +106,16 @@ public class RegisterFragment extends Fragment {
                 }
                 if(TextUtils.isEmpty(password)){
                     editPassword.setError("Password is required");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(contact)){
+                    editContact.setError("Contact Number is required");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(age)){
+                    editAge.setError("Age of child is required");
                     return;
                 }
 
@@ -136,6 +148,7 @@ public class RegisterFragment extends Fragment {
                             user.put("name", fullname);
                             user.put("email", email);
                             user.put("contact", contact);
+                            user.put("age of child", age);
 
                             docReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

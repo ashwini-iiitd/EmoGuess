@@ -2,6 +2,7 @@ package com.mobilecomp.viswa.emoguess;
 
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
+import android.media.MediaPlayer;
 import android.os.PowerManager;
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -40,7 +41,7 @@ public class ImageFragment extends Fragment {
     View view;
     String[] emotions;
     static HorizontalViewPager horizontalViewPager;
-    private Context mContext;
+    private static Context mContext;
     private TypedArray imagesArray;
     static int score;
     static int attempts;
@@ -337,6 +338,8 @@ public class ImageFragment extends Fragment {
                 lastZ = z;
 
                 if (z > FLIPCONSTANT && deltaZ > 0) { //pass
+                    final MediaPlayer ring1= MediaPlayer.create(mContext, R.raw.wrong);
+                    ring1.start();
                     horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
                     attempts++;
                     try {
@@ -369,6 +372,8 @@ public class ImageFragment extends Fragment {
                     }
 
                 } else if (z < -1 * FLIPCONSTANT && deltaZ > 0) {//got word
+                    final MediaPlayer ring= MediaPlayer.create(mContext, R.raw.correct);
+                    ring.start();
                     horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
                     attempts++;
                     score++;
@@ -543,6 +548,10 @@ public class ImageFragment extends Fragment {
             startActivity(new Intent(getContext(), RestartActivity.class));
             Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(score) +" out of "+ String.valueOf(attempts), Toast.LENGTH_SHORT);
             toast.show();
+        }
+        if (timelefttext.compareTo("0:03") == 0) {
+            final MediaPlayer ring2= MediaPlayer.create(mContext, R.raw.timer);
+            ring2.start();
         }
     }
 

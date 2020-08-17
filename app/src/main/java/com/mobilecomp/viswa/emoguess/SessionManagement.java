@@ -20,6 +20,7 @@ public class SessionManagement {
         String name=user.getName();
         String email=user.getEmail();
         String phone=user.getPhone();
+        String age=user.getAge();
         editor.putInt(skey, Integer.parseInt(phone)).commit();
     }
 

@@ -6,11 +6,13 @@ public class User {
     String name;
     String email;
     String phone;
+    String childage;
 
-    public User(String name, String email, String phone) {
+    public User(String name, String email, String phone, String childage) {
         this.name=name;
         this.email=email;
         this.phone=phone;
+        this.childage=childage;
     }
 
     public String getName() {
@@ -35,5 +37,13 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone=phone;
+    }
+
+    public String getAge() {
+        return childage;
+    }
+
+    public void setAge(String age) {
+        this.childage = age;
     }
 }

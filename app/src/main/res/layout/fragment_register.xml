@@ -16,7 +16,7 @@
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_85sdp"
-        android:layout_marginTop="@dimen/_150sdp"
+        android:layout_marginTop="@dimen/_130sdp"
         app:cardBackgroundColor="@color/colorOrange"
         app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="@dimen/_35sdp"
@@ -50,7 +50,7 @@
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_85sdp"
-        android:layout_marginTop="@dimen/_190sdp"
+        android:layout_marginTop="@dimen/_170sdp"
         app:cardBackgroundColor="@color/colorOrange"
         app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="@dimen/_35sdp"
@@ -84,7 +84,7 @@
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_85sdp"
-        android:layout_marginTop="@dimen/_230sdp"
+        android:layout_marginTop="@dimen/_210sdp"
         app:cardBackgroundColor="@color/colorOrange"
         app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="@dimen/_35sdp"
@@ -118,7 +118,7 @@
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_85sdp"
-        android:layout_marginTop="@dimen/_270sdp"
+        android:layout_marginTop="@dimen/_250sdp"
         app:cardBackgroundColor="@color/colorOrange"
         app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="@dimen/_35sdp"
@@ -149,10 +149,44 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView26"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_85sdp"
+        android:layout_marginTop="@dimen/_290sdp"
+        app:cardBackgroundColor="@color/colorOrange"
+        app:cardCornerRadius="@dimen/_6sdp"
+        app:cardElevation="@dimen/_35sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/editAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorOrange"
+                android:ems="10"
+                android:fontFamily="@font/atma"
+                android:hint="Age of your child"
+                android:inputType="number"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView27"
         android:layout_width="@dimen/_180sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_marginStart="@dimen/_70sdp"
-        android:layout_marginTop="@dimen/_315sdp"
+        android:layout_marginTop="@dimen/_335sdp"
         app:cardBackgroundColor="@color/colorAccentLight"
         app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="@dimen/_35sdp"
@@ -186,7 +220,7 @@
         android:id="@+id/textLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_370sdp"
+        android:layout_marginTop="@dimen/_390sdp"
         android:fontFamily="@font/atma"
         android:text="Already Registered? Sign in"
         android:textSize="@dimen/_13ssp"
