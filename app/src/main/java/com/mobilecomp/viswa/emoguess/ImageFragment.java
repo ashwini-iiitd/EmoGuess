@@ -232,13 +232,13 @@ public class ImageFragment extends Fragment {
      */
     public static class ShakeEventListener implements SensorEventListener {
 
-        private final int FLIPCONSTANT = 5;
+        private final int FLIPCONSTANT = 2;
         private boolean mInitialized;
 
         /**
          * Minimum movement force to consider.
          */
-        private static final int MIN_FORCE = 50;
+        private static final int MIN_FORCE = 30;
 
         /**
          * Minimum times in a shake gesture that the direction of movement needs to

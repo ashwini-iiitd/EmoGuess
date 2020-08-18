@@ -5,11 +5,9 @@
     android:id="@+id/login_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_centerVertical="true"
     android:background="@drawable/bg3"
     android:backgroundTint="@color/colorOrange"
     android:backgroundTintMode="screen"
-    android:orientation="vertical"
     tools:context=".LoginFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -124,13 +122,27 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textforgot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_327sdp"
+        android:fontFamily="@font/atma"
+        android:text="Forgot Password?"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ProgressBar
         android:id="@+id/progLoginBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_250sdp"
         android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/_230sdp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textRegister" />
 
 </android.support.constraint.ConstraintLayout>

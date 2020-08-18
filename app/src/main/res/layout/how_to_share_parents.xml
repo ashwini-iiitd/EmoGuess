@@ -21,7 +21,7 @@
             android:layout_margin="@dimen/_5sdp"
             android:fontFamily="casual"
             android:text= "@string/how_to_share_parents"
-            android:textAlignment="center"
+
             android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
             android:textStyle="bold" />

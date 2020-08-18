@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,7 +41,7 @@ public class LoginFragment extends Fragment {
 
     EditText editLogEmail, editLogPassword;
     Button buttonLogin;
-    TextView txtRegister;
+    TextView txtRegister, txtForgot;
     ProgressBar progressBar;
     FirebaseAuth fAuth;
     private static final int REQ_CODE_CAMERA_PERMISSION = 1253;
@@ -67,6 +69,7 @@ public class LoginFragment extends Fragment {
         editLogPassword = view.findViewById(R.id.editLogPassword);
         buttonLogin = view.findViewById(R.id.loginButton);
         txtRegister = view.findViewById(R.id.textRegister);
+        txtForgot = view.findViewById(R.id.textforgot);
         progressBar = view.findViewById(R.id.progLoginBar);
         fAuth = FirebaseAuth.getInstance();
 
@@ -108,7 +111,8 @@ public class LoginFragment extends Fragment {
                         else{
 //                            status = 1;
                             Toast.makeText(getContext(),"Error: "+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(view.GONE);
+                            progressBar.setVisibility(view.INVISIBLE);
+                            //progressBar.setVisibility(view.GONE);
 
                         }
                     }
@@ -127,10 +131,47 @@ public class LoginFragment extends Fragment {
         txtRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isConnected(getContext());
                 if (isConnected(getContext())==true) {
                     startActivity(new Intent(getContext(),RegisterActivity.class));
                 }
+                else {
+                    isConnected(getContext());
+                }
+            }
+        });
+
+        txtForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText resetMail = new EditText(view.getContext());
+                AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(view.getContext());
+                passwordResetDialog.setTitle("Reset Password?");
+                passwordResetDialog.setMessage("Enter your Email ID to receive reset link.");
+                passwordResetDialog.setView(resetMail);
+                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String mail= resetMail.getText().toString();
+                        fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getContext(), "Reset link sent to your mail.",Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "Error! Reset link is not sent. "+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+                passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                passwordResetDialog.create().show();
             }
         });
 
