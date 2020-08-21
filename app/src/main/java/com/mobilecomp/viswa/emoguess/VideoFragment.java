@@ -52,7 +52,8 @@ public class VideoFragment extends Fragment {
     static String getName;
     static VideoView getVideo;
     static int stopPosition;
-
+    private static TextView scorekeep;
+    static String scorek;
     private OnFragmentInteractionListener mListener;
 
     public VideoFragment() {
@@ -68,6 +69,7 @@ public class VideoFragment extends Fragment {
 //        toast.show();
         timertext = view.findViewById(R.id.countdown_text);
         timerbutton = view.findViewById(R.id.countdown_button);
+        scorekeep = view.findViewById(R.id.score_keep);
         timerbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -366,6 +368,8 @@ public class VideoFragment extends Fragment {
                     horizontalViewPagerVideo.setAdapter(new ViewPagerAdapterVideo(mContext, emos));
                     ImageFragment.attempts++;
                     ImageFragment.score++;
+                    scorek=ImageFragment.score+"";
+                    scorekeep.setText(scorek);
                     try {
 
 

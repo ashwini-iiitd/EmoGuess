@@ -35,6 +35,36 @@
         android:textColor="@color/colorOrange2"
         android:layout_alignParentRight="@id/viewPager" />
 
+    <TextView
+        android:id="@+id/score_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|end"
+        android:gravity="left"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/atma"
+        android:textStyle="bold"
+        android:text="Score: "
+        android:textSize="@dimen/_20ssp"
+        android:textColor="@color/colorOrange2"
+        android:layout_alignParentRight="@id/viewPager" />
+
+    <TextView
+        android:id="@+id/score_keep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|end"
+        android:gravity="left"
+        android:layout_marginStart="@dimen/_68sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/atma"
+        android:textStyle="bold"
+        android:text="0"
+        android:textSize="@dimen/_20ssp"
+        android:textColor="@color/colorOrange2"
+        android:layout_alignParentRight="@id/viewPager" />
+
     <android.support.v7.widget.CardView
         android:id="@+id/card"
         android:layout_width="wrap_content"

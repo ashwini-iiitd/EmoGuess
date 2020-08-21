@@ -53,6 +53,9 @@ public class ImageFragment extends Fragment {
     static String timelefttext;
     private static View currentView;
     static String getName;
+    MediaPlayer ring2;
+    private static TextView scorekeep;
+    static String scorek;
     private OnFragmentInteractionListener mListener;
 
     public ImageFragment() {
@@ -69,6 +72,7 @@ public class ImageFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_image, container, false);
         timertext = view.findViewById(R.id.countdown_text);
         timerbutton = view.findViewById(R.id.countdown_button);
+        scorekeep = view.findViewById(R.id.score_keep);
         timerbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -377,6 +381,8 @@ public class ImageFragment extends Fragment {
                     horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
                     attempts++;
                     score++;
+                    scorek=score+"";
+                    scorekeep.setText(scorek);
                     try {
 
 
@@ -500,6 +506,10 @@ public class ImageFragment extends Fragment {
         timerbutton.setText("RESUME");
         timerrunning = false;
         ImageActivity.mSensorManager.unregisterListener(ImageActivity.mSensorListener);
+//        ring2= MediaPlayer.create(mContext, R.raw.timer);
+//        if (ring2.isPlaying()){
+//            ring2.pause();
+//        }
 //        horizontalViewPager.setOnTouchListener(new View.OnTouchListener() {
 //
 //            public boolean onTouch(View arg0, MotionEvent arg1) {
@@ -550,9 +560,13 @@ public class ImageFragment extends Fragment {
             toast.show();
         }
         if (timelefttext.compareTo("0:03") == 0) {
-            final MediaPlayer ring2= MediaPlayer.create(mContext, R.raw.timer);
+            ring2= MediaPlayer.create(mContext, R.raw.timer);
             ring2.start();
         }
+//        if (timelefttext.compareTo("0:02") == 0) {
+//            ring2= MediaPlayer.create(mContext, R.raw.timer);
+//            ring2.pause();
+//        }
     }
 
     @Override
@@ -575,6 +589,10 @@ public class ImageFragment extends Fragment {
 
     @Override
     public void onPause() {
+//        ring2= MediaPlayer.create(mContext, R.raw.timer);
+//        if (ring2.isPlaying()){
+//            ring2.pause();
+//        }
         if (timerrunning) {
             stoptimer();
         }
@@ -585,6 +603,10 @@ public class ImageFragment extends Fragment {
 
     @Override
     public void onStop() {
+//        ring2= MediaPlayer.create(mContext, R.raw.timer);
+//        if (ring2.isPlaying()){
+//            ring2.pause();
+//        }
         //getActivity().getIntent().putExtras();
         if (timerrunning) {
             stoptimer();
@@ -595,6 +617,7 @@ public class ImageFragment extends Fragment {
 
     @Override
     public void onResume() {
+       // ring2.start();
        // getActivity().getIntent().getExtras();
         System.out.println("r");
         if (!timerrunning) {
