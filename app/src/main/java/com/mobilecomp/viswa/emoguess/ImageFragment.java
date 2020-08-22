@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 import static android.content.Context.POWER_SERVICE;
 
-public class ImageFragment extends Fragment {
+public class ImageFragment extends Fragment implements SensorEventListener {
 
     ImageButton leftNav, rightNav;
     View view;
@@ -57,6 +57,9 @@ public class ImageFragment extends Fragment {
     private static TextView scorekeep;
     static String scorek;
     private OnFragmentInteractionListener mListener;
+    private Sensor accelerometer;
+    private Sensor magnetometer;
+    public static SensorManager mSensorManager;
 
     public ImageFragment() {
         // Required empty public constructor
@@ -80,6 +83,11 @@ public class ImageFragment extends Fragment {
             }
         });
         mContext = getContext();
+        mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
+
+        accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        initListeners();
 
         //access data from the calling activity, i.e., question and answers
         Bundle bundle = this.getArguments();
@@ -87,6 +95,7 @@ public class ImageFragment extends Fragment {
         emotions = (q).toArray(new String[q.size()]);
 //        imagesArray = getResources().obtainTypedArray(R.array.emo_images);
         horizontalViewPager = view.findViewById(R.id.viewPager);
+
         return view;
     }
 
@@ -231,152 +240,33 @@ public class ImageFragment extends Fragment {
         }
     }
 
-    /**
-     * Listener that detects shake gesture.
-     */
-    public static class ShakeEventListener implements SensorEventListener {
+    public void initListeners()
+    {
+        mSensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+        mSensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI);
+    }
 
-        private final int FLIPCONSTANT = 2;
-        private boolean mInitialized;
+    float[] inclineGravity = new float[3];
+    float[] mGravity=new float[3];
+    float[] mGeomagnetic=new float[3];
+    float orientation[] = new float[3];
+    float pitch;
+    float roll;
 
-        /**
-         * Minimum movement force to consider.
-         */
-        private static final int MIN_FORCE = 30;
-
-        /**
-         * Minimum times in a shake gesture that the direction of movement needs to
-         * change.
-         */
-        private static final int MIN_DIRECTION_CHANGE = 70;
-
-        /**
-         * Maximum pause between movements.
-         */
-        private static final int MAX_PAUSE_BETWEEN_DIRECTION_CHANGE = 200;
-
-        /**
-         * Maximum allowed time for shake gesture.
-         */
-        private static final int MAX_TOTAL_DURATION_OF_SHAKE = 400;
-
-        /**
-         * Time when the gesture started.
-         */
-        private long mFirstDirectionChangeTime = 0;
-
-        /**
-         * Time when the last movement started.
-         */
-        private long mLastDirectionChangeTime;
-
-        /**
-         * How many movements are considered so far.
-         */
-        private int mDirectionChangeCount = 0;
-
-        /**
-         * The last x position.
-         */
-        private float lastX = 0;
-
-        /**
-         * The last y position.
-         */
-        private float lastY = 0;
-
-        /**
-         * The last z position.
-         */
-        private float lastZ = 0;
-        private final float NOISE = (float) 10.0;
-
-        /**
-         * OnShakeListener that is called when shake is detected.
-         */
-        private OnShakeListener mShakeListener;
-
-        /**
-         * Interface for shake gesture.
-         */
-        public interface OnShakeListener {
-
-            /**
-             * Called when shake gesture is detected.
-             */
-            void onShake();
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        //If type is accelerometer only assign values to global property mGravity
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+        {
+            mGravity = event.values;
         }
+        else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
+        {
+            mGeomagnetic = event.values;
 
-        public void setOnShakeListener(OnShakeListener listener) {
-            mShakeListener = listener;
-        }
-
-        @Override
-        public void onSensorChanged(SensorEvent se) {
-            // get sensor data
-            float x = se.values[SensorManager.DATA_X];
-            float y = se.values[SensorManager.DATA_Y];
-            float z = se.values[SensorManager.DATA_Z];
-
-            if (!mInitialized) {
-                lastX = x;
-                lastY = y;
-                lastZ = z;
-
-                mInitialized = true;
-            } else {
-                float deltaX = Math.abs(lastX - x);
-                float deltaY = Math.abs(lastY - y);
-                float deltaZ = Math.abs(lastZ - z);
-
-//                System.out.println("deltaX ==" + deltaX);
-//                System.out.println("deltaY ==" + deltaY);
-//                System.out.println("deltaZ ==" + deltaZ);
-
-                if (deltaX < NOISE) deltaX = (float) 0.0;
-                if (deltaY < NOISE) deltaY = (float) 0.0;
-                if (deltaZ < NOISE && deltaZ > -1 * NOISE) deltaZ = (float) 0.0;
-
-                lastX = x;
-                lastY = y;
-                lastZ = z;
-
-                if (z > FLIPCONSTANT && deltaZ > 0) { //pass
-                    final MediaPlayer ring1= MediaPlayer.create(mContext, R.raw.wrong);
-                    ring1.start();
-                    horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
-                    attempts++;
-                    try {
-
-
-
-
-
-                        /********* To get current emotion displayed on the screen *********/
-                        /*******Code in ViewPagerAdapter to set the current view***************/
-                        currentView = ViewPagerAdapter.mCurrentView;
-
-                        ViewGroup viewGroup = ((ViewGroup)currentView);
-                        ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-                        ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-                        LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-                        ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
-
-                        getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-                        System.out.println("Current emotion: "+getName);
-
-                        /**********************************************************************/
-
-
-
-
-                    }catch (Exception e){
-                        System.out.println(e);
-                        // Toaster.showShortMessage("Extra Page!");
-                    }
-
-                } else if (z < -1 * FLIPCONSTANT && deltaZ > 0) {//got word
-                    final MediaPlayer ring= MediaPlayer.create(mContext, R.raw.correct);
+            if (isTiltDownward())
+            {
+                final MediaPlayer ring= MediaPlayer.create(mContext, R.raw.correct);
                     ring.start();
                     horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
                     attempts++;
@@ -384,11 +274,6 @@ public class ImageFragment extends Fragment {
                     scorek=score+"";
                     scorekeep.setText(scorek);
                     try {
-
-
-
-
-
                         /********* To get current emotion displayed on the screen *********/
                         /*******Code in ViewPagerAdapter to set the current view***************/
                         currentView = ViewPagerAdapter.mCurrentView;
@@ -403,87 +288,438 @@ public class ImageFragment extends Fragment {
                         System.out.println("Current emotion: "+getName);
 
                         /**********************************************************************/
-
-
-
-
-                    }catch (Exception e){
+                    }
+                    catch (Exception e){
                         System.out.println(e);
                         // Toaster.showShortMessage("Extra Page!");
                     }
-                }
-
             }
+            else if (isTiltUpward())
+            {
+                final MediaPlayer ring1= MediaPlayer.create(mContext, R.raw.wrong);
+                ring1.start();
+                horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
+                attempts++;
+                try {
+                    /********* To get current emotion displayed on the screen *********/
+                    /*******Code in ViewPagerAdapter to set the current view***************/
+                    currentView = ViewPagerAdapter.mCurrentView;
 
-            // calculate movement
-            float totalMovement = Math.abs(x + y + z - lastX - lastY - lastZ);
+                    ViewGroup viewGroup = ((ViewGroup)currentView);
+                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
 
-            if (totalMovement > MIN_FORCE) {
+                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+                    System.out.println("Current emotion: "+getName);
 
-                // get time
-                long now = System.currentTimeMillis();
-
-                // store first movement time
-                if (mFirstDirectionChangeTime == 0) {
-                    mFirstDirectionChangeTime = now;
-                    mLastDirectionChangeTime = now;
+                    /**********************************************************************/
                 }
-
-                // check if the last movement was not long ago
-                long lastChangeWasAgo = now - mLastDirectionChangeTime;
-                if (lastChangeWasAgo < MAX_PAUSE_BETWEEN_DIRECTION_CHANGE) {
-
-                    // store movement data
-                    mLastDirectionChangeTime = now;
-                    mDirectionChangeCount++;
-
-                    // store last sensor data
-                    lastX = x;
-                    lastY = y;
-                    lastZ = z;
-
-                    // check how many movements are so far
-                    if (mDirectionChangeCount >= MIN_DIRECTION_CHANGE) {
-
-                        // check total duration
-                        long totalDuration = now - mFirstDirectionChangeTime;
-                        if (totalDuration < MAX_TOTAL_DURATION_OF_SHAKE) {
-                            mShakeListener.onShake();
-                            resetShakeParameters();
-                        }
-                    }
-
-                } else {
-                    resetShakeParameters();
+                catch (Exception e){
+                    System.out.println(e);
+                    // Toaster.showShortMessage("Extra Page!");
                 }
             }
-        }
-
-        /**
-         * Resets the shake parameters to their default values.
-         */
-        private void resetShakeParameters() {
-            mFirstDirectionChangeTime = 0;
-            mDirectionChangeCount = 0;
-            mLastDirectionChangeTime = 0;
-            mInitialized = false;
-            lastX = 0;
-            lastY = 0;
-            lastZ = 0;
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
 
     }
 
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // TODO Auto-generated method stub
+
+    }
+
+    public boolean isTiltUpward()
+    {
+        if (mGravity != null && mGeomagnetic != null)
+        {
+            float R[] = new float[9];
+            float I[] = new float[9];
+
+            SensorManager.remapCoordinateSystem(R,
+                    SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X,
+                    R);
+
+            boolean success = SensorManager.getRotationMatrix(R, I, mGravity, mGeomagnetic);
+
+            if (success)
+            {
+                float orientation[] = new float[3];
+                SensorManager.getOrientation(R, orientation);
+
+                /*
+                 * If the roll is positive, you're in reverse landscape (landscape right), and if the roll is negative you're in landscape (landscape left)
+                 *
+                 * Similarly, you can use the pitch to differentiate between portrait and reverse portrait.
+                 * If the pitch is positive, you're in reverse portrait, and if the pitch is negative you're in portrait.
+                 *
+                 * orientation -> azimut, pitch and roll
+                 *
+                 *
+                 */
+
+                pitch = orientation[1];
+                roll = orientation[2];
+
+                inclineGravity = mGravity.clone();
+
+                double norm_Of_g = Math.sqrt(inclineGravity[0] * inclineGravity[0] + inclineGravity[1] * inclineGravity[1] + inclineGravity[2] * inclineGravity[2]);
+
+                // Normalize the accelerometer vector
+                inclineGravity[0] = (float) (inclineGravity[0] / norm_Of_g);
+                inclineGravity[1] = (float) (inclineGravity[1] / norm_Of_g);
+                inclineGravity[2] = (float) (inclineGravity[2] / norm_Of_g);
+
+                //Checks if device is flat on ground or not
+                int inclination = (int) Math.round(Math.toDegrees(Math.acos(inclineGravity[2])));
+
+                /*
+                 * Float obj1 = new Float("10.2");
+                 * Float obj2 = new Float("10.20");
+                 * int retval = obj1.compareTo(obj2);
+                 *
+                 * if(retval > 0) {
+                 * System.out.println("obj1 is greater than obj2");
+                 * }
+                 * else if(retval < 0) {
+                 * System.out.println("obj1 is less than obj2");
+                 * }
+                 * else {
+                 * System.out.println("obj1 is equal to obj2");
+                 * }
+                 */
+                Float objPitch = new Float(pitch);
+                Float objZero = new Float(0.0);
+                Float objZeroPointTwo = new Float(0.2);
+                Float objZeroPointTwoNegative = new Float(-0.2);
+
+                int objPitchZeroResult = objPitch.compareTo(objZero);
+                int objPitchZeroPointTwoResult = objZeroPointTwo.compareTo(objPitch);
+                int objPitchZeroPointTwoNegativeResult = objPitch.compareTo(objZeroPointTwoNegative);
+
+                if (roll < 0 && ((objPitchZeroResult > 0 && objPitchZeroPointTwoResult > 0) || (objPitchZeroResult < 0 && objPitchZeroPointTwoNegativeResult > 0)) && (inclination > 30 && inclination < 40))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isTiltDownward()
+    {
+        if (mGravity != null && mGeomagnetic != null)
+        {
+            float R[] = new float[9];
+            float I[] = new float[9];
+
+            boolean success = SensorManager.getRotationMatrix(R, I, mGravity, mGeomagnetic);
+
+            if (success)
+            {
+                float orientation[] = new float[3];
+                SensorManager.getOrientation(R, orientation);
+
+                pitch = orientation[1];
+                roll = orientation[2];
+
+                inclineGravity = mGravity.clone();
+
+                double norm_Of_g = Math.sqrt(inclineGravity[0] * inclineGravity[0] + inclineGravity[1] * inclineGravity[1] + inclineGravity[2] * inclineGravity[2]);
+
+                // Normalize the accelerometer vector
+                inclineGravity[0] = (float) (inclineGravity[0] / norm_Of_g);
+                inclineGravity[1] = (float) (inclineGravity[1] / norm_Of_g);
+                inclineGravity[2] = (float) (inclineGravity[2] / norm_Of_g);
+
+                //Checks if device is flat on ground or not
+                int inclination = (int) Math.round(Math.toDegrees(Math.acos(inclineGravity[2])));
+
+                Float objPitch = new Float(pitch);
+                Float objZero = new Float(0.0);
+                Float objZeroPointTwo = new Float(0.2);
+                Float objZeroPointTwoNegative = new Float(-0.2);
+
+                int objPitchZeroResult = objPitch.compareTo(objZero);
+                int objPitchZeroPointTwoResult = objZeroPointTwo.compareTo(objPitch);
+                int objPitchZeroPointTwoNegativeResult = objPitch.compareTo(objZeroPointTwoNegative);
+
+                if (roll < 0 && ((objPitchZeroResult > 0 && objPitchZeroPointTwoResult > 0) || (objPitchZeroResult < 0 && objPitchZeroPointTwoNegativeResult > 0)) && (inclination > 140 && inclination < 170))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        return false;
+    }
+
+//    /**
+//     * Listener that detects shake gesture.
+//     */
+//    public static class ShakeEventListener implements SensorEventListener {
+//
+//        private final int FLIPCONSTANT = 2;
+//        private boolean mInitialized;
+//
+//        /**
+//         * Minimum movement force to consider.
+//         */
+//        private static final int MIN_FORCE = 30;
+//
+//        /**
+//         * Minimum times in a shake gesture that the direction of movement needs to
+//         * change.
+//         */
+//        private static final int MIN_DIRECTION_CHANGE = 70;
+//
+//        /**
+//         * Maximum pause between movements.
+//         */
+//        private static final int MAX_PAUSE_BETWEEN_DIRECTION_CHANGE = 200;
+//
+//        /**
+//         * Maximum allowed time for shake gesture.
+//         */
+//        private static final int MAX_TOTAL_DURATION_OF_SHAKE = 400;
+//
+//        /**
+//         * Time when the gesture started.
+//         */
+//        private long mFirstDirectionChangeTime = 0;
+//
+//        /**
+//         * Time when the last movement started.
+//         */
+//        private long mLastDirectionChangeTime;
+//
+//        /**
+//         * How many movements are considered so far.
+//         */
+//        private int mDirectionChangeCount = 0;
+//
+//        /**
+//         * The last x position.
+//         */
+//        private float lastX = 0;
+//
+//        /**
+//         * The last y position.
+//         */
+//        private float lastY = 0;
+//
+//        /**
+//         * The last z position.
+//         */
+//        private float lastZ = 0;
+//        private final float NOISE = (float) 10.0;
+//
+//        /**
+//         * OnShakeListener that is called when shake is detected.
+//         */
+//        private OnShakeListener mShakeListener;
+//
+//        /**
+//         * Interface for shake gesture.
+//         */
+//        public interface OnShakeListener {
+//
+//            /**
+//             * Called when shake gesture is detected.
+//             */
+//            void onShake();
+//        }
+//
+//        public void setOnShakeListener(OnShakeListener listener) {
+//            mShakeListener = listener;
+//        }
+//
+//        @Override
+//        public void onSensorChanged(SensorEvent se) {
+//            // get sensor data
+//            float x = se.values[SensorManager.DATA_X];
+//            float y = se.values[SensorManager.DATA_Y];
+//            float z = se.values[SensorManager.DATA_Z];
+//
+//            if (!mInitialized) {
+//                lastX = x;
+//                lastY = y;
+//                lastZ = z;
+//
+//                mInitialized = true;
+//            } else {
+//                float deltaX = Math.abs(lastX - x);
+//                float deltaY = Math.abs(lastY - y);
+//                float deltaZ = Math.abs(lastZ - z);
+//
+////                System.out.println("deltaX ==" + deltaX);
+////                System.out.println("deltaY ==" + deltaY);
+////                System.out.println("deltaZ ==" + deltaZ);
+//
+//                if (deltaX < NOISE) deltaX = (float) 0.0;
+//                if (deltaY < NOISE) deltaY = (float) 0.0;
+//                if (deltaZ < NOISE && deltaZ > -1 * NOISE) deltaZ = (float) 0.0;
+//
+//                lastX = x;
+//                lastY = y;
+//                lastZ = z;
+//
+//                if (z > FLIPCONSTANT && deltaZ > 0) { //pass
+//                    final MediaPlayer ring1= MediaPlayer.create(mContext, R.raw.wrong);
+//                    ring1.start();
+//                    horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
+//                    attempts++;
+//                    try {
+//
+//
+//
+//
+//
+//                        /********* To get current emotion displayed on the screen *********/
+//                        /*******Code in ViewPagerAdapter to set the current view***************/
+//                        currentView = ViewPagerAdapter.mCurrentView;
+//
+//                        ViewGroup viewGroup = ((ViewGroup)currentView);
+//                        ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+//                        ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+//                        LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+//                        ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+//
+//                        getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+//                        System.out.println("Current emotion: "+getName);
+//
+//                        /**********************************************************************/
+//
+//
+//
+//
+//                    }catch (Exception e){
+//                        System.out.println(e);
+//                        // Toaster.showShortMessage("Extra Page!");
+//                    }
+//
+//                } else if (z < -1 * FLIPCONSTANT && deltaZ > 0) {//got word
+//                    final MediaPlayer ring= MediaPlayer.create(mContext, R.raw.correct);
+//                    ring.start();
+//                    horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
+//                    attempts++;
+//                    score++;
+//                    scorek=score+"";
+//                    scorekeep.setText(scorek);
+//                    try {
+//
+//
+//
+//
+//
+//                        /********* To get current emotion displayed on the screen *********/
+//                        /*******Code in ViewPagerAdapter to set the current view***************/
+//                        currentView = ViewPagerAdapter.mCurrentView;
+//
+//                        ViewGroup viewGroup = ((ViewGroup)currentView);
+//                        ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+//                        ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+//                        LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+//                        ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+//
+//                        getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+//                        System.out.println("Current emotion: "+getName);
+//
+//                        /**********************************************************************/
+//
+//
+//
+//
+//                    }catch (Exception e){
+//                        System.out.println(e);
+//                        // Toaster.showShortMessage("Extra Page!");
+//                    }
+//                }
+//
+//            }
+//
+//            // calculate movement
+//            float totalMovement = Math.abs(x + y + z - lastX - lastY - lastZ);
+//
+//            if (totalMovement > MIN_FORCE) {
+//
+//                // get time
+//                long now = System.currentTimeMillis();
+//
+//                // store first movement time
+//                if (mFirstDirectionChangeTime == 0) {
+//                    mFirstDirectionChangeTime = now;
+//                    mLastDirectionChangeTime = now;
+//                }
+//
+//                // check if the last movement was not long ago
+//                long lastChangeWasAgo = now - mLastDirectionChangeTime;
+//                if (lastChangeWasAgo < MAX_PAUSE_BETWEEN_DIRECTION_CHANGE) {
+//
+//                    // store movement data
+//                    mLastDirectionChangeTime = now;
+//                    mDirectionChangeCount++;
+//
+//                    // store last sensor data
+//                    lastX = x;
+//                    lastY = y;
+//                    lastZ = z;
+//
+//                    // check how many movements are so far
+//                    if (mDirectionChangeCount >= MIN_DIRECTION_CHANGE) {
+//
+//                        // check total duration
+//                        long totalDuration = now - mFirstDirectionChangeTime;
+//                        if (totalDuration < MAX_TOTAL_DURATION_OF_SHAKE) {
+//                            mShakeListener.onShake();
+//                            resetShakeParameters();
+//                        }
+//                    }
+//
+//                } else {
+//                    resetShakeParameters();
+//                }
+//            }
+//        }
+//
+//        /**
+//         * Resets the shake parameters to their default values.
+//         */
+//        private void resetShakeParameters() {
+//            mFirstDirectionChangeTime = 0;
+//            mDirectionChangeCount = 0;
+//            mLastDirectionChangeTime = 0;
+//            mInitialized = false;
+//            lastX = 0;
+//            lastY = 0;
+//            lastZ = 0;
+//        }
+//
+//        @Override
+//        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+//        }
+//
+//    }
+
 
     public void starttimer() {
+        ring2= MediaPlayer.create(mContext, R.raw.timer);
         //horizontalViewPager.setOnTouchListener(null);
-        ImageActivity.mSensorManager.registerListener(ImageActivity.mSensorListener,
-                ImageActivity.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_UI);
+        initListeners();
+//        ImageActivity.mSensorManager.registerListener(ImageActivity.mSensorListener,
+//                ImageActivity.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+//                SensorManager.SENSOR_DELAY_UI);
         timer = new CountDownTimer(timeleft, 1000) {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -501,15 +737,18 @@ public class ImageFragment extends Fragment {
         timerrunning = true;
     }
 
+    int length;
+
     public void stoptimer() {
         timer.cancel();
         timerbutton.setText("RESUME");
         timerrunning = false;
-        ImageActivity.mSensorManager.unregisterListener(ImageActivity.mSensorListener);
-//        ring2= MediaPlayer.create(mContext, R.raw.timer);
-//        if (ring2.isPlaying()){
-//            ring2.pause();
-//        }
+        mSensorManager.unregisterListener(this);
+//        ImageActivity.mSensorManager.unregisterListener(ImageActivity.mSensorListener);
+        if (ring2.isPlaying()){
+            ring2.pause();
+            length = ring2.getCurrentPosition();
+        }
 //        horizontalViewPager.setOnTouchListener(new View.OnTouchListener() {
 //
 //            public boolean onTouch(View arg0, MotionEvent arg1) {
@@ -518,31 +757,6 @@ public class ImageFragment extends Fragment {
 //        });
     }
 
-//    public void OnScreen() {
-//        PowerManager powerManager = (PowerManager) mContext.getSystemService(POWER_SERVICE);
-//        boolean isScreenOn = powerManager.isScreenOn();
-//
-//        if (!isScreenOn) {
-//            System.out.println("screen off");
-//            // The screen has been locked
-//            // do stuff...
-//        }
-//        else {
-//            System.out.println("screen off");
-//        }
-//    }
-//
-//    private boolean isPhoneLocked(Context context) {
-//        boolean isPhoneLock = false;
-//        if (context != null) {
-//            KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-//            if (myKM != null && myKM.isKeyguardLocked()) {
-//                isPhoneLock = true;
-//            }
-//        }
-//        System.out.println(isPhoneLock);
-//        return isPhoneLock;
-//    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void updatetimer() {
@@ -559,14 +773,15 @@ public class ImageFragment extends Fragment {
             Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(score) +" out of "+ String.valueOf(attempts), Toast.LENGTH_SHORT);
             toast.show();
         }
-        if (timelefttext.compareTo("0:03") == 0) {
-            ring2= MediaPlayer.create(mContext, R.raw.timer);
-            ring2.start();
+        if (timelefttext.compareTo("0:03") == 0 || (timelefttext.compareTo("0:02") == 0) || (timelefttext.compareTo("0:01") == 0)) {
+            if (ring2.isPlaying()) {
+
+
+            } else {
+                ring2.seekTo(length);
+                ring2.start();
+            }
         }
-//        if (timelefttext.compareTo("0:02") == 0) {
-//            ring2= MediaPlayer.create(mContext, R.raw.timer);
-//            ring2.pause();
-//        }
     }
 
     @Override
@@ -582,51 +797,48 @@ public class ImageFragment extends Fragment {
 
     @Override
     public void onDetach() {
-        System.out.println("d");
         super.onDetach();
         mListener = null;
     }
 
     @Override
+    public void onDestroy()
+    {
+        mSensorManager.unregisterListener(this);
+        super.onDestroy();
+    }
+
+    @Override
     public void onPause() {
-//        ring2= MediaPlayer.create(mContext, R.raw.timer);
-//        if (ring2.isPlaying()){
-//            ring2.pause();
-//        }
         if (timerrunning) {
             stoptimer();
         }
-        System.out.println("p");
         super.onPause();
     }
 
 
     @Override
     public void onStop() {
-//        ring2= MediaPlayer.create(mContext, R.raw.timer);
-//        if (ring2.isPlaying()){
-//            ring2.pause();
-//        }
         //getActivity().getIntent().putExtras();
         if (timerrunning) {
             stoptimer();
         }
-        System.out.println("s");
         super.onStop();
     }
 
     @Override
     public void onResume() {
-       // ring2.start();
        // getActivity().getIntent().getExtras();
         System.out.println("r");
         if (!timerrunning) {
-            ImageActivity.mSensorManager.unregisterListener(ImageActivity.mSensorListener);
+            mSensorManager.unregisterListener(this);
+//            ImageActivity.mSensorManager.unregisterListener(ImageActivity.mSensorListener);
         }
         else {
-            ImageActivity.mSensorManager.registerListener(ImageActivity.mSensorListener,
-                    ImageActivity.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                    SensorManager.SENSOR_DELAY_UI);
+            initListeners();
+//            ImageActivity.mSensorManager.registerListener(ImageActivity.mSensorListener,
+//                    ImageActivity.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+//                    SensorManager.SENSOR_DELAY_UI);
         }
         super.onResume();
     }

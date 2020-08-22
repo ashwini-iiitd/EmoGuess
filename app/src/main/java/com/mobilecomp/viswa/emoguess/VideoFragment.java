@@ -54,6 +54,7 @@ public class VideoFragment extends Fragment {
     static int stopPosition;
     private static TextView scorekeep;
     static String scorek;
+    MediaPlayer ring2;
     private OnFragmentInteractionListener mListener;
 
     public VideoFragment() {
@@ -478,6 +479,7 @@ public class VideoFragment extends Fragment {
 
 
     public void starttimer() {
+        ring2= MediaPlayer.create(mContext, R.raw.timer);
         //horizontalViewPagerVideo.setOnTouchListener(null);
         VideoActivity.mSensorManager.registerListener(VideoActivity.mSensorListener,
                  VideoActivity.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -498,6 +500,8 @@ public class VideoFragment extends Fragment {
         timerrunning = true;
     }
 
+    int length;
+
     public void stoptimer() {
         if (getVideo != null){
             getVideo.pause();
@@ -506,6 +510,10 @@ public class VideoFragment extends Fragment {
         timerbutton.setText("RESUME");
         timerrunning = false;
         VideoActivity.mSensorManager.unregisterListener(VideoActivity.mSensorListener);
+        if (ring2.isPlaying()){
+            ring2.pause();
+            length = ring2.getCurrentPosition();
+        }
 //        horizontalViewPagerVideo.setOnTouchListener(new View.OnTouchListener() {
 //
 //            public boolean onTouch(View arg0, MotionEvent arg1) {
@@ -530,9 +538,14 @@ public class VideoFragment extends Fragment {
             Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score) + " out of " + String.valueOf(ImageFragment.attempts), Toast.LENGTH_SHORT);
             toast.show();
         }
-        if (timelefttext.compareTo("0:03") == 0) {
-            final MediaPlayer ring2= MediaPlayer.create(mContext, R.raw.timer);
-            ring2.start();
+        if (timelefttext.compareTo("0:03") == 0 || (timelefttext.compareTo("0:02") == 0) || (timelefttext.compareTo("0:01") == 0)) {
+            if (ring2.isPlaying()) {
+
+
+            } else {
+                ring2.seekTo(length);
+                ring2.start();
+            }
         }
     }
 
