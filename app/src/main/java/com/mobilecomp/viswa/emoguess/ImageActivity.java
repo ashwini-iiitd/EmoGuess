@@ -65,7 +65,7 @@ import com.androidhiddencamera.config.CameraRotation;
 public class ImageActivity extends HiddenCameraActivity implements ImageFragment.OnFragmentInteractionListener {
     private static final int REQUEST_WRITE_STORAGE = 1254;
     public static SensorManager mSensorManager;
-    public static ImageFragment.ShakeEventListener mSensorListener;
+//    public static ImageFragment.ShakeEventListener mSensorListener;
     private static final int REQ_CODE_CAMERA_PERMISSION = 1253;
     private CameraConfig mCameraConfig;
     private Context mContext;
@@ -76,15 +76,15 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
     public void onCreate(final Bundle savedInstanceState) {
         audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mSensorListener = new ImageFragment.ShakeEventListener();
-
-        mSensorListener.setOnShakeListener(new ImageFragment.ShakeEventListener.OnShakeListener() {
-
-            public void onShake() {
-                ImageFragment.horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
-                //Toast.makeText(ImageActivity.this, "Shake!", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        mSensorListener = new ImageFragment.ShakeEventListener();
+//
+//        mSensorListener.setOnShakeListener(new ImageFragment.ShakeEventListener.OnShakeListener() {
+//
+//            public void onShake() {
+//                ImageFragment.horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
+//                //Toast.makeText(ImageActivity.this, "Shake!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
@@ -290,15 +290,15 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
     public void onResume() {
         super.onResume();
      //   initListeners();
-        mSensorManager.registerListener(mSensorListener,
-                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_UI);
+//        mSensorManager.registerListener(mSensorListener,
+//                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+//                SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
     public void onPause() {
 //        mSensorManager.unregisterListener((SensorEventListener) this);
-        mSensorManager.unregisterListener(mSensorListener);
+//        mSensorManager.unregisterListener(mSensorListener);
         super.onPause();
     }
 }

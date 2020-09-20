@@ -47,4 +47,5 @@ dependencies {
     implementation project(path: ':hiddencamera')
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.github.nisrulz:sensey:1.8.0'
 }
