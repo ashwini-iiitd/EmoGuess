@@ -205,7 +205,7 @@ public class ImageActivity extends HiddenCameraActivity implements ImageFragment
         if (!dir.exists())
             dir.mkdirs();
 
-        File file = new File(dir, "emoguess_" + ImageFragment.getName + new SimpleDateFormat("_yyyyMMdd_HHmmss").format(new Date()) + ".png");
+        File file = new File(dir, "emoguess_" + ImageFragment.getName + new SimpleDateFormat("_yyyyMMdd_HHmmss").format(new Date()) + "_imageplay" + ".png");
         try {
             if (!file.exists()) {
                 boolean is = file.createNewFile();

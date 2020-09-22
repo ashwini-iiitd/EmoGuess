@@ -65,7 +65,7 @@ import java.util.Arrays;
 public class VideoActivity extends HiddenCameraActivity implements VideoFragment.OnFragmentInteractionListener{
     private static final int REQUEST_WRITE_STORAGE = 1254;
     public static SensorManager mSensorManager;
-    public static VideoFragment.ShakeEventListener mSensorListener;
+//    public static VideoFragment.ShakeEventListener mSensorListener;
     private static final int REQ_CODE_CAMERA_PERMISSION = 1253;
     private CameraConfig mCameraConfig;
     public AudioManager audioManager;
@@ -76,15 +76,15 @@ public class VideoActivity extends HiddenCameraActivity implements VideoFragment
         audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mSensorListener = new VideoFragment.ShakeEventListener();
+//        mSensorListener = new VideoFragment.ShakeEventListener();
 
-        mSensorListener.setOnShakeListener(new VideoFragment.ShakeEventListener.OnShakeListener() {
-
-            public void onShake() {
-                VideoFragment.horizontalViewPagerVideo.arrowScroll(View.FOCUS_RIGHT);
-                //Toast.makeText(VideoActivity.this, "Shake!", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        mSensorListener.setOnShakeListener(new VideoFragment.ShakeEventListener.OnShakeListener() {
+//
+//            public void onShake() {
+//                VideoFragment.horizontalViewPagerVideo.arrowScroll(View.FOCUS_RIGHT);
+//                //Toast.makeText(VideoActivity.this, "Shake!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
@@ -211,7 +211,7 @@ public class VideoActivity extends HiddenCameraActivity implements VideoFragment
         // System.out.println(file_path);
         if(!dir.exists())
             dir.mkdirs();
-        File file = new File(dir, "emoguess_" + VideoFragment.getName+ new SimpleDateFormat("_yyyyMMdd_HHmmss").format(new Date()) + ".png");
+        File file = new File(dir, "emoguess_" + VideoFragment.getName+ new SimpleDateFormat("_yyyyMMdd_HHmmss").format(new Date()) + "_videoplay" + ".png");
         try {
             if (!file.exists()) {
                 boolean is = file.createNewFile();
@@ -287,14 +287,14 @@ public class VideoActivity extends HiddenCameraActivity implements VideoFragment
     @Override
     public void onResume() {
         super.onResume();
-        mSensorManager.registerListener(mSensorListener,
-                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_UI);
+//        mSensorManager.registerListener(mSensorListener,
+//                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+//                SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
     public void onPause() {
-        mSensorManager.unregisterListener(mSensorListener);
+//        mSensorManager.unregisterListener(mSensorListener);
         super.onPause();
     }
 

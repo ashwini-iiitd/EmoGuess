@@ -17,48 +17,51 @@ public class HorizontalViewPager extends ViewPager {
     public HorizontalViewPager(Context context) {
         super(context);
         init();
-        setMyScroller();
+//        if (!ImageFragment.timerrunning){
+//            setMyScroller();
+//        }
+        //setMyScroller();
     }
 
     public HorizontalViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
-        setMyScroller();
+       // setMyScroller();
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent event) {
-        // Never allow swiping to switch between pages
-        return false;
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        // Never allow swiping to switch between pages
-        return false;
-    }
-
-    private void setMyScroller() {
-        try {
-            Class<?> viewpager = ViewPager.class;
-            Field scroller = viewpager.getDeclaredField("mScroller");
-            scroller.setAccessible(true);
-            scroller.set(this, new MyScroller(getContext()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public class MyScroller extends Scroller {
-        public MyScroller(Context context) {
-            super(context, new DecelerateInterpolator());
-        }
-
-        @Override
-        public void startScroll(int startX, int startY, int dx, int dy, int duration) {
-            super.startScroll(startX, startY, dx, dy, 350 /*1 secs*/);
-        }
-    }
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent event) {
+//        // Never allow swiping to switch between pages
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        // Never allow swiping to switch between pages
+//        return false;
+//    }
+//
+//    public void setMyScroller() {
+//        try {
+//            Class<?> viewpager = ViewPager.class;
+//            Field scroller = viewpager.getDeclaredField("mScroller");
+//            scroller.setAccessible(true);
+//            scroller.set(this, new MyScroller(getContext()));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public class MyScroller extends Scroller {
+//        public MyScroller(Context context) {
+//            super(context, new DecelerateInterpolator());
+//        }
+//
+//        @Override
+//        public void startScroll(int startX, int startY, int dx, int dy, int duration) {
+//            super.startScroll(startX, startY, dx, dy, 350 /*1 secs*/);
+//        }
+//    }
 
     private void init() {
         // The majority of the magic happens here
@@ -109,5 +112,4 @@ public class HorizontalViewPager extends ViewPager {
             }
         }
     }
-
 }

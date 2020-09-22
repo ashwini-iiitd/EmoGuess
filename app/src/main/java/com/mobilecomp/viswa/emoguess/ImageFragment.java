@@ -46,7 +46,7 @@ import com.github.nisrulz.sensey.SoundLevelDetector.SoundLevelListener;
 import com.github.nisrulz.sensey.TiltDirectionDetector;
 import com.github.nisrulz.sensey.TiltDirectionDetector.TiltDirectionListener;
 
-public class ImageFragment extends Fragment implements FlipListener, TiltDirectionListener {
+public class ImageFragment extends Fragment{ //implements FlipListener, TiltDirectionListener {
 
     ImageButton leftNav, rightNav;
     View view;
@@ -60,7 +60,7 @@ public class ImageFragment extends Fragment implements FlipListener, TiltDirecti
     private Button timerbutton;
     private CountDownTimer timer;
     private long timeleft = 60000;
-    private boolean timerrunning;
+    static boolean timerrunning;
     static String timelefttext;
     private static View currentView;
     static String getName;
@@ -584,84 +584,8 @@ public class ImageFragment extends Fragment implements FlipListener, TiltDirecti
 //        return false;
 //    }
 
-    @Override
-    public void onFaceDown() {
-            final MediaPlayer ring= MediaPlayer.create(mContext, R.raw.correct);
-            ring.start();
-            horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
-            attempts++;
-            score++;
-            scorek=score+"";
-            scorekeep.setText(scorek);
-            try {
-
-
-
-
-
-                /********* To get current emotion displayed on the screen *********/
-                /*******Code in ViewPagerAdapter to set the current view***************/
-                currentView = ViewPagerAdapter.mCurrentView;
-
-                ViewGroup viewGroup = ((ViewGroup)currentView);
-                ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-                ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-                LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-                ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
-
-                getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-                System.out.println("Current emotion: "+getName);
-
-                /**********************************************************************/
-
-
-
-
-            }catch (Exception e){
-                System.out.println(e);
-                // Toaster.showShortMessage("Extra Page!");
-            }
-        }
-
-    @Override
-    public void onFaceUp() {
-        final MediaPlayer ring1= MediaPlayer.create(mContext, R.raw.wrong);
-        ring1.start();
-        horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
-        attempts++;
-        try {
-
-
-
-
-
-            /********* To get current emotion displayed on the screen *********/
-            /*******Code in ViewPagerAdapter to set the current view***************/
-            currentView = ViewPagerAdapter.mCurrentView;
-
-            ViewGroup viewGroup = ((ViewGroup)currentView);
-            ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-            ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-            LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-            ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
-
-            getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-            System.out.println("Current emotion: "+getName);
-
-            /**********************************************************************/
-
-
-
-
-        }catch (Exception e){
-            System.out.println(e);
-            // Toaster.showShortMessage("Extra Page!");
-        }
-    }
-
-    @Override
-    public void onTiltInAxisX(int i) {
-//        if (i==TiltDirectionDetector.DIRECTION_CLOCKWISE) {
+//    @Override
+//    public void onFaceDown() {
 //            final MediaPlayer ring= MediaPlayer.create(mContext, R.raw.correct);
 //            ring.start();
 //            horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
@@ -698,51 +622,127 @@ public class ImageFragment extends Fragment implements FlipListener, TiltDirecti
 //                // Toaster.showShortMessage("Extra Page!");
 //            }
 //        }
-//        else {
-//            final MediaPlayer ring1= MediaPlayer.create(mContext, R.raw.wrong);
-//            ring1.start();
-//            horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
-//            attempts++;
-//            try {
+//
+//    @Override
+//    public void onFaceUp() {
+//        final MediaPlayer ring1= MediaPlayer.create(mContext, R.raw.wrong);
+//        ring1.start();
+//        horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
+//        attempts++;
+//        try {
 //
 //
 //
 //
 //
-//                /********* To get current emotion displayed on the screen *********/
-//                /*******Code in ViewPagerAdapter to set the current view***************/
-//                currentView = ViewPagerAdapter.mCurrentView;
+//            /********* To get current emotion displayed on the screen *********/
+//            /*******Code in ViewPagerAdapter to set the current view***************/
+//            currentView = ViewPagerAdapter.mCurrentView;
 //
-//                ViewGroup viewGroup = ((ViewGroup)currentView);
-//                ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-//                ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-//                LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-//                ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+//            ViewGroup viewGroup = ((ViewGroup)currentView);
+//            ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+//            ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+//            LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+//            ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
 //
-//                getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-//                System.out.println("Current emotion: "+getName);
+//            getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+//            System.out.println("Current emotion: "+getName);
 //
-//                /**********************************************************************/
-//
-//
+//            /**********************************************************************/
 //
 //
-//            }catch (Exception e){
-//                System.out.println(e);
-//                // Toaster.showShortMessage("Extra Page!");
-//            }
+//
+//
+//        }catch (Exception e){
+//            System.out.println(e);
+//            // Toaster.showShortMessage("Extra Page!");
 //        }
-    }
-
-    @Override
-    public void onTiltInAxisY(int i) {
-
-    }
-
-    @Override
-    public void onTiltInAxisZ(int i) {
-
-    }
+//    }
+//
+//    @Override
+//    public void onTiltInAxisX(int i) {
+////        if (i==TiltDirectionDetector.DIRECTION_CLOCKWISE) {
+////            final MediaPlayer ring= MediaPlayer.create(mContext, R.raw.correct);
+////            ring.start();
+////            horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
+////            attempts++;
+////            score++;
+////            scorek=score+"";
+////            scorekeep.setText(scorek);
+////            try {
+////
+////
+////
+////
+////
+////                /********* To get current emotion displayed on the screen *********/
+////                /*******Code in ViewPagerAdapter to set the current view***************/
+////                currentView = ViewPagerAdapter.mCurrentView;
+////
+////                ViewGroup viewGroup = ((ViewGroup)currentView);
+////                ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+////                ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+////                LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+////                ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+////
+////                getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+////                System.out.println("Current emotion: "+getName);
+////
+////                /**********************************************************************/
+////
+////
+////
+////
+////            }catch (Exception e){
+////                System.out.println(e);
+////                // Toaster.showShortMessage("Extra Page!");
+////            }
+////        }
+////        else {
+////            final MediaPlayer ring1= MediaPlayer.create(mContext, R.raw.wrong);
+////            ring1.start();
+////            horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
+////            attempts++;
+////            try {
+////
+////
+////
+////
+////
+////                /********* To get current emotion displayed on the screen *********/
+////                /*******Code in ViewPagerAdapter to set the current view***************/
+////                currentView = ViewPagerAdapter.mCurrentView;
+////
+////                ViewGroup viewGroup = ((ViewGroup)currentView);
+////                ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+////                ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+////                LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+////                ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+////
+////                getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+////                System.out.println("Current emotion: "+getName);
+////
+////                /**********************************************************************/
+////
+////
+////
+////
+////            }catch (Exception e){
+////                System.out.println(e);
+////                // Toaster.showShortMessage("Extra Page!");
+////            }
+////        }
+//    }
+//
+//    @Override
+//    public void onTiltInAxisY(int i) {
+//
+//    }
+//
+//    @Override
+//    public void onTiltInAxisZ(int i) {
+//
+//    }
 
 //    /**
 //     * Listener that detects shake gesture.
@@ -994,9 +994,8 @@ public class ImageFragment extends Fragment implements FlipListener, TiltDirecti
 
     public void starttimer() {
         ring2= MediaPlayer.create(mContext, R.raw.timer);
-        Sensey.getInstance().startFlipDetection(this);
+//        Sensey.getInstance().startFlipDetection(this);
 //        Sensey.getInstance().startTiltDirectionDetection(this);
-        //horizontalViewPager.setOnTouchListener(null);
 //        registerSensorListeners();
 //        ImageActivity.mSensorManager.registerListener(ImageActivity.mSensorListener,
 //                ImageActivity.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -1024,7 +1023,7 @@ public class ImageFragment extends Fragment implements FlipListener, TiltDirecti
         timer.cancel();
         timerbutton.setText("RESUME");
         timerrunning = false;
-        Sensey.getInstance().stopFlipDetection(this);
+//        Sensey.getInstance().stopFlipDetection(this);
 //        Sensey.getInstance().stopTiltDirectionDetection(this);
 //        mSensorManager.unregisterListener(this);
 //        ImageActivity.mSensorManager.unregisterListener(ImageActivity.mSensorListener);
@@ -1032,12 +1031,6 @@ public class ImageFragment extends Fragment implements FlipListener, TiltDirecti
             ring2.pause();
             length = ring2.getCurrentPosition();
         }
-//        horizontalViewPager.setOnTouchListener(new View.OnTouchListener() {
-//
-//            public boolean onTouch(View arg0, MotionEvent arg1) {
-//                return true;
-//            }
-//        });
     }
 
 
@@ -1090,7 +1083,7 @@ public class ImageFragment extends Fragment implements FlipListener, TiltDirecti
 //        mSensorManager.unregisterListener(this);
 //        ImageActivity.mSensorManager.unregisterListener(ImageActivity.mSensorListener);
         super.onDestroy();
-        Sensey.getInstance().stop();
+//        Sensey.getInstance().stop();
     }
 
     @Override
@@ -1116,13 +1109,13 @@ public class ImageFragment extends Fragment implements FlipListener, TiltDirecti
        // getActivity().getIntent().getExtras();
         System.out.println("r");
         if (!timerrunning) {
-            Sensey.getInstance().stopFlipDetection(this);
+//            Sensey.getInstance().stopFlipDetection(this);
 //            Sensey.getInstance().stopFlipDetection(this);
 //            mSensorManager.unregisterListener(this);
 //            ImageActivity.mSensorManager.unregisterListener(ImageActivity.mSensorListener);
         }
         else {
-            Sensey.getInstance().startFlipDetection(this);
+//            Sensey.getInstance().startFlipDetection(this);
 //            Sensey.getInstance().startTiltDirectionDetection(this);
 //            registerSensorListeners();
 //            ImageActivity.mSensorManager.registerListener(ImageActivity.mSensorListener,
@@ -1151,41 +1144,14 @@ public class ImageFragment extends Fragment implements FlipListener, TiltDirecti
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         horizontalViewPager.setOffscreenPageLimit(1);
-       // leftNav = view.findViewById(R.id.left_nav);
-      //  rightNav = view.findViewById(R.id.right_nav);
+//        leftNav = view.findViewById(R.id.left_nav);
+//        rightNav = view.findViewById(R.id.right_nav);
 
 
         horizontalViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                try {
-//
-//
-//
-//
-//
-//                    /********* To get current emotion displayed on the screen *********/
-//                    /*******Code in ViewPagerAdapter to set the current view***************/
-//                    currentView = ViewPagerAdapter.mCurrentView;
-//
-//                    ViewGroup viewGroup = ((ViewGroup)currentView);
-//                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-//                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-//                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-//                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
-//
-//                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-//                    System.out.println("Current emotion: "+getName);
-//
-//                    /**********************************************************************/
-//
-//
-//
-//
-//                }catch (Exception e){
-//                    System.out.println(e);
-//                    // Toaster.showShortMessage("Extra Page!");
-//                }
+//                
             }
 
             @Override
@@ -1218,18 +1184,18 @@ public class ImageFragment extends Fragment implements FlipListener, TiltDirecti
 //                    System.out.println(e);
 //                    // Toaster.showShortMessage("Extra Page!");
 //                }
-                if (position == 0) {
-                    //attempts++;
-                   // leftNav.setVisibility(View.INVISIBLE);
-                } else
-                   // leftNav.setVisibility(View.VISIBLE);
-
-                if (position==emos.length-1){
-                   // rightNav.setVisibility(View.INVISIBLE);
-                } else {
-                   // attempts++;
-                   // rightNav.setVisibility(View.VISIBLE);
-                }
+//                if (position == 0) {
+//                    //attempts++;
+//                   leftNav.setVisibility(View.INVISIBLE);
+//                } else
+//                   leftNav.setVisibility(View.VISIBLE);
+//
+//                if (position==emos.length-1){
+//                   rightNav.setVisibility(View.INVISIBLE);
+//                } else {
+//                   // attempts++;
+//                   rightNav.setVisibility(View.VISIBLE);
+//                }
             }
 
             @Override
@@ -1274,8 +1240,8 @@ public class ImageFragment extends Fragment implements FlipListener, TiltDirecti
 //
 //            }
 //        });
-//
-//        // Images right navigatin
+
+        // Images right navigatin
 //        rightNav.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
