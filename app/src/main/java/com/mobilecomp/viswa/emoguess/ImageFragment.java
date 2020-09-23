@@ -1140,22 +1140,44 @@ public class ImageFragment extends Fragment{ //implements FlipListener, TiltDire
         void onFragmentInteraction(Uri uri);
     }
 
+//    private int lastPosition = 0;
+//    private static final float thresholdOffset = 0.5f;
+//    private boolean scrollStarted, checkDirection;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         horizontalViewPager.setOffscreenPageLimit(1);
-//        leftNav = view.findViewById(R.id.left_nav);
-//        rightNav = view.findViewById(R.id.right_nav);
+        leftNav = view.findViewById(R.id.left_nav);
+        rightNav = view.findViewById(R.id.right_nav);
+
 
 
         horizontalViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            float sum;
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                
-            }
+//                if ((position + positionOffset) > sum) {
+
+//                }
+//
+//                else {
+//
+//                }
+//
+//                    sum = position+positionOffset;
+                }
+
 
             @Override
             public void onPageSelected(int position) {
+//                if (lastPosition > position) {
+//
+//                    System.out.println("Left");
+//                }else if (lastPosition < position) {
+//                    System.out.println("Right");
+//                }
+//                lastPosition = position;
 //                try {
 //
 //
@@ -1186,95 +1208,110 @@ public class ImageFragment extends Fragment{ //implements FlipListener, TiltDire
 //                }
 //                if (position == 0) {
 //                    //attempts++;
-//                   leftNav.setVisibility(View.INVISIBLE);
+//                   //leftNav.setVisibility(View.INVISIBLE);
 //                } else
-//                   leftNav.setVisibility(View.VISIBLE);
+//                   //leftNav.setVisibility(View.VISIBLE);
 //
 //                if (position==emos.length-1){
-//                   rightNav.setVisibility(View.INVISIBLE);
+//                   //rightNav.setVisibility(View.INVISIBLE);
 //                } else {
 //                   // attempts++;
-//                   rightNav.setVisibility(View.VISIBLE);
+//                   //rightNav.setVisibility(View.VISIBLE);
 //                }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+//                if (!scrollStarted && state == ViewPager.SCROLL_STATE_DRAGGING) {
+//                    scrollStarted = true;
+//                    checkDirection = true;
+//                } else {
+//                    scrollStarted = false;
+//                }
             }
         });
 
         // Images left navigation
-//        leftNav.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+        leftNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 //                horizontalViewPager.arrowScroll(View.FOCUS_LEFT);
-//                try {
-//
-//
-//
-//
-//
-//                    /********* To get current emotion displayed on the screen *********/
-//                    /*******Code in ViewPagerAdapter to set the current view***************/
-//                    currentView = ViewPagerAdapter.mCurrentView;
-//
-//                    ViewGroup viewGroup = ((ViewGroup)currentView);
-//                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-//                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-//                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-//                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
-//
-//                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-//                    System.out.println("Current emotion: "+getName);
-//
-//                    /**********************************************************************/
-//
-//
-//
-//
-//                }catch (Exception e){
-//                    System.out.println(e);
-//                    // Toaster.showShortMessage("Extra Page!");
-//                }
-//
-//            }
-//        });
+                final MediaPlayer ring1= MediaPlayer.create(mContext, R.raw.wrong);
+                ring1.start();
+                horizontalViewPager.setAdapter(new ViewPagerAdapter(mContext, emos));
+                attempts++;
+                try {
+
+
+
+
+
+                    /********* To get current emotion displayed on the screen *********/
+                    /*******Code in ViewPagerAdapter to set the current view***************/
+                    currentView = ViewPagerAdapter.mCurrentView;
+
+                    ViewGroup viewGroup = ((ViewGroup)currentView);
+                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+
+                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+                    System.out.println("Current emotion: "+getName);
+
+                    /**********************************************************************/
+
+
+
+
+                }catch (Exception e){
+                    System.out.println(e);
+                    // Toaster.showShortMessage("Extra Page!");
+                }
+
+            }
+        });
 
         // Images right navigatin
-//        rightNav.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                attempts++;
-//                try {
-//                    horizontalViewPager.arrowScroll(View.FOCUS_RIGHT);
-//
-//
-//
-//
-//                    /********* To get current emotion displayed on the screen *********/
-//                    /*******Code in ViewPagerAdapter to set the current view***************/
-//                    currentView = ViewPagerAdapter.mCurrentView;
-//
-//                    ViewGroup viewGroup = ((ViewGroup)currentView);
-//                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-//                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-//                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-//                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
-//
-//                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-//                    System.out.println("Current emotion: "+getName);
-//
-//                    /**********************************************************************/
-//
-//
-//
-//
-//                }catch (Exception e){
-//                    System.out.println(e);
-//                    // Toaster.showShortMessage("Extra Page!");
-//                }
-//            }
-//        });
+        rightNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final MediaPlayer ring= MediaPlayer.create(mContext, R.raw.correct);
+                    ring.start();
+                    horizontalViewPager.setAdapter(new ViewPagerAdapter(mContext, emos));
+                    attempts++;
+                    score++;
+                    scorek=score+"";
+                    scorekeep.setText(scorek);
+                    try {
+
+
+
+
+
+                        /********* To get current emotion displayed on the screen *********/
+                        /*******Code in ViewPagerAdapter to set the current view***************/
+                        currentView = ViewPagerAdapter.mCurrentView;
+
+                        ViewGroup viewGroup = ((ViewGroup)currentView);
+                        ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+                        ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+                        LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+                        ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+
+                        getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+                        System.out.println("Current emotion: "+getName);
+
+                        /**********************************************************************/
+
+
+
+
+                    }catch (Exception e){
+                        System.out.println(e);
+                        // Toaster.showShortMessage("Extra Page!");
+                    }
+            }
+        });
     }
 }

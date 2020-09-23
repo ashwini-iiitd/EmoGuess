@@ -45,7 +45,7 @@ public class VideoFragment extends Fragment {
     private TextView timertext;
     private Button timerbutton;
     private CountDownTimer timer;
-    private long timeleft = 60000;
+    private long timeleft = 90000;
     private boolean timerrunning;
     static String timelefttext;
     private static View currentView;
@@ -625,8 +625,8 @@ public class VideoFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         horizontalViewPagerVideo.setOffscreenPageLimit(1);
-       // leftNav = view.findViewById(R.id.left_nav);
-       // rightNav = view.findViewById(R.id.right_nav);
+        leftNav = view.findViewById(R.id.left_nav);
+        rightNav = view.findViewById(R.id.right_nav);
 
         horizontalViewPagerVideo.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -685,74 +685,104 @@ public class VideoFragment extends Fragment {
         });
 
         // Images left navigation
-//        leftNav.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                horizontalViewPagerVideo.arrowScroll(View.FOCUS_LEFT);
-//                try {
-//
-//
-//
-//
-//                    /********* To get current emotion displayed on the screen *********/
-//                    /*******Code in ViewPagerAdapter to set the current view***************/
-//                    currentView = ViewPagerAdapterVideo.mCurrentView;
-//
-//                    ViewGroup viewGroup = ((ViewGroup)currentView);
-//                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-//                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-//                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-//                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
-//
-//                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-//                    System.out.println("Current emotion: "+getName);
-//                    getVideo= ((VideoView)viewGroup2.getChildAt(0));
-//                    /**********************************************************************/
-//
-//
-//
-//
-//                }catch (Exception e){
-//                    System.out.println(e);
-//                    // Toaster.showShortMessage("Extra Page!");
-//                }
-//            }
-//        });
+        leftNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final MediaPlayer ring1= MediaPlayer.create(mContext, R.raw.wrong);
+                ring1.start();
+                horizontalViewPagerVideo.setAdapter(new ViewPagerAdapterVideo(mContext, emos));
+                ImageFragment.attempts++;
+                try {
+
+
+
+
+                    /********* To get current emotion displayed on the screen *********/
+                    /*******Code in ViewPagerAdapter to set the current view***************/
+                    currentView = ViewPagerAdapterVideo.mCurrentView;
+
+                    ViewGroup viewGroup = ((ViewGroup)currentView);
+                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+
+                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+                    System.out.println("Current emotion: "+getName);
+                    getVideo= ((VideoView)viewGroup2.getChildAt(0));
+                    System.out.println("Current video: "+getVideo);
+                    getVideo.requestFocus();
+                    getVideo.start();
+                    getVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                            mp.setLooping(true);
+                            getVideo.setBackgroundColor(Color.TRANSPARENT);
+                            //mp.pause();
+                        }
+                    });
+                    /**********************************************************************/
+
+
+
+
+                }catch (Exception e){
+                    System.out.println(e);
+                    // Toaster.showShortMessage("Extra Page!");
+                }
+            }
+        });
 //
 //        // Images right navigatin
-//        rightNav.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ImageFragment.attempts++;
-//                try {
-//                    horizontalViewPagerVideo.arrowScroll(View.FOCUS_RIGHT);
-//
-//
-//
-//
-//                    /********* To get current emotion displayed on the screen *********/
-//                    /*******Code in ViewPagerAdapter to set the current view***************/
-//                    currentView = ViewPagerAdapterVideo.mCurrentView;
-//
-//                    ViewGroup viewGroup = ((ViewGroup)currentView);
-//                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-//                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-//                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-//                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
-//
-//                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-//                    System.out.println("Current emotion: "+getName);
-//                    getVideo= ((VideoView)viewGroup2.getChildAt(0));
-//                    /**********************************************************************/
-//
-//
-//
-//
-//                }catch (Exception e){
-//                    System.out.println(e);
-//                    // Toaster.showShortMessage("Extra Page!");
-//                }
-//            }
-//        });
+        rightNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final MediaPlayer ring= MediaPlayer.create(mContext, R.raw.correct);
+                ring.start();
+                horizontalViewPagerVideo.setAdapter(new ViewPagerAdapterVideo(mContext, emos));
+                ImageFragment.attempts++;
+                ImageFragment.score++;
+                scorek=ImageFragment.score+"";
+                scorekeep.setText(scorek);
+                try {
+
+
+
+
+                    /********* To get current emotion displayed on the screen *********/
+                    /*******Code in ViewPagerAdapter to set the current view***************/
+                    currentView = ViewPagerAdapterVideo.mCurrentView;
+
+                    ViewGroup viewGroup = ((ViewGroup)currentView);
+                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+
+                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+                    System.out.println("Current emotion: "+getName);
+                    getVideo= ((VideoView)viewGroup2.getChildAt(0));
+                    System.out.println("Current video: "+getVideo);
+                    getVideo.requestFocus();
+                    getVideo.start();
+                    getVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                            mp.setLooping(true);
+                            getVideo.setBackgroundColor(Color.TRANSPARENT);
+                            //mp.pause();
+                        }
+                    });
+                    /**********************************************************************/
+
+
+
+
+                }catch (Exception e){
+                    System.out.println(e);
+                    // Toaster.showShortMessage("Extra Page!");
+                }
+            }
+        });
     }
 }
