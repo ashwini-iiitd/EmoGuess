@@ -64,6 +64,7 @@ public class ImageFragment extends Fragment{ //implements FlipListener, TiltDire
     static String timelefttext;
     private static View currentView;
     static String getName;
+    static String getCorr;
     MediaPlayer ring2;
     private static TextView scorekeep;
     static String scorek;
@@ -1236,6 +1237,7 @@ public class ImageFragment extends Fragment{ //implements FlipListener, TiltDire
             @Override
             public void onClick(View v) {
 //                horizontalViewPager.arrowScroll(View.FOCUS_LEFT);
+                getCorr = "incorrect";
                 final MediaPlayer ring1= MediaPlayer.create(mContext, R.raw.wrong);
                 ring1.start();
                 horizontalViewPager.setAdapter(new ViewPagerAdapter(mContext, emos));
@@ -1276,41 +1278,42 @@ public class ImageFragment extends Fragment{ //implements FlipListener, TiltDire
         rightNav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getCorr = "correct";
                 final MediaPlayer ring= MediaPlayer.create(mContext, R.raw.correct);
-                    ring.start();
-                    horizontalViewPager.setAdapter(new ViewPagerAdapter(mContext, emos));
-                    attempts++;
-                    score++;
-                    scorek=score+"";
-                    scorekeep.setText(scorek);
-                    try {
+                ring.start();
+                horizontalViewPager.setAdapter(new ViewPagerAdapter(mContext, emos));
+                attempts++;
+                score++;
+                scorek=score+"";
+                scorekeep.setText(scorek);
+                try {
 
 
 
 
 
-                        /********* To get current emotion displayed on the screen *********/
-                        /*******Code in ViewPagerAdapter to set the current view***************/
-                        currentView = ViewPagerAdapter.mCurrentView;
+                    /********* To get current emotion displayed on the screen *********/
+                    /*******Code in ViewPagerAdapter to set the current view***************/
+                    currentView = ViewPagerAdapter.mCurrentView;
 
-                        ViewGroup viewGroup = ((ViewGroup)currentView);
-                        ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
-                        ViewGroup viewGroup1 = ((ViewGroup)scrollView);
-                        LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
-                        ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
+                    ViewGroup viewGroup = ((ViewGroup)currentView);
+                    ScrollView scrollView = (ScrollView) viewGroup.getChildAt(0);
+                    ViewGroup viewGroup1 = ((ViewGroup)scrollView);
+                    LinearLayout linearLayout = (LinearLayout) viewGroup1.getChildAt(0);
+                    ViewGroup viewGroup2 = ((ViewGroup)linearLayout);
 
-                        getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
-                        System.out.println("Current emotion: "+getName);
+                    getName = ((TextView)viewGroup2.getChildAt(1)).getText().toString();
+                    System.out.println("Current emotion: "+getName);
 
-                        /**********************************************************************/
-
-
+                    /**********************************************************************/
 
 
-                    }catch (Exception e){
-                        System.out.println(e);
-                        // Toaster.showShortMessage("Extra Page!");
-                    }
+
+
+                }catch (Exception e){
+                    System.out.println(e);
+                    // Toaster.showShortMessage("Extra Page!");
+                }
             }
         });
     }

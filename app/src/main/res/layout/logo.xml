@@ -5,10 +5,10 @@
     android:id="@+id/layout">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/logo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/adnace_search_i" />
+        android:layout_height="@dimen/_90sdp"
+        android:scaleType="fitEnd"
+        android:layout_marginTop="@dimen/_500sdp"
+        android:src="@drawable/logo" />
 </RelativeLayout>
