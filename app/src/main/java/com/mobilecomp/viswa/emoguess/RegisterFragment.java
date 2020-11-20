@@ -2,16 +2,21 @@ package com.mobilecomp.viswa.emoguess;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -80,6 +85,29 @@ public class RegisterFragment extends Fragment {
         progressBar = view.findViewById(R.id.progBar);
         fAuth = FirebaseAuth.getInstance();
         fStore= FirebaseFirestore.getInstance();
+        buttonRegister.setEnabled(false);
+
+        TextView textView = view.findViewById(R.id.consent);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setTypeface(ResourcesCompat.getFont(getContext(), R.font.atma));
+        textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+
+        CheckBox check = view.findViewById(R.id.consent);
+        check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+               @Override
+               public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                   if (isChecked) {
+                       buttonRegister.setEnabled(true);
+                       System.out.println("check");
+                   }
+                   else {
+                       buttonRegister.setEnabled(false);
+                       System.out.println("check1");
+                   }
+
+               }
+           }
+        );
 
         if (fAuth.getCurrentUser()!=null){
             startActivity(new Intent(getContext(),HomeActivity.class));

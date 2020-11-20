@@ -21,6 +21,7 @@
     <string name="how_to_share_parents">\u2022 The expressions you capture during the game get saved to your gallery automatically. \n \u2022 After the game ends, you will see a share button on the next screen, clicking which will take you to the gallery, from where you select the images to be shared. \n \u2022 In case you forget to do this after the game ends, there is also an option in the play area which you may use for the same.</string>
     <string name="how_to_children">How to Play: Carefully look at the image/video on the screen (with text below it as the hint). Enact the emotion shown by the image/video. Tell your parents if they guessed it right :)</string>
     <string name="hyperlink">Contact us at <a href="https://hmi.iiitd.edu.in/contact_us.html">HMI Lab</a></string>
+    <string name="consentform">I choose to give my <a href="https://docs.google.com/document/d/1suV8Wro0jgfwIQ96AVEwOBHpYRCPFZL-IglZiG054TE/edit?usp=sharing">consent</a></string>
     <string name="for_parents">For Parents</string>
 
     <string-array name="emotions">
