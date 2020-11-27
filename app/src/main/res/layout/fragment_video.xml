@@ -100,6 +100,7 @@
         android:layout_height="@dimen/_250sdp"
         android:layout_gravity="center_horizontal|start"
         android:background="@null"
+        app:srcCompat="@mipmap/forward_incorrect"
         android:layout_below="@id/cardvideo"
         android:layout_alignLeft="@id/viewPagerVideo" />
 <!--    app:srcCompat="@drawable/ic_action_left"-->
@@ -112,6 +113,7 @@
         android:layout_gravity="center_horizontal|end"
         android:fadingEdge="horizontal"
         android:background="@null"
+        app:srcCompat="@mipmap/forward_correct"
         android:layout_below="@id/cardvideo"
         android:layout_alignRight="@id/viewPagerVideo" />
 <!--    app:srcCompat="@drawable/ic_action_right"-->

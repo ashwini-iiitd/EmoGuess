@@ -71,10 +71,28 @@ public class VideoFragment extends Fragment {
         timertext = view.findViewById(R.id.countdown_text);
         timerbutton = view.findViewById(R.id.countdown_button);
         scorekeep = view.findViewById(R.id.score_keep);
+        leftNav = view.findViewById(R.id.left_nav);
+        rightNav = view.findViewById(R.id.right_nav);
+        rightNav.setEnabled(false);
+        leftNav.setEnabled(false);
+        rightNav.setVisibility(View.INVISIBLE);
+        leftNav.setVisibility(View.INVISIBLE);
         timerbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startStop();
+                if (timerrunning) {
+                    rightNav.setEnabled(true);
+                    leftNav.setEnabled(true);
+                    rightNav.setVisibility(View.VISIBLE);
+                    leftNav.setVisibility(View.VISIBLE);
+                }
+                else {
+                    rightNav.setEnabled(false);
+                    leftNav.setEnabled(false);
+                    rightNav.setVisibility(View.INVISIBLE);
+                    leftNav.setVisibility(View.INVISIBLE);
+                }
             }
         });
         mContext = getContext();
@@ -625,8 +643,6 @@ public class VideoFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         horizontalViewPagerVideo.setOffscreenPageLimit(1);
-        leftNav = view.findViewById(R.id.left_nav);
-        rightNav = view.findViewById(R.id.right_nav);
 
         horizontalViewPagerVideo.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
