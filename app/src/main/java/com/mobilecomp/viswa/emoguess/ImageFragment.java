@@ -173,72 +173,81 @@ public class ImageFragment extends Fragment{ //implements FlipListener, TiltDire
     Emo e8 = new Emo(R.drawable.a8 , "Angry");
     Emo e9 = new Emo(R.drawable.a9 , "Angry");
     Emo e10 = new Emo(R.drawable.a10 , "Angry");
+    Emo e11 = new Emo(R.drawable.a11 , "Angry");
+    Emo e12 = new Emo(R.drawable.a12 , "Angry");
+    Emo e13 = new Emo(R.drawable.a13 , "Angry");
 
-    Emo e11 = new Emo(R.drawable.d1 , "Disgust");
-    Emo e12 = new Emo(R.drawable.d2 , "Disgust");
-    Emo e13 = new Emo(R.drawable.d3 , "Disgust");
-    Emo e14 = new Emo(R.drawable.d4 , "Disgust");
-    Emo e15 = new Emo(R.drawable.d5 , "Disgust");
-    Emo e16 = new Emo(R.drawable.d6 , "Disgust");
-    Emo e17 = new Emo(R.drawable.d7 , "Disgust");
-    Emo e18 = new Emo(R.drawable.d8 , "Disgust");
-    Emo e19 = new Emo(R.drawable.d9 , "Disgust");
-    Emo e20 = new Emo(R.drawable.d10 , "Disgust");
+    Emo e14 = new Emo(R.drawable.d1 , "Disgust");
+    Emo e15 = new Emo(R.drawable.d2 , "Disgust");
+    Emo e16 = new Emo(R.drawable.d3 , "Disgust");
+    Emo e17 = new Emo(R.drawable.d4 , "Disgust");
+    Emo e18 = new Emo(R.drawable.d5 , "Disgust");
+    Emo e19 = new Emo(R.drawable.d6 , "Disgust");
+    Emo e20 = new Emo(R.drawable.d7 , "Disgust");
+    Emo e21 = new Emo(R.drawable.d8 , "Disgust");
+    Emo e22 = new Emo(R.drawable.d9 , "Disgust");
+    Emo e23 = new Emo(R.drawable.d10 , "Disgust");
 
-    Emo e21 = new Emo(R.drawable.f1 , "Fearful");
-    Emo e22 = new Emo(R.drawable.f2 , "Fearful");
-    Emo e23 = new Emo(R.drawable.f3 , "Fearful");
-    Emo e24 = new Emo(R.drawable.f4 , "Fearful");
-    Emo e25 = new Emo(R.drawable.f5 , "Fearful");
-    Emo e26 = new Emo(R.drawable.f6 , "Fearful");
-    Emo e27 = new Emo(R.drawable.f7 , "Fearful");
-    Emo e28 = new Emo(R.drawable.f8 , "Fearful");
-    Emo e29 = new Emo(R.drawable.f9 , "Fearful");
-    Emo e30 = new Emo(R.drawable.f10 , "Fearful");
+    Emo e24 = new Emo(R.drawable.f1 , "Fearful");
+    Emo e25 = new Emo(R.drawable.f2 , "Fearful");
+    Emo e26 = new Emo(R.drawable.f3 , "Fearful");
+    Emo e27 = new Emo(R.drawable.f4 , "Fearful");
+    Emo e28 = new Emo(R.drawable.f5 , "Fearful");
+    Emo e29 = new Emo(R.drawable.f6 , "Fearful");
+    Emo e30 = new Emo(R.drawable.f7 , "Fearful");
+    Emo e31 = new Emo(R.drawable.f8 , "Fearful");
+    Emo e32 = new Emo(R.drawable.f9 , "Fearful");
 
-    Emo e31 = new Emo(R.drawable.h1 , "Happy");
-    Emo e32 = new Emo(R.drawable.h2 , "Happy");
-    Emo e33 = new Emo(R.drawable.h3 , "Happy");
-    Emo e34 = new Emo(R.drawable.h4 , "Happy");
-    Emo e35 = new Emo(R.drawable.h5 , "Happy");
-    Emo e36 = new Emo(R.drawable.h6 , "Happy");
-    Emo e37 = new Emo(R.drawable.h7 , "Happy");
-    Emo e38 = new Emo(R.drawable.h8 , "Happy");
-    Emo e39 = new Emo(R.drawable.h9 , "Happy");
-    Emo e40 = new Emo(R.drawable.h10 , "Happy");
+    Emo e33 = new Emo(R.drawable.h1 , "Happy");
+    Emo e34 = new Emo(R.drawable.h2 , "Happy");
+    Emo e35 = new Emo(R.drawable.h3 , "Happy");
+    Emo e36 = new Emo(R.drawable.h4 , "Happy");
+    Emo e37 = new Emo(R.drawable.h5 , "Happy");
+    Emo e38 = new Emo(R.drawable.h6 , "Happy");
+    Emo e39 = new Emo(R.drawable.h7 , "Happy");
+    Emo e40 = new Emo(R.drawable.h8 , "Happy");
+    Emo e41 = new Emo(R.drawable.h9 , "Happy");
+    Emo e42 = new Emo(R.drawable.h10 , "Happy");
+    Emo e43 = new Emo(R.drawable.h11 , "Happy");
+    Emo e44 = new Emo(R.drawable.h12 , "Happy");
 
-    Emo e41 = new Emo(R.drawable.n1 , "Neutral");
-    Emo e42 = new Emo(R.drawable.n2 , "Neutral");
-    Emo e43 = new Emo(R.drawable.n3 , "Neutral");
-    Emo e44 = new Emo(R.drawable.n4 , "Neutral");
-    Emo e45 = new Emo(R.drawable.n5 , "Neutral");
-    Emo e46 = new Emo(R.drawable.n6 , "Neutral");
-    Emo e47 = new Emo(R.drawable.n7 , "Neutral");
-    Emo e48 = new Emo(R.drawable.n8 , "Neutral");
-    Emo e49 = new Emo(R.drawable.n9 , "Neutral");
-    Emo e50 = new Emo(R.drawable.n10 , "Neutral");
+    Emo e45 = new Emo(R.drawable.n1 , "Neutral");
+    Emo e46 = new Emo(R.drawable.n2 , "Neutral");
+    Emo e47 = new Emo(R.drawable.n3 , "Neutral");
+    Emo e48 = new Emo(R.drawable.n4 , "Neutral");
+    Emo e49 = new Emo(R.drawable.n5 , "Neutral");
+    Emo e50 = new Emo(R.drawable.n6 , "Neutral");
+    Emo e51 = new Emo(R.drawable.n7 , "Neutral");
+    Emo e52 = new Emo(R.drawable.n8 , "Neutral");
+    Emo e53 = new Emo(R.drawable.n9 , "Neutral");
+    Emo e54 = new Emo(R.drawable.n10 , "Neutral");
+    Emo e55 = new Emo(R.drawable.n11 , "Neutral");
+    Emo e56 = new Emo(R.drawable.n12 , "Neutral");
+    Emo e57 = new Emo(R.drawable.n13 , "Neutral");
 
-    Emo e51 = new Emo(R.drawable.s1 , "Sad");
-    Emo e52 = new Emo(R.drawable.s2 , "Sad");
-    Emo e53 = new Emo(R.drawable.s3 , "Sad");
-    Emo e54 = new Emo(R.drawable.s4 , "Sad");
-    Emo e55 = new Emo(R.drawable.s5 , "Sad");
-    Emo e56 = new Emo(R.drawable.s6 , "Sad");
-    Emo e57 = new Emo(R.drawable.s7 , "Sad");
-    Emo e58 = new Emo(R.drawable.s8 , "Sad");
-    Emo e59 = new Emo(R.drawable.s9 , "Sad");
-    Emo e60 = new Emo(R.drawable.s10 , "Sad");
+    Emo e58 = new Emo(R.drawable.s1 , "Sad");
+    Emo e59 = new Emo(R.drawable.s2 , "Sad");
+    Emo e60 = new Emo(R.drawable.s3 , "Sad");
+    Emo e61 = new Emo(R.drawable.s4 , "Sad");
+    Emo e62 = new Emo(R.drawable.s5 , "Sad");
+    Emo e63 = new Emo(R.drawable.s6 , "Sad");
+    Emo e64 = new Emo(R.drawable.s7 , "Sad");
+    Emo e65 = new Emo(R.drawable.s8 , "Sad");
+    Emo e66 = new Emo(R.drawable.s9 , "Sad");
+    Emo e67 = new Emo(R.drawable.s10 , "Sad");
 
-    Emo e61 = new Emo(R.drawable.sur1 , "Surprise");
-    Emo e62 = new Emo(R.drawable.sur2 , "Surprise");
-    Emo e63 = new Emo(R.drawable.sur3 , "Surprise");
-    Emo e64 = new Emo(R.drawable.sur4 , "Surprise");
-    Emo e65 = new Emo(R.drawable.sur5 , "Surprise");
-    Emo e66 = new Emo(R.drawable.sur6 , "Surprise");
-    Emo e67 = new Emo(R.drawable.sur7 , "Surprise");
-    Emo e68 = new Emo(R.drawable.sur8 , "Surprise");
-    Emo e69 = new Emo(R.drawable.sur9 , "Surprise");
-    Emo e70 = new Emo(R.drawable.sur10 , "Surprise");
+    Emo e68 = new Emo(R.drawable.sur1 , "Surprise");
+    Emo e69 = new Emo(R.drawable.sur2 , "Surprise");
+    Emo e70 = new Emo(R.drawable.sur3 , "Surprise");
+    Emo e71 = new Emo(R.drawable.sur4 , "Surprise");
+    Emo e72 = new Emo(R.drawable.sur5 , "Surprise");
+    Emo e73 = new Emo(R.drawable.sur6 , "Surprise");
+    Emo e74 = new Emo(R.drawable.sur7 , "Surprise");
+    Emo e75 = new Emo(R.drawable.sur8 , "Surprise");
+    Emo e76 = new Emo(R.drawable.sur9 , "Surprise");
+    Emo e77 = new Emo(R.drawable.sur10 , "Surprise");
+    Emo e78 = new Emo(R.drawable.sur11 , "Surprise");
+    Emo e79 = new Emo(R.drawable.sur12 , "Surprise");
 
 
     Emo[] emos = new Emo[]{
@@ -248,7 +257,8 @@ public class ImageFragment extends Fragment{ //implements FlipListener, TiltDire
             e31, e32, e33, e34, e35, e36, e37, e38, e39, e40,
             e41, e42, e43, e44, e45, e46, e47, e48, e49, e50,
             e51, e52, e53, e54, e55, e56, e57, e58, e59, e60,
-            e61, e62, e63, e64, e65, e66, e67, e68, e69, e70
+            e61, e62, e63, e64, e65, e66, e67, e68, e69, e70,
+            e71, e72, e73, e74, e75, e76, e77, e78, e79
     };
 
     public void startStop() {
