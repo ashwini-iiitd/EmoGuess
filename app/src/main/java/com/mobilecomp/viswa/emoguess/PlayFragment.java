@@ -131,34 +131,34 @@ public class PlayFragment extends Fragment {
             }
         });
 
-        ImageView videoView = view.findViewById(R.id.bVideo);
-//        Uri s=Uri.parse("android.resource://com.mobilecomp.viswa.emoguess/"+R.raw.video);
-//        videoView.setVideoURI(s);
-//        videoView.start();
-        videoView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isConnected(getContext());
-                if (isConnected(getContext())==true) {
-                ImageFragment.score=0;
-                ImageFragment.attempts=0;
-                    startActivity(new Intent(getContext(),VideoActivity.class));
-                }
-            }
-        });
-
-        Button videoView2 = view.findViewById(R.id.bbVideo);
-        videoView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isConnected(getContext());
-                if (isConnected(getContext())==true) {
-                ImageFragment.score=0;
-                ImageFragment.attempts=0;
-                    startActivity(new Intent(getContext(),VideoActivity.class));
-                }
-            }
-        });
+//        ImageView videoView = view.findViewById(R.id.bVideo);
+////        Uri s=Uri.parse("android.resource://com.mobilecomp.viswa.emoguess/"+R.raw.video);
+////        videoView.setVideoURI(s);
+////        videoView.start();
+//        videoView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                isConnected(getContext());
+//                if (isConnected(getContext())==true) {
+//                ImageFragment.score=0;
+//                ImageFragment.attempts=0;
+//                    startActivity(new Intent(getContext(),VideoActivity.class));
+//                }
+//            }
+//        });
+//
+//        Button videoView2 = view.findViewById(R.id.bbVideo);
+//        videoView2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                isConnected(getContext());
+//                if (isConnected(getContext())==true) {
+//                ImageFragment.score=0;
+//                ImageFragment.attempts=0;
+//                    startActivity(new Intent(getContext(),VideoActivity.class));
+//                }
+//            }
+//        });
 
         ImageButton share = view.findViewById(R.id.share);
 
