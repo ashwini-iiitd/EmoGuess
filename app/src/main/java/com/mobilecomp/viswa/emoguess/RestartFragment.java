@@ -45,6 +45,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -59,7 +60,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -86,6 +89,7 @@ public class RestartFragment extends Fragment {
     StorageReference storageReference;
     static View view;
     String userID;
+    String username;
 
     private OnFragmentInteractionListener mListener;
 
@@ -134,6 +138,7 @@ public class RestartFragment extends Fragment {
         // toast.show();
         Button score = view.findViewById(R.id.Score);
 
+
         score.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,6 +154,8 @@ public class RestartFragment extends Fragment {
                 builder.setView(input);
                 AlertDialog alert = builder.create();
                 alert.show();
+//                Intent intent = new Intent();
+//                startActivityForResult(intent, 2);
 
 //                Toast toast = Toast.makeText(getActivity(), "Score: " + String.valueOf(ImageFragment.score) + " out of " + String.valueOf(ImageFragment.attempts), Toast.LENGTH_LONG);
 //                toast.show();
@@ -187,6 +194,8 @@ public class RestartFragment extends Fragment {
                 builder.setView(input);
                 AlertDialog alert = builder.create();
                 alert.show();
+//                Intent intent = new Intent();
+//                startActivityForResult(intent, 2);
             }
         });
 
@@ -297,6 +306,7 @@ public class RestartFragment extends Fragment {
         try {
 
             userID = fAuth.getCurrentUser().getUid();
+//            username = fAuth.getCurrentUser().getDisplayName();
             // When an Image is picked
             if (requestCode == 1 && null != data) {
                 // Get the Image from data
@@ -316,10 +326,9 @@ public class RestartFragment extends Fragment {
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     imageEncoded = cursor.getString(columnIndex);
-                    imageName= imageEncoded.substring(47);
+                    imageName = imageEncoded.substring(47);
                     imagesEncodedList.add(imageEncoded);
                     imagesNameList.add(imageName);
-                    System.out.println(imageName);
                     cursor.close();
                 } else {
                     if (data.getClipData() != null) {
@@ -335,10 +344,9 @@ public class RestartFragment extends Fragment {
                             cursor.moveToFirst();
                             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                             imageEncoded = cursor.getString(columnIndex);
-                            imageName= imageEncoded.substring(47);
+                            imageName = imageEncoded.substring(47);
                             imagesEncodedList.add(imageEncoded);
-                            imagesNameList.add(imageName);
-                            System.out.println(imageName);
+                            System.out.println("i "+imageName);
                             cursor.close();
                         }
                         Log.v("LOG_TAG", "Selected Images" + mArrayUri.size());
@@ -378,7 +386,8 @@ public class RestartFragment extends Fragment {
                                         progressDialog.show();
 
                                         //Replace UUID.randomUUID().toString()  to image name
-                                        StorageReference ref = storageReference.child("images/"+userID+"/"+ imagesNameList.get(i));
+                                        StorageReference ref = storageReference.child("images/"+userID+"/"+ imagesNameList.get(i)+"_"+ImageFragment.score+"_"+ImageFragment.attempts);
+//                                        StorageReference ref = storageReference.child("images/"+username+"/"+ imagesNameList.get(i));
                                         ref.putFile(compressed)
                                                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                                     @Override
@@ -416,7 +425,19 @@ public class RestartFragment extends Fragment {
                 AlertDialog alert = builder.create();
                 alert.show();
 
-            } else {
+            }
+//            else if (requestCode == 2) {
+//                //Replace UUID.randomUUID().toString()  to image name
+////                StorageReference ref = storageReference.child("score/" + userID + "/");
+//                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("score/" + userID + "/");
+//                Map<String,Object> map = new HashMap<>();
+//                map.put("msg1","some string");
+//                map.put("msg2","another string");
+//                map.put("msg3","yet another");
+////                ref.putBytes(input);
+//                ref.setValue(map);
+//            }
+            else {
                 System.out.println("Image not picked");
             }
         } catch (Exception e) {

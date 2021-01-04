@@ -144,6 +144,6 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_13ssp"
         android:layout_marginTop="@dimen/_540sdp"
-        android:layout_marginLeft="@dimen/_90sdp"/>
+        android:layout_marginLeft="@dimen/_40sdp"/>
 
     </RelativeLayout>

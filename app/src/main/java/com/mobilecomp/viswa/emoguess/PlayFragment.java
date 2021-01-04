@@ -215,6 +215,7 @@ public class PlayFragment extends Fragment {
                     imagesEncodedList.add(imageEncoded);
                     imagesNameList.add(imageName);
                     System.out.println(imageName);
+                    System.out.println("encode "+imageEncoded);
                     cursor.close();
                 } else {
                     if (data.getClipData() != null) {
@@ -273,7 +274,7 @@ public class PlayFragment extends Fragment {
                                         progressDialog.show();
 
                                         //Replace UUID.randomUUID().toString()  to image name
-                                        StorageReference ref = storageReference.child("images/"+userID+"/"+ imagesNameList.get(i));
+                                        StorageReference ref = storageReference.child("images/"+userID+"/"+ imagesNameList.get(i)+"_"+ImageFragment.score+"_"+ImageFragment.attempts);
                                         ref.putFile(compressed)
                                                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                                     @Override
