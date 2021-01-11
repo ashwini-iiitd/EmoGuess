@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.mobilecomp.viswa.emoguess">
 <!--    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="15" />-->
 
@@ -17,7 +18,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:debuggable="false">
 
         <activity android:name=".HomeActivity"
             android:screenOrientation="portrait"></activity>
