@@ -66,7 +66,7 @@ public class PlayFragment extends Fragment {
     StorageReference storageReference;
     FirebaseStorage storage;
     String userID;
-
+    String username;
 
     private OnFragmentInteractionListener mListener;
 
@@ -192,6 +192,7 @@ public class PlayFragment extends Fragment {
         try {
 
             userID = fAuth.getCurrentUser().getUid();
+            username = fAuth.getCurrentUser().getEmail();
             // When an Image is picked
             if (requestCode == 1 && null != data) {
                 // Get the Image from data
@@ -274,7 +275,8 @@ public class PlayFragment extends Fragment {
                                         progressDialog.show();
 
                                         //Replace UUID.randomUUID().toString()  to image name
-                                        StorageReference ref = storageReference.child("images/"+userID+"/"+ imagesNameList.get(i)+"_"+ImageFragment.score+"_"+ImageFragment.attempts);
+//                                        StorageReference ref = storageReference.child("images/"+userID+"/"+ imagesNameList.get(i)+"_"+ImageFragment.score+"_"+ImageFragment.attempts);
+                                        StorageReference ref = storageReference.child("images/"+username+"/"+ imagesNameList.get(i));
                                         ref.putFile(compressed)
                                                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                                     @Override

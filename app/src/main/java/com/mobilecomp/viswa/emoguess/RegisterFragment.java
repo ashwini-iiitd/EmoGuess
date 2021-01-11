@@ -38,7 +38,7 @@ import java.util.Map;
 
 public class RegisterFragment extends Fragment {
 
-    EditText editName, editEmail, editContact, editPassword, editAge;
+    EditText editName, editEmail, editContact, editPassword, editAge, editEthnicity, editGender;
     Button buttonRegister;
     TextView txtLogin;
     ProgressBar progressBar;
@@ -80,6 +80,8 @@ public class RegisterFragment extends Fragment {
         editPassword = view.findViewById(R.id.editPassword);
         editContact = view.findViewById(R.id.editContact);
         editAge = view.findViewById(R.id.editAge);
+        editEthnicity = view.findViewById(R.id.editEthnicity);
+        editGender= view.findViewById(R.id.editGender);
         buttonRegister = view.findViewById(R.id.registerButton);
         txtLogin = view.findViewById(R.id.textLogin);
         progressBar = view.findViewById(R.id.progBar);
@@ -98,11 +100,9 @@ public class RegisterFragment extends Fragment {
                public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
                    if (isChecked) {
                        buttonRegister.setEnabled(true);
-                       System.out.println("check");
                    }
                    else {
                        buttonRegister.setEnabled(false);
-                       System.out.println("check1");
                    }
 
                }
@@ -123,6 +123,8 @@ public class RegisterFragment extends Fragment {
                 final String fullname = editName.getText().toString();
                 final String contact = editContact.getText().toString();
                 final String age = editAge.getText().toString();
+                final String ethnicity = editEthnicity.getText().toString();
+                final String gender = editGender.getText().toString();
 
                 if(TextUtils.isEmpty(fullname)){
                     editName.setError("Name is required");
@@ -144,6 +146,16 @@ public class RegisterFragment extends Fragment {
 
                 if(TextUtils.isEmpty(age)){
                     editAge.setError("Age of child is required");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(ethnicity)){
+                    editEthnicity.setError("Ethnicity of child is required");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(gender)){
+                    editGender.setError("Gender of child is required");
                     return;
                 }
 
@@ -177,6 +189,8 @@ public class RegisterFragment extends Fragment {
                             user.put("email", email);
                             user.put("contact", contact);
                             user.put("age of child", age);
+                            user.put("ethnicity of child", ethnicity);
+                            user.put("gender of child", gender);
 
                             docReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

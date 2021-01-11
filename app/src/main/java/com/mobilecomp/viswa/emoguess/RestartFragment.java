@@ -306,7 +306,7 @@ public class RestartFragment extends Fragment {
         try {
 
             userID = fAuth.getCurrentUser().getUid();
-//            username = fAuth.getCurrentUser().getDisplayName();
+            username = fAuth.getCurrentUser().getEmail();
             // When an Image is picked
             if (requestCode == 1 && null != data) {
                 // Get the Image from data
@@ -386,8 +386,8 @@ public class RestartFragment extends Fragment {
                                         progressDialog.show();
 
                                         //Replace UUID.randomUUID().toString()  to image name
-                                        StorageReference ref = storageReference.child("images/"+userID+"/"+ imagesNameList.get(i)+"_"+ImageFragment.score+"_"+ImageFragment.attempts);
-//                                        StorageReference ref = storageReference.child("images/"+username+"/"+ imagesNameList.get(i));
+//                                        StorageReference ref = storageReference.child("images/"+userID+"/"+ imagesNameList.get(i)+"_"+ImageFragment.score+"_"+ImageFragment.attempts);
+                                        StorageReference ref = storageReference.child("images/"+username+"/"+ imagesNameList.get(i));
                                         ref.putFile(compressed)
                                                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                                     @Override
